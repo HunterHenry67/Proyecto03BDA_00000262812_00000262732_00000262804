@@ -16,12 +16,57 @@ public class Album {
     private ObjectId id;
     private String nombre;
     private LocalDate fechaLanzamiento;
-    private String genero;
+    private ObjectId idGenero;
     private String imagenPortada;
-    private ObjectId idArtista;
-    private String tipoArtista;
-    private List<ObjectId> canciones;
+    private List<Cancion> canciones;
 
-    public Album() {
+    public ObjectId getId() {
+        return id;
     }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public LocalDate getFechaLanzamiento() {
+        return fechaLanzamiento;
+    }
+
+    public void setFechaLanzamiento(LocalDate fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
+    }
+
+    public ObjectId getIdGenero() {
+        return idGenero;
+    }
+
+    public void setIdGenero(ObjectId idGenero) {
+        this.idGenero = idGenero;
+    }
+
+    public String getImagenPortada() {
+        return imagenPortada;
+    }
+
+    public void setImagenPortada(String imagenPortada) {
+        this.imagenPortada = imagenPortada;
+    }
+
+    public List<Cancion> getCanciones() {
+        return canciones;
+    }
+
+    public void setCanciones(List<Cancion> canciones) {
+        this.canciones = canciones;
+    }
+    
+    
 }

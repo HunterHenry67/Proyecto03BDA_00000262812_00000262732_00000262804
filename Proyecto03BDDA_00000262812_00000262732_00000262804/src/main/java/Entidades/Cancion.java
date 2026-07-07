@@ -14,7 +14,7 @@ public class Cancion {
     private ObjectId id;
     private String nombre;
     private String duracion;
-    private ObjectId idAlbum;
+    private ObjectId idGenero;
 
     public Cancion() {
     }
@@ -43,12 +43,12 @@ public class Cancion {
         this.duracion = duracion;
     }
 
-    public ObjectId getIdAlbum() {
-        return idAlbum;
+    public ObjectId getIdGenero() {
+        return idGenero;
     }
 
-    public void setIdAlbum(ObjectId idAlbum) {
-        this.idAlbum = idAlbum;
+    public void setIdGenero(ObjectId idGenero) {
+        this.idGenero = idGenero;
     }
     
     

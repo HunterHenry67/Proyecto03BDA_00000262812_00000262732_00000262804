@@ -5,27 +5,26 @@
 package Entidades;
 
 import java.time.LocalDate;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author Andre
  */
 public class Integrante {
-    private String nombreCompleto;
+    
+    private ObjectId idPersona;
     private String rol;
     private LocalDate fechaIngreso;
     private LocalDate fechaSalida;
     private boolean activo;
 
-    public Integrante() {
+    public ObjectId getIdPersona() {
+        return idPersona;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setIdPersona(ObjectId idPersona) {
+        this.idPersona = idPersona;
     }
 
     public String getRol() {
@@ -59,7 +58,6 @@ public class Integrante {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    
-    
 
+    
 }

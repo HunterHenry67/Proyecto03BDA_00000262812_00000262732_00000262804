@@ -12,5 +12,36 @@ import org.bson.types.ObjectId;
  */
 public class Persona {
     
-    private ObjectId idPersona;
+    private ObjectId id;
+    private String nombre;
+    private String descripcion;
+
+    public Persona() {
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setIdPersona(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
+    
 }
