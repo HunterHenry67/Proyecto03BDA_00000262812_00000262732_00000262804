@@ -4,6 +4,7 @@
  */
 package Entidades;
 
+import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
@@ -16,6 +17,7 @@ public class Usuario {
     private String correo;
     private String contrasena;
     private String imagenPerfil;
+    private List<GeneroNoDeseado> generoNoDeseado;
 
     public Usuario() {
     }
@@ -59,5 +61,13 @@ public class Usuario {
     public void setImagenPerfil(String imagenPerfil) {
         this.imagenPerfil = imagenPerfil;
     }
-    
+
+    public List<GeneroNoDeseado> getGeneroNoDeseado() {
+        return generoNoDeseado;
+    }
+
+    public void setGeneroNoDeseado(List<GeneroNoDeseado> generoNoDeseado) {
+        this.generoNoDeseado = generoNoDeseado;
+    }
+  
 }

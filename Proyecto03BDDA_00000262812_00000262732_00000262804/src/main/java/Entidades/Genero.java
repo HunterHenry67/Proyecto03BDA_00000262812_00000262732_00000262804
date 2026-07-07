@@ -8,6 +8,6 @@ package Entidades;
  *
  * @author BALAMRUSH
  */
-public class Prueba {
+public class Genero {
     
 }
