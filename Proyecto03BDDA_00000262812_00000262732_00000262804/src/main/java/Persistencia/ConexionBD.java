@@ -29,6 +29,5 @@ public class ConexionBD implements IConexionBD{
         MongoClientSettings settings =MongoClientSettings.builder().applyConnectionString(cadenaConexion).codecRegistry(codecRegistry).build();
         MongoClient cliente = MongoClients.create(settings);
         return cliente.getDatabase("bibliotecaMusical02");
-    }
-    
+    }  
 }
