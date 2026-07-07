@@ -14,6 +14,29 @@ import org.bson.types.ObjectId;
 public class GeneroNoDeseado {
     private ObjectId idGND;
     private LocalDate fechaAgregacion;
-    
+
+    public GeneroNoDeseado() {
+    }
+
+    public GeneroNoDeseado(ObjectId idGND, LocalDate fechaAgregacion) {
+        this.idGND = idGND;
+        this.fechaAgregacion = fechaAgregacion;
+    }
+
+    public ObjectId getIdGND() {
+        return idGND;
+    }
+
+    public void setIdGND(ObjectId idGND) {
+        this.idGND = idGND;
+    }
+
+    public LocalDate getFechaAgregacion() {
+        return fechaAgregacion;
+    }
+
+    public void setFechaAgregacion(LocalDate fechaAgregacion) {
+        this.fechaAgregacion = fechaAgregacion;
+    }
     
 }

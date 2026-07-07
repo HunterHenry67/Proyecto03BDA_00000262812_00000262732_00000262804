@@ -22,6 +22,15 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(ObjectId id, String nombreUsuario, String correo, String contrasena, String imagenPerfil, List<GeneroNoDeseado> generoNoDeseado) {
+        this.id = id;
+        this.nombreUsuario = nombreUsuario;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.imagenPerfil = imagenPerfil;
+        this.generoNoDeseado = generoNoDeseado;
+    }
+
     public ObjectId getId() {
         return id;
     }
