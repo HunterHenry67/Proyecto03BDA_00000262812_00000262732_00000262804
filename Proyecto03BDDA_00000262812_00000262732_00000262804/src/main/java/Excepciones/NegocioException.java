@@ -9,5 +9,7 @@ package Excepciones;
  * @author BALAMRUSH
  */
 public class NegocioException extends Exception{
-    
+    public NegocioException(String message){
+        super(message);
+    }
 }

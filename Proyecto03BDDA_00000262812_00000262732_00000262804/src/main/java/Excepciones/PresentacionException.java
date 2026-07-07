@@ -9,5 +9,7 @@ package Excepciones;
  * @author BALAMRUSH
  */
 public class PresentacionException extends Exception{
-    
+    public PresentacionException(String message){
+        super(message);
+    }
 }
