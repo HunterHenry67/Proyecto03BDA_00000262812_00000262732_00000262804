@@ -4,10 +4,12 @@
  */
 package Interfaces;
 
+import com.mongodb.client.MongoDatabase;
+
 /**
  *
  * @author BALAMRUSH
  */
 public interface IConexionBD {
-    
+    public MongoDatabase conexion();
 }

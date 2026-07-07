@@ -10,4 +10,11 @@
         <maven.compiler.release>23</maven.compiler.release>
         <exec.mainClass>enriquemadridalvarez.proyecto03bdda_00000262812_00000262732_00000262804.Proyecto03BDDA_00000262812_00000262732_00000262804</exec.mainClass>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>5.0.1</version> 
+        </dependency>
+    </dependencies>
 </project>
