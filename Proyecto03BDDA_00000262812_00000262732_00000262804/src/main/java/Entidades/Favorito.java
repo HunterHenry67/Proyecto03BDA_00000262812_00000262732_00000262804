@@ -4,7 +4,7 @@
  */
 package Entidades;
 
-import java.time.LocalDate;
+import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
@@ -14,11 +14,19 @@ import org.bson.types.ObjectId;
 public class Favorito {
     private ObjectId id;
     private ObjectId idUsuario;
-    private String tipoElemento;
-    private ObjectId idElemento;
-    private LocalDate fechaAgregacion;
+    private List<ArtistaFavorito> artistas;
+    private List<AlbumFavorito> albumes;
+    private List<CancionFavorita> canciones;
 
     public Favorito() {
+    }
+
+    public Favorito(ObjectId id, ObjectId idUsuario, List<ArtistaFavorito> artistas, List<AlbumFavorito> albumes, List<CancionFavorita> canciones) {
+        this.id = id;
+        this.idUsuario = idUsuario;
+        this.artistas = artistas;
+        this.albumes = albumes;
+        this.canciones = canciones;
     }
 
     public ObjectId getId() {
@@ -37,28 +45,28 @@ public class Favorito {
         this.idUsuario = idUsuario;
     }
 
-    public String getTipoElemento() {
-        return tipoElemento;
+    public List<ArtistaFavorito> getArtistas() {
+        return artistas;
     }
 
-    public void setTipoElemento(String tipoElemento) {
-        this.tipoElemento = tipoElemento;
+    public void setArtistas(List<ArtistaFavorito> artistas) {
+        this.artistas = artistas;
     }
 
-    public ObjectId getIdElemento() {
-        return idElemento;
+    public List<AlbumFavorito> getAlbumes() {
+        return albumes;
     }
 
-    public void setIdElemento(ObjectId idElemento) {
-        this.idElemento = idElemento;
+    public void setAlbumes(List<AlbumFavorito> albumes) {
+        this.albumes = albumes;
     }
 
-    public LocalDate getFechaAgregacion() {
-        return fechaAgregacion;
+    public List<CancionFavorita> getCanciones() {
+        return canciones;
     }
 
-    public void setFechaAgregacion(LocalDate fechaAgregacion) {
-        this.fechaAgregacion = fechaAgregacion;
+    public void setCanciones(List<CancionFavorita> canciones) {
+        this.canciones = canciones;
     }
     
     

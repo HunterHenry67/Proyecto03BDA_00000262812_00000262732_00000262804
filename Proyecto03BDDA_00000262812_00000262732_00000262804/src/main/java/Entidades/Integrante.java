@@ -19,6 +19,17 @@ public class Integrante {
     private LocalDate fechaSalida;
     private boolean activo;
 
+    public Integrante() {
+    }
+
+    public Integrante(ObjectId idPersona, String rol, LocalDate fechaIngreso, LocalDate fechaSalida, boolean activo) {
+        this.idPersona = idPersona;
+        this.rol = rol;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaSalida = fechaSalida;
+        this.activo = activo;
+    }
+
     public ObjectId getIdPersona() {
         return idPersona;
     }

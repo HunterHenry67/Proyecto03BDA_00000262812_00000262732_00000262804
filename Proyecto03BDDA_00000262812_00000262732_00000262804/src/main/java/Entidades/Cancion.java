@@ -19,6 +19,13 @@ public class Cancion {
     public Cancion() {
     }
 
+    public Cancion(ObjectId id, String nombre, String duracion, ObjectId idGenero) {
+        this.id = id;
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.idGenero = idGenero;
+    }
+
     public ObjectId getId() {
         return id;
     }

@@ -19,6 +19,12 @@ public class Persona {
     public Persona() {
     }
 
+    public Persona(ObjectId id, String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
     public ObjectId getId() {
         return id;
     }

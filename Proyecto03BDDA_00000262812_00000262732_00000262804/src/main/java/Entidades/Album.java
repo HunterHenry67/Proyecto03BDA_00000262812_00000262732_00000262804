@@ -20,10 +20,22 @@ public class Album {
     private String imagenPortada;
     private List<Cancion> canciones;
 
+    public Album() {
+    }
+
+    public Album(ObjectId id, String nombre, LocalDate fechaLanzamiento, ObjectId idGenero, String imagenPortada, List<Cancion> canciones) {
+        this.id = id;
+        this.nombre = nombre;
+        this.fechaLanzamiento = fechaLanzamiento;
+        this.idGenero = idGenero;
+        this.imagenPortada = imagenPortada;
+        this.canciones = canciones;
+    }
+
     public ObjectId getId() {
         return id;
     }
-
+    
     public void setId(ObjectId id) {
         this.id = id;
     }

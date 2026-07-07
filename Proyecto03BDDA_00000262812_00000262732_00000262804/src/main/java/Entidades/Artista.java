@@ -19,8 +19,20 @@ public class Artista {
     private List<Integrante> integrantes;
     private List<Album> albumes;
 
+    public Artista() {
+    }
+
+    public Artista(ObjectId id, String nombre, String imagen, ObjectId idGenero, List<Integrante> integrantes, List<Album> albumes) {
+        this.id = id;
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.idGenero = idGenero;
+        this.integrantes = integrantes;
+        this.albumes = albumes;
+    }
+    
     public ObjectId getId() {
-        return id;
+       return id;
     }
 
     public void setId(ObjectId id) {

@@ -4,16 +4,10 @@
  */
 package Entidades;
 
-import java.time.LocalDate;
-import org.bson.types.ObjectId;
-
 /**
  *
  * @author BALAMRUSH
  */
-public class GeneroNoDeseado {
-    private ObjectId idGND;
-    private LocalDate fechaAgregacion;
-    
+public class CancionFavorita {
     
 }
