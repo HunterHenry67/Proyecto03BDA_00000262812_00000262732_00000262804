@@ -1,0 +1,81 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package DTO;
+
+import java.util.List;
+
+/**
+ *
+ * @author Andre
+ */
+public class UsuarioDTO {
+
+    private String id;
+    private String nombreUsuario;
+    private String correo;
+    private String contrasena;
+    private String imagenPerfil;
+    private List<GeneroNoDeseadoDTO> generoNoDeseado;
+
+    public UsuarioDTO() {
+    }
+
+    public UsuarioDTO(String id, String nombreUsuario, String correo, String contrasena, String imagenPerfil, List<GeneroNoDeseadoDTO> generoNoDeseado) {
+        this.id = id;
+        this.nombreUsuario = nombreUsuario;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.imagenPerfil = imagenPerfil;
+        this.generoNoDeseado = generoNoDeseado;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getImagenPerfil() {
+        return imagenPerfil;
+    }
+
+    public void setImagenPerfil(String imagenPerfil) {
+        this.imagenPerfil = imagenPerfil;
+    }
+
+    public List<GeneroNoDeseadoDTO> getGeneroNoDeseado() {
+        return generoNoDeseado;
+    }
+
+    public void setGeneroNoDeseado(List<GeneroNoDeseadoDTO> generoNoDeseado) {
+        this.generoNoDeseado = generoNoDeseado;
+    }
+}
