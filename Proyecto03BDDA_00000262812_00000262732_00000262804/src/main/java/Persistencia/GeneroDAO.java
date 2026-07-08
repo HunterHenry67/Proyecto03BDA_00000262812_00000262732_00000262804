@@ -31,20 +31,6 @@ public class GeneroDAO implements IGeneroDAO{
         this.coleccion = baseDatos.getCollection("generos", Genero.class);
     }
 
-    @Override
-    public Genero agregar(Genero genero) throws PersistenciaException {
-        try {
-            if (genero.getId() == null) {
-                genero.setId(new ObjectId());
-            }
-
-            coleccion.insertOne(genero);
-            return genero;
-
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al agregar genero: " + e.getMessage());
-        }
-    }
 
     @Override
     public Genero consultarPorId(ObjectId idGenero) throws PersistenciaException {
@@ -76,20 +62,5 @@ public class GeneroDAO implements IGeneroDAO{
         }
     }
 
-    @Override
-    public boolean eliminar(ObjectId idGenero) throws PersistenciaException {
-        try {
-            return coleccion.deleteOne(eq("_id", idGenero))
-                    .getDeletedCount() > 0;
-
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al eliminar genero: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public boolean existeNombre(String nombre) throws PersistenciaException {
-        return consultarPorNombre(nombre) != null;
-    }
 
 }
