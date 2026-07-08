@@ -4,29 +4,31 @@
  */
 package DTO;
 
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author BALAMRUSH
  */
 public class PersonaDTO {
-    private String id;
+    private ObjectId id;
     private String nombre;
     private String descripcion;
 
     public PersonaDTO() {
     }
 
-    public PersonaDTO(String id, String nombre, String descripcion) {
+    public PersonaDTO(ObjectId id, String nombre, String descripcion) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

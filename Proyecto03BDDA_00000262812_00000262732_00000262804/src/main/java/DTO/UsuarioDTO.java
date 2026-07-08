@@ -5,6 +5,7 @@
 package DTO;
 
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class UsuarioDTO {
 
-    private String id;
+    private ObjectId id;
     private String nombreUsuario;
     private String correo;
     private String contrasena;
@@ -22,7 +23,7 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(String id, String nombreUsuario, String correo, String contrasena, String imagenPerfil, List<GeneroNoDeseadoDTO> generoNoDeseado) {
+    public UsuarioDTO(ObjectId id, String nombreUsuario, String correo, String contrasena, String imagenPerfil, List<GeneroNoDeseadoDTO> generoNoDeseado) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
@@ -31,11 +32,11 @@ public class UsuarioDTO {
         this.generoNoDeseado = generoNoDeseado;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

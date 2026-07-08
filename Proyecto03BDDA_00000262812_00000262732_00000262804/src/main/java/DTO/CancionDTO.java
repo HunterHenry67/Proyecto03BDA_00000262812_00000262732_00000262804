@@ -4,18 +4,32 @@
  */
 package DTO;
 
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author user
  */
-public class CancionDTO {
+public class CancionDTO {    
     private String idCancion;
     private String nombre;
-    private String duracion; 
-    private String genero;
-    private int numeroPista;
+    private String duracion;
+    private ObjectId idGenero;
 
     public CancionDTO() {
+    }
+
+    public CancionDTO(String nombre, String duracion, ObjectId idGenero) {
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.idGenero = idGenero;
+    }
+
+    public CancionDTO(String idCancion, String nombre, String duracion, ObjectId idGenero) {
+        this.idCancion = idCancion;
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.idGenero = idGenero;
     }
 
     public String getIdCancion() {
@@ -42,21 +56,11 @@ public class CancionDTO {
         this.duracion = duracion;
     }
 
-    public String getGenero() {
-        return genero;
+    public ObjectId getIdGenero() {
+        return idGenero;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setIdGenero(ObjectId idGenero) {
+        this.idGenero = idGenero;
     }
-
-    public int getNumeroPista() {
-        return numeroPista;
-    }
-
-    public void setNumeroPista(int numeroPista) {
-        this.numeroPista = numeroPista;
-    }
-    
-    
 }
