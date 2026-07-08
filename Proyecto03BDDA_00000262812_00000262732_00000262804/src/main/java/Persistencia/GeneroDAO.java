@@ -76,17 +76,6 @@ public class GeneroDAO implements IGeneroDAO{
     }
 
     @Override
-    public boolean actualizar(Genero genero) throws PersistenciaException {
-        try {
-            return coleccion.replaceOne(eq("_id", genero.getId()), genero)
-                    .getModifiedCount() > 0;
-
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al actualizar genero: " + e.getMessage());
-        }
-    }
-
-    @Override
     public boolean eliminar(ObjectId idGenero) throws PersistenciaException {
         try {
             return coleccion.deleteOne(eq("_id", idGenero))

@@ -22,8 +22,6 @@ public interface IGeneroDAO {
 
     List<Genero> consultarTodos() throws PersistenciaException;
 
-    boolean actualizar(Genero genero) throws PersistenciaException;
-
     boolean eliminar(ObjectId idGenero) throws PersistenciaException;
 
     boolean existeNombre(String nombre) throws PersistenciaException;
