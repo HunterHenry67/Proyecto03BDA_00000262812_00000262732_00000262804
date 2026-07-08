@@ -8,6 +8,7 @@ import Entidades.GeneroNoDeseado;
 import Entidades.Usuario;
 import Excepciones.PersistenciaException;
 import Interfaces.IConexionBD;
+import Interfaces.IUsuarioDAO;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.and;
@@ -20,11 +21,8 @@ import java.util.List;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-/**
- *
- * @author user
- */
-public class UsuarioDAO implements IUsuarioDAO{
+public class UsuarioDAO implements IUsuarioDAO {
+
     private final MongoCollection<Usuario> coleccion;
 
     public UsuarioDAO() {
@@ -51,7 +49,7 @@ public class UsuarioDAO implements IUsuarioDAO{
             return usuario;
 
         } catch (Exception e) {
-            throw new PersistenciaException("Error al agregar usuario " + e.getMessage());
+            throw new PersistenciaException("Error al agregar usuario: " + e.getMessage());
         }
     }
 
@@ -61,7 +59,7 @@ public class UsuarioDAO implements IUsuarioDAO{
             return coleccion.find(eq("_id", idUsuario)).first();
 
         } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar usuario por id" + e.getMessage());
+            throw new PersistenciaException("Error al consultar usuario por id: " + e.getMessage());
         }
     }
 
@@ -71,24 +69,28 @@ public class UsuarioDAO implements IUsuarioDAO{
             return coleccion.find(eq("nombreUsuario", nombreUsuario)).first();
 
         } catch (Exception e) {
-            throw new PersistenciaException("Errror al consultar usuario por nombre de usuario" + e.getMessage());
+            throw new PersistenciaException("Error al consultar usuario por nombre: " + e.getMessage());
         }
     }
 
-   
+    @Override
+    public Usuario consultarPorCorreo(String correo) throws PersistenciaException {
+        try {
+            return coleccion.find(eq("correo", correo)).first();
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar usuario por correo: " + e.getMessage());
+        }
+    }
+
     @Override
     public boolean existeNombreUsuario(String nombreUsuario) throws PersistenciaException {
         return consultarPorNombreUsuario(nombreUsuario) != null;
     }
 
     @Override
-    public Usuario existeCorreo(String correo) throws PersistenciaException {
-         try {
-            return coleccion.find(eq("correo", correo)).first();
-
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar usuario por correo " + e.getMessage());
-        }
+    public boolean existeCorreo(String correo) throws PersistenciaException {
+        return consultarPorCorreo(correo) != null;
     }
 
     @Override
@@ -104,11 +106,10 @@ public class UsuarioDAO implements IUsuarioDAO{
             );
 
             UpdateResult resultado = coleccion.updateOne(filtro, cambios);
-
             return resultado.getModifiedCount() > 0;
 
         } catch (Exception e) {
-            throw new PersistenciaException("Error al actualizar perfil de usuario " + e.getMessage());
+            throw new PersistenciaException("Error al actualizar perfil: " + e.getMessage());
         }
     }
 
@@ -123,11 +124,10 @@ public class UsuarioDAO implements IUsuarioDAO{
             Bson cambio = Updates.push("generoNoDeseado", generoNoDeseado);
 
             UpdateResult resultado = coleccion.updateOne(filtro, cambio);
-
             return resultado.getModifiedCount() > 0;
 
         } catch (Exception e) {
-            throw new PersistenciaException("Error al agregar genero no deseado" + e.getMessage());
+            throw new PersistenciaException("Error al agregar género no deseado: " + e.getMessage());
         }
     }
 
@@ -138,11 +138,10 @@ public class UsuarioDAO implements IUsuarioDAO{
             Bson cambio = Updates.pull("generoNoDeseado", eq("idGND", idGeneroNoDeseado));
 
             UpdateResult resultado = coleccion.updateOne(filtro, cambio);
-
             return resultado.getModifiedCount() > 0;
 
         } catch (Exception e) {
-            throw new PersistenciaException("Error al eliminar genero no deseado " + e.getMessage());
+            throw new PersistenciaException("Error al eliminar género no deseado: " + e.getMessage());
         }
     }
 
@@ -158,19 +157,22 @@ public class UsuarioDAO implements IUsuarioDAO{
             return usuario.getGeneroNoDeseado();
 
         } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar generos no deseados " + e.getMessage());
+            throw new PersistenciaException("Error al consultar géneros no deseados: " + e.getMessage());
         }
     }
 
     @Override
     public boolean tieneGeneroNoDeseado(ObjectId idUsuario, ObjectId idGeneroNoDeseado) throws PersistenciaException {
         try {
-            Bson filtro = and(eq("_id", idUsuario),elemMatch("generoNoDeseado", eq("idGND", idGeneroNoDeseado)));
+            Bson filtro = and(
+                    eq("_id", idUsuario),
+                    elemMatch("generoNoDeseado", eq("idGND", idGeneroNoDeseado))
+            );
 
             return coleccion.find(filtro).first() != null;
 
         } catch (Exception e) {
-            throw new PersistenciaException("Error al validar genero no deseado " + e.getMessage());
+            throw new PersistenciaException("Error al validar género no deseado: " + e.getMessage());
         }
     }
 }

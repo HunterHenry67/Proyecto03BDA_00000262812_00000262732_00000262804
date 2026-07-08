@@ -4,6 +4,7 @@
  */
 package Persistencia;
 
+import Interfaces.IAlbumDAO;
 import Entidades.Album;
 import Excepciones.PersistenciaException;
 import Interfaces.IConexionBD;

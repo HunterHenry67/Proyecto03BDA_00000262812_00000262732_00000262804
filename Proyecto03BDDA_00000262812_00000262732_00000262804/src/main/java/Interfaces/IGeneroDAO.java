@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package Persistencia;
+package Interfaces;
 
-import Entidades.Album;
-import Entidades.Cancion;
+import Entidades.Genero;
 import Excepciones.PersistenciaException;
 import java.util.List;
 import org.bson.types.ObjectId;
@@ -14,12 +13,12 @@ import org.bson.types.ObjectId;
  *
  * @author user
  */
-public interface IAlbumDAO {
-    
-    Album consultarPorId(ObjectId idAlbum) throws PersistenciaException;
+public interface IGeneroDAO {
 
-    List<Album> consultarPorArtista(ObjectId idArtista) throws PersistenciaException;
+    Genero consultarPorId(ObjectId idGenero) throws PersistenciaException;
 
-    List<Album> consultarTodos() throws PersistenciaException;
+    Genero consultarPorNombre(String nombre) throws PersistenciaException;
+
+    List<Genero> consultarTodos() throws PersistenciaException;
 
 }
