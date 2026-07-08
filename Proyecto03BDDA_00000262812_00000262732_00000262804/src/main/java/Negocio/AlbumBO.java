@@ -1,13 +1,10 @@
 
 import DTO.AlbumDTO;
-import DTO.CancionDTO;
 import Entidades.Album;
-import Entidades.Cancion;
 import Excepciones.NegocioException;
-import Excepciones.PersistenciaException;
+import Interfaces.IAlbumDAO;
 import Negocio.IAlbumBO;
 import Persistencia.AlbumDAO;
-import Persistencia.IAlbumDAO;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,7 @@ public class AlbumBO implements IAlbumBO {
                 throw new NegocioException("EL album no existe");
             }
             return mapearAAlbumDTO(album);
-        } catch (PersistenciaException e) {
+        } catch (Exception e) {
             throw new NegocioException("Error al consultar el álbum por ID: " + e.getMessage());
         }
     }
@@ -53,7 +50,7 @@ public class AlbumBO implements IAlbumBO {
                 }
             }
             return albumesDTO;
-        } catch (PersistenciaException e) {
+        } catch (Exception e) {
             throw new NegocioException("Error al consultar álbumes del artista " + e.getMessage());
         }
     }
@@ -70,7 +67,7 @@ public class AlbumBO implements IAlbumBO {
                 }
             }
             return albumesDTO;
-        } catch (PersistenciaException e) {
+        } catch (Exception e) {
             throw new NegocioException("Error al consultar todos los álbumes " + e.getMessage());
         }
     }
