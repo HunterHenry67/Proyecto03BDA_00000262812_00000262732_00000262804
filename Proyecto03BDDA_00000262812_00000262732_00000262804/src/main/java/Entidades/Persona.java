@@ -29,7 +29,7 @@ public class Persona {
         return id;
     }
 
-    public void setIdPersona(ObjectId id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
