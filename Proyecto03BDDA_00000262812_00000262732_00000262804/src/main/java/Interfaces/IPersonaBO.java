@@ -14,7 +14,7 @@ import org.bson.types.ObjectId;
  * @author BALAMRUSH
  */
 public interface IPersonaBO {
-    List<PersonaDTO> agregarMasivo(List<PersonaDTO> personas) throws NegocioException;
+    List<PersonaDTO> agregarMasivo(List<PersonaDTO> personasDTO) throws NegocioException;
 
     PersonaDTO consultarPorId(ObjectId idPersona) throws NegocioException;
 }

@@ -20,17 +20,17 @@ import org.bson.types.ObjectId;
  */
 public class PersonaDAO implements IPersonaDAO{
     
-    private final MongoCollection<Persona> coleccion;
+    private IConexionBD conexionBD;
     
     public PersonaDAO(IConexionBD conexionBD){
-        MongoDatabase baseDatos = new ConexionBD().conexion();
-        this.coleccion = baseDatos.getCollection("personas", Persona.class);
-        
+        this.conexionBD = conexionBD;
     }
 
     @Override
     public List<Persona> agregarMasivo(List<Persona> personas) throws PersistenciaException {
-        try{                        
+        try{        
+            MongoDatabase baseDatos = conexionBD.conexion();
+            MongoCollection<Persona> coleccion = baseDatos.getCollection("personas", Persona.class);
             if(personas == null){
                 throw new PersistenciaException("La lista está vacía.");
             }
@@ -49,6 +49,8 @@ public class PersonaDAO implements IPersonaDAO{
     @Override
     public Persona consultarPorId(ObjectId idPersona) throws PersistenciaException {
         try{
+            MongoDatabase baseDatos = conexionBD.conexion();
+            MongoCollection<Persona> coleccion = baseDatos.getCollection("personas", Persona.class);
             if(idPersona == null){
                 throw new PersistenciaException("La persona con el id no existe o no puede ser nulo.");
             }
