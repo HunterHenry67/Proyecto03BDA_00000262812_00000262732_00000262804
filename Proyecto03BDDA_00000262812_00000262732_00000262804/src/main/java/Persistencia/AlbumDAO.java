@@ -30,25 +30,6 @@ public class AlbumDAO implements IAlbumDAO{
         this.coleccion = baseDatos.getCollection("albumes", Album.class);
     }
 
-    @Override
-    public Album agregar(Album album) throws PersistenciaException {
-        try {
-            if (album.getId() == null) {
-                album.setId(new ObjectId());
-            }
-
-            if (album.getCanciones() == null) {
-                album.setCanciones(new ArrayList<>());
-            }
-
-            coleccion.insertOne(album);
-            return album;
-
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al agregar álbum: " + e.getMessage());
-        }
-    }
-
 
     @Override
     public Album consultarPorId(ObjectId idAlbum) throws PersistenciaException {
