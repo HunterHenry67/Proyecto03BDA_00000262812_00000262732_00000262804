@@ -4,28 +4,43 @@
  */
 package Presentacion;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import DTO.UsuarioDTO;
+import Excepciones.NegocioException;
+import Interfaces.IUsuarioBO;
+import Negocio.UsuarioBO;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.io.File;
+import javax.swing.*;
+
 
 /**
  *
  * @author Andre
  */
 
+
 public class frmRegistro extends JFrame {
 
     private JTextField txtUsuario;
-    private JPasswordField txtPassword;
+    private JPasswordField txtContrasena;
     private JTextField txtCorreo;
     private JButton btnRegresar;
     private JButton btnRegistrarse;
-    private JButton btnFoto; 
-    private String rutaImagenSeleccionada = ""; 
+    private JButton btnFoto;
+
+    private String rutaImagenSeleccionada = "";
+
+    private final IUsuarioBO usuarioBO;
 
     public frmRegistro() {
+        this.usuarioBO = new UsuarioBO();
+        inicializarComponentes();
+        eventos();
+    }
+
+    private void inicializarComponentes() {
         setTitle("Registro de Usuario");
         setSize(650, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,8 +48,8 @@ public class frmRegistro extends JFrame {
         setResizable(false);
 
         JPanel panel = new JPanel();
-        panel.setBackground(Color.LIGHT_GRAY); 
-        panel.setLayout(null); 
+        panel.setBackground(Color.LIGHT_GRAY);
+        panel.setLayout(null);
         add(panel);
 
         JLabel lblTitulo = new JLabel("Registro", SwingConstants.CENTER);
@@ -53,15 +68,15 @@ public class frmRegistro extends JFrame {
         txtUsuario.setBounds(180, 95, 200, 35);
         panel.add(txtUsuario);
 
-        JLabel lblPassword = new JLabel("Contraseña:", SwingConstants.RIGHT);
-        lblPassword.setFont(new Font("Arial", Font.PLAIN, 22));
-        lblPassword.setBounds(30, 145, 130, 30);
-        panel.add(lblPassword);
+        JLabel lblContrasena = new JLabel("Contraseña:", SwingConstants.RIGHT);
+        lblContrasena.setFont(new Font("Arial", Font.PLAIN, 22));
+        lblContrasena.setBounds(30, 145, 130, 30);
+        panel.add(lblContrasena);
 
-        txtPassword = new JPasswordField();
-        txtPassword.setFont(new Font("Arial", Font.PLAIN, 16));
-        txtPassword.setBounds(180, 145, 200, 35);
-        panel.add(txtPassword);
+        txtContrasena = new JPasswordField();
+        txtContrasena.setFont(new Font("Arial", Font.PLAIN, 16));
+        txtContrasena.setBounds(180, 145, 200, 35);
+        panel.add(txtContrasena);
 
         JLabel lblCorreo = new JLabel("Correo:", SwingConstants.RIGHT);
         lblCorreo.setFont(new Font("Arial", Font.PLAIN, 22));
@@ -81,7 +96,7 @@ public class frmRegistro extends JFrame {
         btnFoto = new JButton("Clic aquí");
         btnFoto.setBounds(445, 125, 110, 110);
         btnFoto.setBackground(Color.WHITE);
-        btnFoto.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); 
+        btnFoto.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         btnFoto.setFocusPainted(false);
         panel.add(btnFoto);
 
@@ -91,7 +106,7 @@ public class frmRegistro extends JFrame {
         panel.add(lblOpcional);
 
         btnRegresar = new JButton("Regresar");
-        btnRegresar.setBackground(Color.DARK_GRAY); 
+        btnRegresar.setBackground(Color.DARK_GRAY);
         btnRegresar.setForeground(Color.WHITE);
         btnRegresar.setFocusPainted(false);
         btnRegresar.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -99,46 +114,70 @@ public class frmRegistro extends JFrame {
         panel.add(btnRegresar);
 
         btnRegistrarse = new JButton("Registrarse");
-        btnRegistrarse.setBackground(Color.DARK_GRAY); 
+        btnRegistrarse.setBackground(Color.DARK_GRAY);
         btnRegistrarse.setForeground(Color.WHITE);
         btnRegistrarse.setFocusPainted(false);
         btnRegistrarse.setFont(new Font("Arial", Font.PLAIN, 16));
         btnRegistrarse.setBounds(480, 300, 120, 40);
         panel.add(btnRegistrarse);
+    }
 
-        btnFoto.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cargarFoto();
-            }
+    private void eventos() {
+        btnFoto.addActionListener(e -> cargarFoto());
+
+        btnRegresar.addActionListener(e -> {
+            new frmLogin().setVisible(true);
+            dispose();
         });
-        
-        btnRegresar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmLogin ventanaLogin = new frmLogin();
-                ventanaLogin.setVisible(true);
-                dispose();
-            }
-            
-        });
+
+        btnRegistrarse.addActionListener(e -> registrarUsuario());
+
+        txtContrasena.addActionListener(e -> registrarUsuario());
+    }
+
+    private void registrarUsuario() {
+        String nombreUsuario = txtUsuario.getText().trim();
+        String correo = txtCorreo.getText().trim();
+        String contrasena = new String(txtContrasena.getPassword());
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setNombreUsuario(nombreUsuario);
+        usuarioDTO.setCorreo(correo);
+        usuarioDTO.setContrasena(contrasena);
+        usuarioDTO.setImagenPerfil(rutaImagenSeleccionada);
+
+        try {
+            usuarioBO.registrar(usuarioDTO);
+
+            JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
+
+            new frmLogin().setVisible(true);
+            dispose();
+
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void cargarFoto() {
         JFileChooser archivo = new JFileChooser();
         archivo.setDialogTitle("Seleccione su foto de perfil");
-        
+
         int ventana = archivo.showOpenDialog(this);
-        
+
         if (ventana == JFileChooser.APPROVE_OPTION) {
             File file = archivo.getSelectedFile();
             rutaImagenSeleccionada = file.getAbsolutePath();
-            
+
             ImageIcon imagenOriginal = new ImageIcon(rutaImagenSeleccionada);
-            Image imagenEscalada = imagenOriginal.getImage().getScaledInstance(btnFoto.getWidth(), btnFoto.getHeight(), Image.SCALE_SMOOTH);
-            
-            btnFoto.setText(""); 
-            btnFoto.setIcon(new ImageIcon(imagenEscalada)); 
+            Image imagenEscalada = imagenOriginal.getImage().getScaledInstance(
+                    btnFoto.getWidth(),
+                    btnFoto.getHeight(),
+                    Image.SCALE_SMOOTH
+            );
+
+            btnFoto.setText("");
+            btnFoto.setIcon(new ImageIcon(imagenEscalada));
         }
     }
 }

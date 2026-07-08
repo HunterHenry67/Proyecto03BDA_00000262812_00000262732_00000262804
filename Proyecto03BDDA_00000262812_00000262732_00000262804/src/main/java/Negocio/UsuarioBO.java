@@ -8,6 +8,7 @@
  */
 package Negocio;
 
+import Interfaces.IUsuarioBO;
 import DTO.GeneroNoDeseadoDTO;
 import DTO.UsuarioDTO;
 import Entidades.GeneroNoDeseado;

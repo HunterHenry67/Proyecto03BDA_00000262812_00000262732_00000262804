@@ -4,6 +4,7 @@
  */
 package Negocio;
 
+import Interfaces.IGeneroBO;
 import DTO.GeneroDTO;
 import Entidades.Genero;
 import Excepciones.PersistenciaException;

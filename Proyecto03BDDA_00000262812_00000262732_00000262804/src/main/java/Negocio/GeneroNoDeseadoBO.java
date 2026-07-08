@@ -4,6 +4,7 @@
  */
 package Negocio;
 
+import Interfaces.IGeneroNoDeseadoBO;
 import DTO.GeneroNoDeseadoDTO;
 import Entidades.Genero;
 import Entidades.GeneroNoDeseado;
