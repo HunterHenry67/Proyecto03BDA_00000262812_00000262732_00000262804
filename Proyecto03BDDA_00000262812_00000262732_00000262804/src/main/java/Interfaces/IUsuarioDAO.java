@@ -18,8 +18,9 @@ public interface IUsuarioDAO {
     Usuario agregar(Usuario usuario) throws PersistenciaException;
     Usuario consultarPorId(ObjectId idUsuario) throws PersistenciaException;
     Usuario consultarPorNombreUsuario(String nombreUsuario) throws PersistenciaException;
+    Usuario consultarPorCorreo(String correo) throws PersistenciaException;
     boolean existeNombreUsuario(String nombreUsuario) throws PersistenciaException;
-    Usuario existeCorreo(String correo) throws PersistenciaException;
+    boolean existeCorreo(String correo) throws PersistenciaException;
     boolean actualizarPerfil(Usuario usuario) throws PersistenciaException;
     boolean agregarGeneroNoDeseado(ObjectId idUsuario, GeneroNoDeseado generoNoDeseado) throws PersistenciaException;
     boolean eliminarGeneroNoDeseado(ObjectId idUsuario, ObjectId idGeneroNoDeseado) throws PersistenciaException;
