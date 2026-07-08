@@ -4,6 +4,7 @@
  */
 package Persistencia;
 
+import Interfaces.IGeneroDAO;
 import Entidades.Genero;
 import Excepciones.PersistenciaException;
 import Interfaces.IConexionBD;
