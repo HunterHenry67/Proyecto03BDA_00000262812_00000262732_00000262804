@@ -83,7 +83,7 @@ public class AlbumBO implements IAlbumBO {
         dto.setImagenPortada(album.getImagenPortada());
         
         if (album.getIdGenero() != null) {
-            dto.setGenero(album.getIdGenero().toHexString());
+            dto.setIdGenero(album.getIdGenero().toHexString());
         }
         
         if (album.getFechaLanzamiento() != null) {

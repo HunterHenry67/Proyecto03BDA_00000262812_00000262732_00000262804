@@ -13,7 +13,7 @@ import org.bson.types.ObjectId;
  */
 public class UsuarioDTO {
 
-    private ObjectId id;
+    private String id;
     private String nombreUsuario;
     private String correo;
     private String contrasena;
@@ -23,7 +23,7 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(ObjectId id, String nombreUsuario, String correo, String contrasena, String imagenPerfil, List<GeneroNoDeseadoDTO> generoNoDeseado) {
+    public UsuarioDTO(String id, String nombreUsuario, String correo, String contrasena, String imagenPerfil, List<GeneroNoDeseadoDTO> generoNoDeseado) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
@@ -32,11 +32,11 @@ public class UsuarioDTO {
         this.generoNoDeseado = generoNoDeseado;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

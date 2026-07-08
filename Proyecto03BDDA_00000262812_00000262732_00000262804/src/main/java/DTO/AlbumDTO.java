@@ -15,7 +15,7 @@ public class AlbumDTO {
     private String idAlbum;
     private String nombre;
     private String fechaLanzamiento; 
-    private String genero;
+    private String idGenero;
     private String imagenPortada;
     private String idArtista;
     private String nombreArtista;
@@ -49,12 +49,12 @@ public class AlbumDTO {
         this.fechaLanzamiento = fechaLanzamiento;
     }
 
-    public String getGenero() {
-        return genero;
+    public String getIdGenero() {
+        return idGenero;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setIdGenero(String idGenero) {
+        this.idGenero = idGenero;
     }
 
     public String getImagenPortada() {

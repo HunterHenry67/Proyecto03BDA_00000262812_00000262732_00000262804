@@ -5,14 +5,13 @@
 package DTO;
 
 import java.time.LocalDate;
-import org.bson.types.ObjectId;
 
 /**
  *
  * @author BALAMRUSH
  */
 public class IntegranteDTO {
-    private ObjectId idPersona;
+    private String idPersona;
     private String rol;
     private LocalDate fechaIngreso;
     private LocalDate fechaSalida;
@@ -21,7 +20,7 @@ public class IntegranteDTO {
     public IntegranteDTO() {
     }
 
-    public IntegranteDTO(ObjectId idPersona, String rol, LocalDate fechaIngreso, LocalDate fechaSalida,boolean activo) {
+    public IntegranteDTO(String idPersona, String rol, LocalDate fechaIngreso, LocalDate fechaSalida,boolean activo) {
         this.idPersona = idPersona;
         this.rol = rol;
         this.fechaIngreso = fechaIngreso;
@@ -29,11 +28,11 @@ public class IntegranteDTO {
         this.activo = activo;
     }
 
-    public ObjectId getIdPersona() {
+    public String getIdPersona() {
         return idPersona;
     }
 
-    public void setIdPersona(ObjectId idPersona) {
+    public void setIdPersona(String idPersona) {
         this.idPersona = idPersona;
     }
 

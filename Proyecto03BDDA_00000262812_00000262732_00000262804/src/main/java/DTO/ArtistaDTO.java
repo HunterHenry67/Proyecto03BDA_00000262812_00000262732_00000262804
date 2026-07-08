@@ -5,7 +5,6 @@
 package DTO;
 
 import java.util.List;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -15,14 +14,14 @@ public class ArtistaDTO {
      private String id;
     private String nombre;
     private String imagen;
-    private ObjectId idGenero;
+    private String idGenero;
     private List<IntegranteDTO> integrantes;
     private List<AlbumDTO> albumes;
 
     public ArtistaDTO() {
     }
 
-    public ArtistaDTO(String nombre, String imagen, ObjectId idGenero, List<IntegranteDTO> integrantes,List<AlbumDTO> albumes) {
+    public ArtistaDTO(String nombre, String imagen, String idGenero, List<IntegranteDTO> integrantes,List<AlbumDTO> albumes) {
         this.nombre = nombre;
         this.imagen = imagen;
         this.idGenero = idGenero;
@@ -54,11 +53,11 @@ public class ArtistaDTO {
         this.imagen = imagen;
     }
 
-    public ObjectId getIdGenero() {
+    public String getIdGenero() {
         return idGenero;
     }
 
-    public void setIdGenero(ObjectId idGenero) {
+    public void setIdGenero(String idGenero) {
         this.idGenero = idGenero;
     }
 
