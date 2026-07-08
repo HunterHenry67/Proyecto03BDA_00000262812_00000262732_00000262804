@@ -8,7 +8,7 @@ import DTO.GeneroDTO;
 import Entidades.Genero;
 import Excepciones.PersistenciaException;
 import Persistencia.GeneroDAO;
-import Persistencia.IGeneroDAO;
+import Interfaces.IGeneroDAO;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.types.ObjectId;

@@ -4,6 +4,7 @@
  */
 package Persistencia;
 
+import Interfaces.IUsuarioDAO;
 import Entidades.GeneroNoDeseado;
 import Entidades.Usuario;
 import Excepciones.PersistenciaException;

@@ -7,7 +7,7 @@ package enriquemadridalvarez.proyecto03bdda_00000262812_00000262732_00000262804;
 import Entidades.Genero;
 import Excepciones.PersistenciaException;
 import Persistencia.GeneroDAO;
-import Persistencia.IGeneroDAO;
+import Interfaces.IGeneroDAO;
 import Presentacion.frmLogin;
 
 /**
