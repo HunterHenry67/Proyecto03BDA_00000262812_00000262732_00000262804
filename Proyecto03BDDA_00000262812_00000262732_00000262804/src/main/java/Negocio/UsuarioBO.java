@@ -255,8 +255,8 @@ public class UsuarioBO implements IUsuarioBO {
 
         GeneroNoDeseadoDTO dto = new GeneroNoDeseadoDTO();
 
-        if (genero.getIdGND() != null) {
-            dto.setIdGND(genero.getIdGND().toHexString());
+        if (genero.getIdGenero() != null) {
+            dto.setIdGenero(genero.getIdGenero().toHexString());
         }
 
         dto.setFechaAgregacion(genero.getFechaAgregacion());
@@ -271,8 +271,8 @@ public class UsuarioBO implements IUsuarioBO {
 
         GeneroNoDeseado genero = new GeneroNoDeseado();
 
-        if (dto.getIdGND() != null && !dto.getIdGND().isBlank()) {
-            genero.setIdGND(new ObjectId(dto.getIdGND()));
+        if (dto.getIdGenero() != null && !dto.getIdGenero().isBlank()) {
+            genero.setIdGenero(new ObjectId(dto.getIdGenero()));
         }
 
         genero.setFechaAgregacion(dto.getFechaAgregacion());

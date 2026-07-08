@@ -12,23 +12,33 @@ import org.bson.types.ObjectId;
  * @author BALAMRUSH
  */
 public class GeneroNoDeseado {
-    private ObjectId idGND;
+    private ObjectId idGenero;
+    private String nombreGenero;
     private LocalDate fechaAgregacion;
 
     public GeneroNoDeseado() {
     }
 
-    public GeneroNoDeseado(ObjectId idGND, LocalDate fechaAgregacion) {
-        this.idGND = idGND;
+    public GeneroNoDeseado(ObjectId idGenero, String nombreGenero, LocalDate fechaAgregacion) {
+        this.idGenero = idGenero;
+        this.nombreGenero = nombreGenero;
         this.fechaAgregacion = fechaAgregacion;
     }
 
-    public ObjectId getIdGND() {
-        return idGND;
+    public ObjectId getIdGenero() {
+        return idGenero;
     }
 
-    public void setIdGND(ObjectId idGND) {
-        this.idGND = idGND;
+    public void setIdGenero(ObjectId idGenero) {
+        this.idGenero = idGenero;
+    }
+
+    public String getNombreGenero() {
+        return nombreGenero;
+    }
+
+    public void setNombreGenero(String nombreGenero) {
+        this.nombreGenero = nombreGenero;
     }
 
     public LocalDate getFechaAgregacion() {
@@ -38,5 +48,5 @@ public class GeneroNoDeseado {
     public void setFechaAgregacion(LocalDate fechaAgregacion) {
         this.fechaAgregacion = fechaAgregacion;
     }
-    
+
 }
