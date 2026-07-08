@@ -10,25 +10,36 @@ import java.time.LocalDate;
  *
  * @author Andre
  */
+
 public class GeneroNoDeseadoDTO {
 
-    private String idGND;
+    private String idGenero;
+    private String nombreGenero;
     private LocalDate fechaAgregacion;
 
     public GeneroNoDeseadoDTO() {
     }
 
-    public GeneroNoDeseadoDTO(String idGND, LocalDate fechaAgregacion) {
-        this.idGND = idGND;
+    public GeneroNoDeseadoDTO(String idGenero, String nombreGenero, LocalDate fechaAgregacion) {
+        this.idGenero = idGenero;
+        this.nombreGenero = nombreGenero;
         this.fechaAgregacion = fechaAgregacion;
     }
 
-    public String getIdGND() {
-        return idGND;
+    public String getIdGenero() {
+        return idGenero;
     }
 
-    public void setIdGND(String idGND) {
-        this.idGND = idGND;
+    public void setIdGenero(String idGenero) {
+        this.idGenero = idGenero;
+    }
+
+    public String getNombreGenero() {
+        return nombreGenero;
+    }
+
+    public void setNombreGenero(String nombreGenero) {
+        this.nombreGenero = nombreGenero;
     }
 
     public LocalDate getFechaAgregacion() {

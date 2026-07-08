@@ -25,7 +25,7 @@ public interface IUsuarioDAO {
     boolean agregarGeneroNoDeseado(ObjectId idUsuario, GeneroNoDeseado generoNoDeseado) throws PersistenciaException;
     boolean eliminarGeneroNoDeseado(ObjectId idUsuario, ObjectId idGeneroNoDeseado) throws PersistenciaException;
     List<GeneroNoDeseado> consultarGenerosNoDeseados(ObjectId idUsuario) throws PersistenciaException;
-
     boolean tieneGeneroNoDeseado(ObjectId idUsuario, ObjectId idGeneroNoDeseado) throws PersistenciaException;
+    
 
 }

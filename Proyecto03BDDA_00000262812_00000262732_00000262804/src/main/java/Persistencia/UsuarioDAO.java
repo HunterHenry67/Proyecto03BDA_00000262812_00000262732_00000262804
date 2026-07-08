@@ -116,30 +116,25 @@ public class UsuarioDAO implements IUsuarioDAO {
     @Override
     public boolean agregarGeneroNoDeseado(ObjectId idUsuario, GeneroNoDeseado generoNoDeseado) throws PersistenciaException {
         try {
-            if (generoNoDeseado.getIdGND() == null) {
-                generoNoDeseado.setIdGND(new ObjectId());
+            if (generoNoDeseado.getIdGenero() == null) {
+                throw new PersistenciaException("El género no deseado debe tener un idGenero válido.");
             }
-
             Bson filtro = eq("_id", idUsuario);
             Bson cambio = Updates.push("generoNoDeseado", generoNoDeseado);
-
             UpdateResult resultado = coleccion.updateOne(filtro, cambio);
             return resultado.getModifiedCount() > 0;
-
         } catch (Exception e) {
             throw new PersistenciaException("Error al agregar género no deseado: " + e.getMessage());
         }
     }
 
     @Override
-    public boolean eliminarGeneroNoDeseado(ObjectId idUsuario, ObjectId idGeneroNoDeseado) throws PersistenciaException {
+    public boolean eliminarGeneroNoDeseado(ObjectId idUsuario, ObjectId idGenero) throws PersistenciaException {
         try {
             Bson filtro = eq("_id", idUsuario);
-            Bson cambio = Updates.pull("generoNoDeseado", eq("idGND", idGeneroNoDeseado));
-
+            Bson cambio = Updates.pull("generoNoDeseado", eq("idGenero", idGenero));
             UpdateResult resultado = coleccion.updateOne(filtro, cambio);
             return resultado.getModifiedCount() > 0;
-
         } catch (Exception e) {
             throw new PersistenciaException("Error al eliminar género no deseado: " + e.getMessage());
         }
@@ -162,15 +157,13 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public boolean tieneGeneroNoDeseado(ObjectId idUsuario, ObjectId idGeneroNoDeseado) throws PersistenciaException {
+    public boolean tieneGeneroNoDeseado(ObjectId idUsuario, ObjectId idGenero) throws PersistenciaException {
         try {
             Bson filtro = and(
                     eq("_id", idUsuario),
-                    elemMatch("generoNoDeseado", eq("idGND", idGeneroNoDeseado))
+                    elemMatch("generoNoDeseado", eq("idGenero", idGenero))
             );
-
             return coleccion.find(filtro).first() != null;
-
         } catch (Exception e) {
             throw new PersistenciaException("Error al validar género no deseado: " + e.getMessage());
         }
