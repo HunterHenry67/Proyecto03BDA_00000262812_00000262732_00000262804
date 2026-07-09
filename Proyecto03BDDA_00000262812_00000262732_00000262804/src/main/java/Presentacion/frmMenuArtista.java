@@ -7,11 +7,7 @@ package Presentacion;
 import DTO.ArtistaDTO;
 import Excepciones.NegocioException;
 import Interfaces.IArtistaBO;
-import Interfaces.IArtistaDAO;
-import Interfaces.IConexionBD;
-import Negocio.ArtistaBO;
-import Persistencia.ArtistaDAO;
-import Persistencia.ConexionBD;
+import Interfaces.IPersonaBO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -35,53 +31,84 @@ import javax.swing.SwingConstants;
  * @author BALAMRUSH
  */
 public class frmMenuArtista extends javax.swing.JFrame {
-
+    
+    private IPersonaBO personaBO;
     private IArtistaBO artistaBO;
+    private List<ArtistaDTO> artistasMostrados = new java.util.ArrayList<>();
+    private int paginaActual = 0;
     private static final int LIMITE_ARTISTAS = 6;
 
-    public frmMenuArtista() {
-        initComponents();
-        inicializarBOs();
+    public frmMenuArtista(IArtistaBO artistaBO,IPersonaBO personaBO){
+        initComponents();     
+        this.artistaBO = artistaBO;
+        this.personaBO = personaBO;
         configurarPantallaArtistas();
         setLocationRelativeTo(null);
         cargarPrimerosArtistas();
     }
 
-    private void inicializarBOs() {
-        IConexionBD conexionBD = new ConexionBD();
-        IArtistaDAO artistaDAO = new ArtistaDAO(conexionBD);
-        this.artistaBO = new ArtistaBO(artistaDAO);
-    }
-
     private void configurarPantallaArtistas() {
         pnlListaArtistas.setLayout(new GridLayout(2, 3, 25, 25));
         pnlListaArtistas.setBackground(new Color(220, 220, 220));
-        btnBuscar.addActionListener(e -> buscarArtista());
         txtFieldBuscar.addActionListener(e -> buscarArtista());
     }
 
     private void cargarPrimerosArtistas() {
         try {
-            pnlListaArtistas.removeAll();
-            List<ArtistaDTO> artistas = artistaBO.consultarTodos();
-            int limite = Math.min(LIMITE_ARTISTAS, artistas.size());
-            for (int i = 0; i < limite; i++) {
-                ArtistaDTO artista = artistas.get(i);
-                pnlListaArtistas.add(crearTarjetaArtista(artista));
-            }
+            artistasMostrados = artistaBO.consultarTodos();
+            paginaActual = 0;
+            cargarPaginaArtistas();
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al cargar artistas", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarPaginaArtistas() {
+        pnlListaArtistas.removeAll();
+        if (artistasMostrados == null || artistasMostrados.isEmpty()) {
+            pnlListaArtistas.add(crearMensajeSinResultados());
             while (pnlListaArtistas.getComponentCount() < LIMITE_ARTISTAS) {
                 pnlListaArtistas.add(crearEspacioVacio());
             }
+            actualizarControlesPaginacion();
             pnlListaArtistas.revalidate();
             pnlListaArtistas.repaint();
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    ex.getMessage(),
-                    "Error al cargar artistas",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            return;
         }
+        int inicio = paginaActual * LIMITE_ARTISTAS;
+        int fin = Math.min(inicio + LIMITE_ARTISTAS, artistasMostrados.size());
+
+        for (int i = inicio; i < fin; i++) {
+            ArtistaDTO artista = artistasMostrados.get(i);
+            pnlListaArtistas.add(crearTarjetaArtista(artista));
+        }
+
+        while (pnlListaArtistas.getComponentCount() < LIMITE_ARTISTAS) {
+            pnlListaArtistas.add(crearEspacioVacio());
+        }
+        actualizarControlesPaginacion();
+        pnlListaArtistas.revalidate();
+        pnlListaArtistas.repaint();
+    }
+
+    private void actualizarControlesPaginacion() {
+        int totalPaginas = obtenerTotalPaginas();
+        if (totalPaginas == 0) {
+            lblPaginaArtistas.setText("Página 0 de 0");
+            btnAnteriorArtistas.setEnabled(false);
+            btnSiguienteArtistas.setEnabled(false);
+            return;
+        }
+        lblPaginaArtistas.setText("Página " + (paginaActual + 1) + " de " + totalPaginas);
+        btnAnteriorArtistas.setEnabled(paginaActual > 0);
+        btnSiguienteArtistas.setEnabled(paginaActual < totalPaginas - 1);
+    }
+
+    private int obtenerTotalPaginas() {
+        if (artistasMostrados == null || artistasMostrados.isEmpty()) {
+            return 0;
+        }
+        return (int) Math.ceil(artistasMostrados.size() / (double) LIMITE_ARTISTAS);
     }
 
     private void buscarArtista() {
@@ -91,28 +118,11 @@ public class frmMenuArtista extends javax.swing.JFrame {
             return;
         }
         try {
-            pnlListaArtistas.removeAll();
-            List<ArtistaDTO> artistas = artistaBO.buscarPorNombre(texto.trim());
-            int limite = Math.min(LIMITE_ARTISTAS, artistas.size());
-            for (int i = 0; i < limite; i++) {
-                ArtistaDTO artista = artistas.get(i);
-                pnlListaArtistas.add(crearTarjetaArtista(artista));
-            }
-            if (artistas.isEmpty()) {
-                pnlListaArtistas.add(crearMensajeSinResultados());
-            }
-            while (pnlListaArtistas.getComponentCount() < LIMITE_ARTISTAS) {
-                pnlListaArtistas.add(crearEspacioVacio());
-            }
-            pnlListaArtistas.revalidate();
-            pnlListaArtistas.repaint();
+            artistasMostrados = artistaBO.buscarPorNombre(texto.trim());
+            paginaActual = 0;
+            cargarPaginaArtistas();
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    ex.getMessage(),
-                    "Error al buscar artista",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al buscar artista", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -140,13 +150,21 @@ public class frmMenuArtista extends javax.swing.JFrame {
         panelTexto.add(lblTipo);
         tarjeta.add(lblImagen, BorderLayout.CENTER);
         tarjeta.add(panelTexto, BorderLayout.SOUTH);
-        tarjeta.addMouseListener(new MouseAdapter() {
+        MouseAdapter eventoClick = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 abrirDetalleArtista(artista);
             }
-        });
-
+        };
+        tarjeta.addMouseListener(eventoClick);
+        lblImagen.addMouseListener(eventoClick);
+        lblNombre.addMouseListener(eventoClick);
+        lblTipo.addMouseListener(eventoClick);
+        panelTexto.addMouseListener(eventoClick);
+        lblImagen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblNombre.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblTipo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        panelTexto.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return tarjeta;
     }
 
@@ -201,13 +219,6 @@ public class frmMenuArtista extends javax.swing.JFrame {
     }
 
     private void abrirDetalleArtista(ArtistaDTO artista) {
-        JOptionPane.showMessageDialog(
-                this,
-                "Abrir detalle de: " + artista.getNombre(),
-                "Detalle artista",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-        
         frmDetalleArtista pantallaDetalleArtista = new frmDetalleArtista(artista);
         pantallaDetalleArtista.setVisible(true);
         this.dispose();
@@ -227,6 +238,9 @@ public class frmMenuArtista extends javax.swing.JFrame {
         txtFieldBuscar = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         pnlListaArtistas = new javax.swing.JPanel();
+        btnAnteriorArtistas = new javax.swing.JButton();
+        btnSiguienteArtistas = new javax.swing.JButton();
+        lblPaginaArtistas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Artistas");
@@ -338,6 +352,26 @@ public class frmMenuArtista extends javax.swing.JFrame {
             .addGap(0, 492, Short.MAX_VALUE)
         );
 
+        btnAnteriorArtistas.setBackground(new java.awt.Color(0, 204, 255));
+        btnAnteriorArtistas.setForeground(new java.awt.Color(0, 0, 0));
+        btnAnteriorArtistas.setText("Anterior");
+        btnAnteriorArtistas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorArtistasActionPerformed(evt);
+            }
+        });
+
+        btnSiguienteArtistas.setBackground(new java.awt.Color(0, 204, 255));
+        btnSiguienteArtistas.setForeground(new java.awt.Color(0, 0, 0));
+        btnSiguienteArtistas.setText("Siguiente");
+        btnSiguienteArtistas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteArtistasActionPerformed(evt);
+            }
+        });
+
+        lblPaginaArtistas.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -357,7 +391,15 @@ public class frmMenuArtista extends javax.swing.JFrame {
                                 .addComponent(btnBuscar)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 73, Short.MAX_VALUE))))
+                        .addGap(0, 73, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(btnAnteriorArtistas)
+                        .addGap(118, 118, 118)
+                        .addComponent(lblPaginaArtistas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSiguienteArtistas)
+                        .addGap(139, 139, 139))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,7 +413,12 @@ public class frmMenuArtista extends javax.swing.JFrame {
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
                 .addGap(31, 31, 31)
                 .addComponent(pnlListaArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnteriorArtistas)
+                    .addComponent(btnSiguienteArtistas)
+                    .addComponent(lblPaginaArtistas))
+                .addContainerGap())
         );
 
         pack();
@@ -388,7 +435,9 @@ public class frmMenuArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
-        // TODO add your handling code here:
+        frmMenuArtista pantallaArtista = new frmMenuArtista();
+        pantallaArtista.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
@@ -402,6 +451,21 @@ public class frmMenuArtista extends javax.swing.JFrame {
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPerfilActionPerformed
+
+    private void btnAnteriorArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorArtistasActionPerformed
+        if (paginaActual > 0) {
+            paginaActual--;
+            cargarPaginaArtistas();
+        }
+    }//GEN-LAST:event_btnAnteriorArtistasActionPerformed
+
+    private void btnSiguienteArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteArtistasActionPerformed
+        int totalPaginas = obtenerTotalPaginas();
+        if (paginaActual < totalPaginas - 1) {
+            paginaActual++;
+            cargarPaginaArtistas();
+        }
+    }//GEN-LAST:event_btnSiguienteArtistasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -441,12 +505,15 @@ public class frmMenuArtista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlbumes;
+    private javax.swing.JButton btnAnteriorArtistas;
     private javax.swing.JButton btnArtistas;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnFavoritos;
     private javax.swing.JButton btnMenuPrincipal;
     private javax.swing.JButton btnPerfil;
+    private javax.swing.JButton btnSiguienteArtistas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblPaginaArtistas;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel pnlListaArtistas;
     private javax.swing.JTextField txtFieldBuscar;
