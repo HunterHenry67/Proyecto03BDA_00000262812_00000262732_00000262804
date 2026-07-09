@@ -4,10 +4,13 @@
  */
 package Presentacion;
 
+import DTO.UsuarioDTO;
+import Excepciones.NegocioException;
+import Interfaces.IUsuarioBO;
+import Negocio.UsuarioBO;
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  *
@@ -17,11 +20,19 @@ import java.awt.event.ActionListener;
 public class frmLogin extends JFrame {
 
     private JTextField txtUsuario;
-    private JPasswordField txtPassword;
+    private JPasswordField txtContrasena;
     private JButton btnIngresar;
     private JButton btnRegistrarse;
 
+    private final IUsuarioBO usuarioBO;
+
     public frmLogin() {
+        this.usuarioBO = new UsuarioBO();
+        inicializarComponentes();
+        eventos();
+    }
+
+    private void inicializarComponentes() {
         setTitle("Iniciar Sesión");
         setSize(550, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,10 +41,10 @@ public class frmLogin extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(217, 217, 217));
-        panel.setLayout(null); 
+        panel.setLayout(null);
         add(panel);
 
-        JLabel lblTitulo = new JLabel("Iniciar Sesion", SwingConstants.CENTER);
+        JLabel lblTitulo = new JLabel("Iniciar Sesión", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 26));
         lblTitulo.setBounds(50, 30, 450, 40);
         panel.add(lblTitulo);
@@ -48,42 +59,59 @@ public class frmLogin extends JFrame {
         txtUsuario.setBounds(180, 110, 300, 30);
         panel.add(txtUsuario);
 
-        JLabel lblPassword = new JLabel("Contraseña:", SwingConstants.RIGHT);
-        lblPassword.setFont(new Font("Arial", Font.PLAIN, 20));
-        lblPassword.setBounds(30, 160, 130, 30);
-        panel.add(lblPassword);
+        JLabel lblContrasena = new JLabel("Contraseña:", SwingConstants.RIGHT);
+        lblContrasena.setFont(new Font("Arial", Font.PLAIN, 20));
+        lblContrasena.setBounds(30, 160, 130, 30);
+        panel.add(lblContrasena);
 
-        txtPassword = new JPasswordField();
-        txtPassword.setFont(new Font("Arial", Font.PLAIN, 16));
-        txtPassword.setBounds(180, 160, 300, 30);
-        panel.add(txtPassword);
-
-        Color colorBotones = new Color(45, 45, 45);
+        txtContrasena = new JPasswordField();
+        txtContrasena.setFont(new Font("Arial", Font.PLAIN, 16));
+        txtContrasena.setBounds(180, 160, 300, 30);
+        panel.add(txtContrasena);
 
         btnIngresar = new JButton("Ingresar");
-        btnIngresar.setBackground(colorBotones);
+        btnIngresar.setBackground(Color.DARK_GRAY);
         btnIngresar.setForeground(Color.WHITE);
         btnIngresar.setFocusPainted(false);
         btnIngresar.setBounds(230, 230, 110, 35);
         panel.add(btnIngresar);
 
         btnRegistrarse = new JButton("Registrarse");
-        btnRegistrarse.setBackground(colorBotones);
+        btnRegistrarse.setBackground(Color.DARK_GRAY);
         btnRegistrarse.setForeground(Color.WHITE);
         btnRegistrarse.setFocusPainted(false);
         btnRegistrarse.setBounds(360, 230, 120, 35);
         panel.add(btnRegistrarse);
-        
-        btnRegistrarse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmRegistro ventanaRegistro = new frmRegistro();
-                ventanaRegistro.setVisible(true);
-                dispose();
-            }
-        });  
-        
         setVisible(true);
     }
 
+    private void eventos() {
+        btnIngresar.addActionListener(e -> iniciarSesion());
+
+        btnRegistrarse.addActionListener(e -> {
+            new frmRegistro().setVisible(true);
+            dispose();
+        });
+
+        txtContrasena.addActionListener(e -> iniciarSesion());
+    }
+
+    private void iniciarSesion() {
+        String usuarioOCorreo = txtUsuario.getText().trim();
+        String contrasena = new String(txtContrasena.getPassword());
+
+        try {
+            UsuarioDTO usuario = usuarioBO.iniciarSesion(usuarioOCorreo, contrasena);
+
+            JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getNombreUsuario());
+
+            // new frmMenuPrincipal(usuario).setVisible(true);
+
+            dispose();
+
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 }
