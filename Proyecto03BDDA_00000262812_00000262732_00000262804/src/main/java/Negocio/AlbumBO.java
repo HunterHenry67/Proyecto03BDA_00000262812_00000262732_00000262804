@@ -1,3 +1,4 @@
+package Negocio;
 
 import DTO.AlbumDTO;
 import Entidades.Album;
