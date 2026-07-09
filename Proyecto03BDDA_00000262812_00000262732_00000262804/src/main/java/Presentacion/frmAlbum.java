@@ -34,28 +34,28 @@ public class frmAlbum extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lblNombrePerfil = new javax.swing.JLabel();
+        lblFotoPerfil = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lblAlbum2 = new javax.swing.JLabel();
+        lblAlbum3 = new javax.swing.JLabel();
+        lblAlbum5 = new javax.swing.JLabel();
+        lblAlbum6 = new javax.swing.JLabel();
+        lblAlbum7 = new javax.swing.JLabel();
+        lblAlbum4 = new javax.swing.JLabel();
+        lblAlbum8 = new javax.swing.JLabel();
+        lblAlbum1 = new javax.swing.JLabel();
+        lblArtista1 = new javax.swing.JLabel();
+        lblNombreAlbum1 = new javax.swing.JLabel();
+        lblArtista2 = new javax.swing.JLabel();
+        lblNombreAlbum2 = new javax.swing.JLabel();
+        lblArtista3 = new javax.swing.JLabel();
+        lblNombreAlbum3 = new javax.swing.JLabel();
+        lblArtista4 = new javax.swing.JLabel();
+        lblNombreAlbum4 = new javax.swing.JLabel();
+        lblTituloFrm = new javax.swing.JLabel();
+        txtBuscadorAlbumes = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,9 +71,9 @@ public class frmAlbum extends javax.swing.JFrame {
 
         jButton5.setText("Perfil");
 
-        jLabel1.setText("Nombre");
+        lblNombrePerfil.setText("Nombre");
 
-        jLabel12.setText("jLabel12");
+        lblFotoPerfil.setText("jLabel12");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,9 +93,9 @@ public class frmAlbum extends javax.swing.JFrame {
                                 .addGap(17, 17, 17))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)))
+                        .addComponent(lblNombrePerfil)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -103,8 +103,8 @@ public class frmAlbum extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombrePerfil)
+                    .addComponent(lblFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -121,37 +121,37 @@ public class frmAlbum extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel3.setText("Albumes recomendados");
 
-        jLabel5.setText("jLabel5");
+        lblAlbum2.setText("jLabel5");
 
-        jLabel6.setText("jLabel6");
+        lblAlbum3.setText("jLabel6");
 
-        jLabel7.setText("jLabel7");
+        lblAlbum5.setText("jLabel7");
 
-        jLabel8.setText("jLabel8");
+        lblAlbum6.setText("jLabel8");
 
-        jLabel9.setText("jLabel9");
+        lblAlbum7.setText("jLabel9");
 
-        jLabel10.setText("jLabel10");
+        lblAlbum4.setText("jLabel10");
 
-        jLabel11.setText("jLabel11");
+        lblAlbum8.setText("jLabel11");
 
-        jLabel4.setText("jLabel4");
+        lblAlbum1.setText("jLabel4");
 
-        jLabel13.setText("jLabel13");
+        lblArtista1.setText("jLabel13");
 
-        jLabel14.setText("jLabel14");
+        lblNombreAlbum1.setText("jLabel14");
 
-        jLabel15.setText("jLabel15");
+        lblArtista2.setText("jLabel15");
 
-        jLabel16.setText("jLabel16");
+        lblNombreAlbum2.setText("jLabel16");
 
-        jLabel17.setText("jLabel17");
+        lblArtista3.setText("jLabel17");
 
-        jLabel18.setText("jLabel18");
+        lblNombreAlbum3.setText("jLabel18");
 
-        jLabel19.setText("jLabel19");
+        lblArtista4.setText("jLabel19");
 
-        jLabel20.setText("jLabel20");
+        lblNombreAlbum4.setText("jLabel20");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -165,35 +165,35 @@ public class frmAlbum extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblAlbum5, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                .addComponent(lblAlbum1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblArtista1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombreAlbum1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblAlbum2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                .addComponent(lblAlbum6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblArtista2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombreAlbum2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombreAlbum3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(lblAlbum3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(lblAlbum7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(lblArtista3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(36, 36, 36)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblAlbum4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblAlbum8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                            .addComponent(lblNombreAlbum4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblArtista4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                 .addContainerGap(99, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -203,35 +203,35 @@ public class frmAlbum extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblAlbum1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblAlbum2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblAlbum3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblAlbum4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel19))
+                    .addComponent(lblArtista1)
+                    .addComponent(lblArtista2)
+                    .addComponent(lblArtista3)
+                    .addComponent(lblArtista4))
                 .addGap(3, 3, 3)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel20))
+                    .addComponent(lblNombreAlbum1)
+                    .addComponent(lblNombreAlbum2)
+                    .addComponent(lblNombreAlbum3)
+                    .addComponent(lblNombreAlbum4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblAlbum5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAlbum6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAlbum7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAlbum8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32))
         );
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel2.setText("ALBUMES");
+        lblTituloFrm.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTituloFrm.setForeground(new java.awt.Color(153, 153, 153));
+        lblTituloFrm.setText("ALBUMES");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -244,9 +244,9 @@ public class frmAlbum extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(198, 198, 198)
-                        .addComponent(jLabel2)
+                        .addComponent(lblTituloFrm)
                         .addGap(221, 221, 221)
-                        .addComponent(jTextField1)
+                        .addComponent(txtBuscadorAlbumes)
                         .addGap(31, 31, 31)))
                 .addGap(0, 157, Short.MAX_VALUE))
         );
@@ -258,8 +258,8 @@ public class frmAlbum extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblTituloFrm)
+                            .addComponent(txtBuscadorAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -299,28 +299,28 @@ public class frmAlbum extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblAlbum1;
+    private javax.swing.JLabel lblAlbum2;
+    private javax.swing.JLabel lblAlbum3;
+    private javax.swing.JLabel lblAlbum4;
+    private javax.swing.JLabel lblAlbum5;
+    private javax.swing.JLabel lblAlbum6;
+    private javax.swing.JLabel lblAlbum7;
+    private javax.swing.JLabel lblAlbum8;
+    private javax.swing.JLabel lblArtista1;
+    private javax.swing.JLabel lblArtista2;
+    private javax.swing.JLabel lblArtista3;
+    private javax.swing.JLabel lblArtista4;
+    private javax.swing.JLabel lblFotoPerfil;
+    private javax.swing.JLabel lblNombreAlbum1;
+    private javax.swing.JLabel lblNombreAlbum2;
+    private javax.swing.JLabel lblNombreAlbum3;
+    private javax.swing.JLabel lblNombreAlbum4;
+    private javax.swing.JLabel lblNombrePerfil;
+    private javax.swing.JLabel lblTituloFrm;
+    private javax.swing.JTextField txtBuscadorAlbumes;
     // End of variables declaration//GEN-END:variables
 }
