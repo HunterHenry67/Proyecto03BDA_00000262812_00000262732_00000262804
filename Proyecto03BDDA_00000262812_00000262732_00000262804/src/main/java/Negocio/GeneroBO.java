@@ -26,6 +26,12 @@ public class GeneroBO implements IGeneroBO{
         this.generoDAO = new GeneroDAO();
     }
 
+    public GeneroBO(IGeneroDAO generoDAO) {
+        this.generoDAO = generoDAO;
+    }
+    
+    
+
     @Override
     public GeneroDTO consultarPorId(ObjectId idGenero) throws PersistenciaException {
         if (idGenero == null) {

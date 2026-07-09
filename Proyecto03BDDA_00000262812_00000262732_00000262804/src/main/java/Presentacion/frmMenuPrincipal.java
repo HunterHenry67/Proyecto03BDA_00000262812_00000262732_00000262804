@@ -5,6 +5,7 @@
 package Presentacion;
 
 import Interfaces.IArtistaBO;
+import Negocio.ArtistaBO;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -24,7 +25,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private JPanel panelContenido;
     private CardLayout cardLayout;
     public frmMenuPrincipal() {
-        this.artistaBO = artistaBO;
+        this.artistaBO = new ArtistaBO();
         setTitle("Biblioteca Musical");
         setSize(1200, 750);
         setLocationRelativeTo(null);

@@ -17,6 +17,12 @@ public class AlbumBO implements IAlbumBO {
         this.albumDAO = new AlbumDAO();
     }
 
+    public AlbumBO(IAlbumDAO albumDAO) {
+        this.albumDAO = albumDAO;
+    }
+    
+    
+
     @Override
     public AlbumDTO consultarPorId(ObjectId idAlbum) throws NegocioException {
         if (idAlbum == null) {
