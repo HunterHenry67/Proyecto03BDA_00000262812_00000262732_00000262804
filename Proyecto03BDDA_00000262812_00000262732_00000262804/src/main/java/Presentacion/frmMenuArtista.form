@@ -131,6 +131,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#xc1;rtistas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnArtistasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAlbumes">
           <Properties>
@@ -145,6 +148,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#xc1;lbumes"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlbumesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnFavoritos">
           <Properties>
@@ -159,6 +165,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Favoritos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFavoritosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnPerfil">
           <Properties>
@@ -173,6 +182,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Perfil"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPerfilActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

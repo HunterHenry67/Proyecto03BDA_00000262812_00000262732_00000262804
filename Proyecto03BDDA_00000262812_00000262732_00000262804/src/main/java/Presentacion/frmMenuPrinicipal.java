@@ -54,21 +54,41 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
         btnArtistas.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnArtistas.setForeground(new java.awt.Color(255, 255, 255));
         btnArtistas.setText("Ártistas");
+        btnArtistas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArtistasActionPerformed(evt);
+            }
+        });
 
         btnAlbumes.setBackground(new java.awt.Color(0, 0, 0));
         btnAlbumes.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnAlbumes.setForeground(new java.awt.Color(255, 255, 255));
         btnAlbumes.setText("Álbumes");
+        btnAlbumes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlbumesActionPerformed(evt);
+            }
+        });
 
         btnFavoritos.setBackground(new java.awt.Color(0, 0, 0));
         btnFavoritos.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnFavoritos.setForeground(new java.awt.Color(255, 255, 255));
         btnFavoritos.setText("Favoritos");
+        btnFavoritos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFavoritosActionPerformed(evt);
+            }
+        });
 
         btnPerfil.setBackground(new java.awt.Color(0, 0, 0));
         btnPerfil.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnPerfil.setForeground(new java.awt.Color(255, 255, 255));
         btnPerfil.setText("Perfil");
+        btnPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPerfilActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
         panelBotones.setLayout(panelBotonesLayout);
@@ -111,7 +131,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Artistas");
+        jLabel1.setText("Menú Principal");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,7 +149,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(298, 298, 298))))
+                        .addGap(269, 269, 269))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,6 +174,22 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnArtistasActionPerformed
+
+    private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlbumesActionPerformed
+
+    private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFavoritosActionPerformed
+
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPerfilActionPerformed
 
     /**
      * @param args the command line arguments
