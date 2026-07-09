@@ -4,188 +4,156 @@
  */
 package Presentacion;
 
-import DTO.AlbumDTO;
 import DTO.ArtistaDTO;
 import DTO.IntegranteDTO;
-import java.awt.BorderLayout;
+import DTO.PersonaDTO;
+import Excepciones.NegocioException;
+import Excepciones.PresentacionException;
+import Interfaces.IConexionBD;
+import Interfaces.IPersonaBO;
+import Interfaces.IPersonaDAO;
+import Negocio.PersonaBO;
+import Persistencia.ConexionBD;
+import Persistencia.PersonaDAO;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.io.File;
 import java.net.URL;
-import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author BALAMRUSH
  */
-public class frmDetalleArtista extends javax.swing.JFrame {
+public class frmDetalleIntegrante extends javax.swing.JFrame {
 
     private ArtistaDTO artista;
-    private JPanel panelTarjetasIntegrantes;
+    private IntegranteDTO integrante;
+    private PersonaDTO persona;
+    private IPersonaBO personaBO;
 
-    public frmDetalleArtista(ArtistaDTO artista) {
+    public frmDetalleIntegrante(ArtistaDTO artista, IntegranteDTO integrante) {
         initComponents();
         this.artista = artista;
-        setLocationRelativeTo(null);
+        this.integrante = integrante;
+        inicializarBOs();
         configurarPantalla();
-        cargarDatosArtista();
-        cargarIntegrantes();
-        cargarAlbumes();
+        setLocationRelativeTo(null);
+        try {
+            cargarPersona();
+        } catch (PresentacionException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        cargarDatosIntegrante();
+    }
+
+    private void inicializarBOs() {
+        IConexionBD conexionBD = new ConexionBD();
+        IPersonaDAO personaDAO = new PersonaDAO(conexionBD);
+        this.personaBO = new PersonaBO(personaDAO);
     }
 
     private void configurarPantalla() {
-        panelTarjetasIntegrantes = new JPanel();
-        panelTarjetasIntegrantes.setLayout(new GridLayout(0, 4, 12, 12));
-        panelTarjetasIntegrantes.setBackground(new Color(220, 220, 220));
-        panelTarjetasIntegrantes.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-        scrollpane.setViewportView(panelTarjetasIntegrantes);
-        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollpane.getVerticalScrollBar().setUnitIncrement(16);
+        txtDescripcion.setEditable(false);
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setWrapStyleWord(true);
+        lblImagenIntegrante.setHorizontalAlignment(SwingConstants.CENTER);
+        lblImagenIntegrante.setVerticalAlignment(SwingConstants.CENTER);
     }
 
-    private void cargarDatosArtista() {
-        lblNombreArtista.setText("Nombre: " + artista.getNombre());
-        lblTipoArtista.setText("Tipo: " + obtenerTipoArtista());
-        lblGeneroArtista.setText("Género: " + artista.getIdGenero());
-        cargarImagen(lblImagenArtista, artista.getImagen(), 120, 120);
-    }
-
-    private String obtenerTipoArtista() {
-        if (artista.getIntegrantes() == null) {
-            return "Artista";
+    private void cargarPersona() throws PresentacionException {
+        if (integrante == null) {
+            throw new PresentacionException("No se recibió la información del integrante.");
         }
-        if (artista.getIntegrantes().size() == 1) {
-            return "Solista";
+        String idPersona = integrante.getIdPersona();
+        if (idPersona == null || idPersona.trim().isEmpty()) {
+            throw new PresentacionException("El integrante no tiene una persona relacionada.");
         }
-        if (artista.getIntegrantes().size() > 1) {
-            return "Banda";
+
+        if (!ObjectId.isValid(idPersona)) {
+            throw new PresentacionException("El identificador de la persona no es válido.");
         }
-        return "Artista";
-    }
 
-    private void cargarIntegrantes() {
-        panelTarjetasIntegrantes.removeAll();
-        List<IntegranteDTO> integrantes = artista.getIntegrantes();
-        if (integrantes == null || integrantes.isEmpty()) {
-            JLabel lblSinIntegrantes = new JLabel("Sin integrantes registrados.");
-            lblSinIntegrantes.setHorizontalAlignment(SwingConstants.CENTER);
-            panelTarjetasIntegrantes.add(lblSinIntegrantes);
-            panelTarjetasIntegrantes.setPreferredSize(new Dimension(530, 100));
-        } else {
-            for (IntegranteDTO integrante : integrantes) {
-                panelTarjetasIntegrantes.add(crearTarjetaIntegrante(integrante));
-            }
-            int columnas = 4;
-            int filas = (int) Math.ceil(integrantes.size() / (double) columnas);
-            int altoPorFila = 140;
-            panelTarjetasIntegrantes.setPreferredSize(new Dimension(530, Math.max(120, filas * altoPorFila)));
-        }
-        panelTarjetasIntegrantes.revalidate();
-        panelTarjetasIntegrantes.repaint();
-        scrollpane.revalidate();
-        scrollpane.repaint();
-    }
-
-    private JPanel crearTarjetaIntegrante(IntegranteDTO integrante) {
-        JPanel tarjeta = new JPanel(new BorderLayout());
-        tarjeta.setPreferredSize(new Dimension(145, 120));
-        tarjeta.setMinimumSize(new Dimension(145, 120));
-        tarjeta.setMaximumSize(new Dimension(145, 120));
-        tarjeta.setBackground(Color.WHITE);
-        tarjeta.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        JLabel lblImagen = new JLabel();
-        lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
-        lblImagen.setPreferredSize(new Dimension(80, 75));
-        cargarImagen(lblImagen, artista.getImagen(), 70, 70);
-        String estado = integrante.isActivo() ? "Activo" : "Inactivo";
-        JLabel lblTexto = new JLabel(
-                "<html>"
-                + "<div style='text-align:center; width:125px;'>"
-                + integrante.getRol()
-                + "<br>"
-                + estado
-                + "</div>"
-                + "</html>"
-        );
-        lblTexto.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTexto.setFont(new Font("Arial", Font.PLAIN, 10));
-        tarjeta.add(lblImagen, BorderLayout.CENTER);
-        tarjeta.add(lblTexto, BorderLayout.SOUTH);
-        MouseAdapter eventoClick = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                abrirDetalleIntegrante(integrante);
-            }
-        };
-        tarjeta.addMouseListener(eventoClick);
-        lblImagen.addMouseListener(eventoClick);
-        lblTexto.addMouseListener(eventoClick);
-
-        return tarjeta;
-    }
-
-    private void abrirDetalleIntegrante(IntegranteDTO integrante) {
-        frmDetalleIntegrante detalleIntegrante
-                = new frmDetalleIntegrante(
-                        artista,
-                        integrante
+        try {
+            persona = personaBO.consultarPorId(
+                    new ObjectId(idPersona)
+            );
+            if (persona == null) {
+                throw new PresentacionException(
+                        "No se encontró la información de la persona."
                 );
+            }
 
-        detalleIntegrante.setVisible(true);
-        this.dispose();
+        } catch (NegocioException ex) {
+            throw new PresentacionException("No fue posible consultar la información del integrante." + ex.getMessage());
+        }
     }
 
-    private void cargarAlbumes() {
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Portada");
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Fecha de publicación");
-        modelo.addColumn("Género");
-        if (artista.getAlbumes() != null) {
-            for (AlbumDTO album : artista.getAlbumes()) {
-                modelo.addRow(new Object[]{
-                    album.getImagenPortada(),
-                    album.getNombre(),
-                    album.getFechaLanzamiento(),
-                    album.getIdGenero()
-                });
-            }
+    private void cargarDatosIntegrante() {
+        if (integrante == null) {
+            return;
         }
-        tblAlbumes.setModel(modelo);
+
+        if (persona != null) {
+            lblNombreIntegrante.setText(persona.getNombre() != null ? persona.getNombre() : "Nombre no disponible");
+            txtDescripcion.setText(persona.getDescripcion() != null ? persona.getDescripcion() : "Sin descripción registrada.");
+            cargarImagen(lblImagenIntegrante, persona.getImagen(), 140, 140);
+
+        } else {
+            lblNombreIntegrante.setText("Nombre no disponible");
+            txtDescripcion.setText("Sin descripción registrada.");
+            lblImagenIntegrante.setIcon(null);
+            lblImagenIntegrante.setText("Sin imagen");
+        }
+        lblRolIntegrante.setText("Rol: " + valorSeguro(integrante.getRol()));
+        lblFechaIngreso.setText("Fecha ingreso: " + (integrante.getFechaIngreso() != null ? integrante.getFechaIngreso().toString() : "N/A"));
+        lblFechaSalida.setText("Fecha salida: " + (integrante.getFechaSalida() != null ? integrante.getFechaSalida().toString() : "N/A"));
+        lblEstado.setText("Estado: " + (integrante.isActivo() ? "Activo" : "Inactivo"));
+    }
+
+    private String valorSeguro(String valor) {
+        if (valor == null || valor.trim().isEmpty()) {
+            return "N/A";
+        }
+        return valor;
     }
 
     private void cargarImagen(JLabel label, String rutaImagen, int ancho, int alto) {
+        label.setText("");
+        label.setIcon(null);
+        if (rutaImagen == null || rutaImagen.trim().isEmpty()) {
+            label.setText("Sin imagen");
+            return;
+        }
         try {
+            String rutaNormalizada = rutaImagen.trim().replace("\\", "/");
+            while (rutaNormalizada.startsWith("/")) {
+                rutaNormalizada = rutaNormalizada.substring(1);
+            }
             ImageIcon icono = null;
-            if (rutaImagen != null && !rutaImagen.trim().isEmpty()) {
-                URL url = getClass().getClassLoader().getResource(rutaImagen);
-                if (url != null) {
-                    icono = new ImageIcon(url);
-                } else {
-                    icono = new ImageIcon(rutaImagen);
+            URL url = Thread.currentThread().getContextClassLoader().getResource(rutaNormalizada);
+            if (url != null) {
+                icono = new ImageIcon(url);
+            } else {
+                File archivo = new File(rutaImagen);
+                if (archivo.exists()) {
+                    icono = new ImageIcon(archivo.getAbsolutePath());
                 }
             }
             if (icono == null || icono.getIconWidth() <= 0) {
                 label.setText("Sin imagen");
                 return;
             }
-            Image imagen = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
-            label.setIcon(new ImageIcon(imagen));
+            Image imagenEscalada = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+            label.setIcon(new ImageIcon(imagenEscalada));
         } catch (Exception ex) {
+            label.setIcon(null);
             label.setText("Sin imagen");
+            label.setForeground(Color.BLACK);
         }
     }
 
@@ -200,17 +168,17 @@ public class frmDetalleArtista extends javax.swing.JFrame {
         btnFavoritos = new javax.swing.JButton();
         btnPerfil = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        lblNombreArtista = new javax.swing.JLabel();
-        lblTipoArtista = new javax.swing.JLabel();
-        lblGeneroArtista = new javax.swing.JLabel();
-        pnlIntegrantes5 = new javax.swing.JLabel();
+        lblNombreIntegrante = new javax.swing.JLabel();
+        lblRolIntegrante = new javax.swing.JLabel();
+        lblFechaIngreso = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblAlbumes = new javax.swing.JTable();
-        lblImagenArtista = new javax.swing.JLabel();
+        lblImagenIntegrante = new javax.swing.JLabel();
         btnAgregarFavoritos = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
-        scrollpane = new javax.swing.JScrollPane();
+        lblFechaSalida = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescripcion = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -291,7 +259,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
                 .addComponent(btnAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnFavoritos, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 321, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -300,35 +268,22 @@ public class frmDetalleArtista extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Detalle Artistas");
 
-        lblNombreArtista.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        lblNombreArtista.setText("Nombre:");
+        lblNombreIntegrante.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblNombreIntegrante.setText("Nombre Integrante:");
 
-        lblTipoArtista.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        lblTipoArtista.setText("Tipo:");
+        lblRolIntegrante.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblRolIntegrante.setText("Rol: ");
 
-        lblGeneroArtista.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        lblGeneroArtista.setText("Género:");
+        lblFechaIngreso.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblFechaIngreso.setText("Fecha Ingreso: ");
 
-        pnlIntegrantes5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        pnlIntegrantes5.setText("Integrantes:");
+        lblEstado.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblEstado.setText("Estado: ");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel6.setText("Colección de Álbumes:");
+        jLabel6.setText("Descripción:");
 
-        tblAlbumes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblAlbumes);
-
-        lblImagenArtista.setText("jLabel2");
+        lblImagenIntegrante.setText("jLabel2");
 
         btnAgregarFavoritos.setBackground(new java.awt.Color(0, 255, 0));
         btnAgregarFavoritos.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -347,6 +302,13 @@ public class frmDetalleArtista extends javax.swing.JFrame {
             }
         });
 
+        lblFechaSalida.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblFechaSalida.setText("Fecha Salida:");
+
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jScrollPane1.setViewportView(txtDescripcion);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -355,29 +317,31 @@ public class frmDetalleArtista extends javax.swing.JFrame {
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(259, 259, 259)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
-                                    .addComponent(lblTipoArtista)
-                                    .addComponent(lblNombreArtista)
-                                    .addComponent(lblGeneroArtista)
-                                    .addComponent(pnlIntegrantes5)
-                                    .addComponent(jLabel6)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblImagenArtista)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnAgregarFavoritos, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12))
-                                    .addComponent(scrollpane))))
-                        .addGap(0, 49, Short.MAX_VALUE))
+                        .addGap(259, 259, 259)
+                        .addComponent(jLabel1)
+                        .addGap(0, 277, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblImagenIntegrante)
+                                            .addComponent(lblFechaSalida)
+                                            .addComponent(lblRolIntegrante)
+                                            .addComponent(lblFechaIngreso)
+                                            .addComponent(lblEstado)
+                                            .addComponent(jLabel6)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblNombreIntegrante)
+                                                .addGap(207, 207, 207)
+                                                .addComponent(btnAgregarFavoritos, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(25, 25, 25))))
         );
         layout.setVerticalGroup(
@@ -387,24 +351,24 @@ public class frmDetalleArtista extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1)
                 .addGap(80, 80, 80)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImagenArtista)
+                .addComponent(lblImagenIntegrante)
+                .addGap(84, 84, 84)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreIntegrante)
                     .addComponent(btnAgregarFavoritos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addComponent(lblNombreArtista)
                 .addGap(18, 18, 18)
-                .addComponent(lblTipoArtista)
+                .addComponent(lblRolIntegrante)
                 .addGap(18, 18, 18)
-                .addComponent(lblGeneroArtista)
-                .addGap(76, 76, 76)
-                .addComponent(pnlIntegrantes5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addComponent(lblFechaIngreso)
+                .addGap(18, 18, 18)
+                .addComponent(lblFechaSalida)
+                .addGap(18, 18, 18)
+                .addComponent(lblEstado)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -419,7 +383,9 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuPrincipalActionPerformed
 
     private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
-        // TODO add your handling code here:
+        frmMenuArtista menuArtista = new frmMenuArtista();
+        menuArtista.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
@@ -439,8 +405,8 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarFavoritosActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        frmMenuArtista menu = new frmMenuArtista();
-        menu.setVisible(true);
+        frmDetalleArtista detalleArtista = new frmDetalleArtista(artista);
+        detalleArtista.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
@@ -456,13 +422,13 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblGeneroArtista;
-    private javax.swing.JLabel lblImagenArtista;
-    private javax.swing.JLabel lblNombreArtista;
-    private javax.swing.JLabel lblTipoArtista;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblFechaIngreso;
+    private javax.swing.JLabel lblFechaSalida;
+    private javax.swing.JLabel lblImagenIntegrante;
+    private javax.swing.JLabel lblNombreIntegrante;
+    private javax.swing.JLabel lblRolIntegrante;
     private javax.swing.JPanel panelBotones;
-    private javax.swing.JLabel pnlIntegrantes5;
-    private javax.swing.JScrollPane scrollpane;
-    private javax.swing.JTable tblAlbumes;
+    private javax.swing.JTextArea txtDescripcion;
     // End of variables declaration//GEN-END:variables
 }
