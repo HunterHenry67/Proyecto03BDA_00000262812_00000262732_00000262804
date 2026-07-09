@@ -7,15 +7,20 @@ package Presentacion;
 import DTO.AlbumDTO;
 import DTO.ArtistaDTO;
 import DTO.IntegranteDTO;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.net.URL;
+import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmDetalleArtista extends javax.swing.JFrame {
 
     private ArtistaDTO artista;
+    private JPanel panelTarjetasIntegrantes;
 
     public frmDetalleArtista(ArtistaDTO artista) {
         initComponents();
@@ -38,8 +44,14 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }
 
     private void configurarPantalla() {
-        pnlIntegrantes.setLayout(new GridLayout(1, 4, 15, 15));
-        pnlIntegrantes.setBackground(new Color(220, 220, 220));
+        panelTarjetasIntegrantes = new JPanel();
+        panelTarjetasIntegrantes.setLayout(new GridLayout(0, 4, 12, 12));
+        panelTarjetasIntegrantes.setBackground(new Color(220, 220, 220));
+        panelTarjetasIntegrantes.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        scrollpane.setViewportView(panelTarjetasIntegrantes);
+        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollpane.getVerticalScrollBar().setUnitIncrement(16);
     }
 
     private void cargarDatosArtista() {
@@ -63,34 +75,53 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }
 
     private void cargarIntegrantes() {
-        pnlIntegrantes.removeAll();
-        if (artista.getIntegrantes() == null || artista.getIntegrantes().isEmpty()) {
-            pnlIntegrantes.add(new JLabel("Sin integrantes registrados."));
-        } else {
-            for (IntegranteDTO integrante : artista.getIntegrantes()) {
-                pnlIntegrantes.add(crearTarjetaIntegrante(integrante));
+        panelTarjetasIntegrantes.removeAll();
+        List<IntegranteDTO> integrantes = artista.getIntegrantes();
+        if (integrantes == null || integrantes.isEmpty()) {
+            JLabel lblSinIntegrantes= new JLabel("Sin integrantes registrados.");
+            lblSinIntegrantes.setHorizontalAlignment(SwingConstants.CENTER);
+            panelTarjetasIntegrantes.add(lblSinIntegrantes);
+            panelTarjetasIntegrantes.setPreferredSize(new Dimension(530, 100));
+        }else {
+            for(IntegranteDTO integrante : integrantes) {
+                panelTarjetasIntegrantes.add(crearTarjetaIntegrante(integrante));
             }
+            int columnas = 4;
+            int filas = (int) Math.ceil(integrantes.size() / (double) columnas);
+            int altoPorFila = 140;
+            panelTarjetasIntegrantes.setPreferredSize(new Dimension(530,Math.max(120, filas * altoPorFila)));
         }
-        pnlIntegrantes.revalidate();
-        pnlIntegrantes.repaint();
+        panelTarjetasIntegrantes.revalidate();
+        panelTarjetasIntegrantes.repaint();
+        scrollpane.revalidate();
+        scrollpane.repaint();
     }
 
     private JPanel crearTarjetaIntegrante(IntegranteDTO integrante) {
-        JPanel tarjeta = new JPanel();
-        tarjeta.setLayout(new java.awt.BorderLayout());
+        JPanel tarjeta = new JPanel(new BorderLayout());
+        tarjeta.setPreferredSize(new Dimension(145, 120));
+        tarjeta.setMinimumSize(new Dimension(145, 120));
+        tarjeta.setMaximumSize(new Dimension(145, 120));
         tarjeta.setBackground(Color.WHITE);
+        tarjeta.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         JLabel lblImagen = new JLabel();
         lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
-        lblImagen.setPreferredSize(new Dimension(90, 90));
-        cargarImagen(lblImagen, artista.getImagen(), 80, 80);
-        JLabel lblTexto = new JLabel("<html><center>"
+        lblImagen.setPreferredSize(new Dimension(80, 75));
+        cargarImagen(lblImagen, artista.getImagen(), 70, 70);
+        String estado = integrante.isActivo() ? "Activo" : "Inactivo";
+        JLabel lblTexto = new JLabel(
+                "<html>"
+                + "<div style='text-align:center; width:125px;'>"
                 + integrante.getRol()
                 + "<br>"
-                + (integrante.isActivo() ? "Activo" : "Inactivo")
-                + "</center></html>");
+                + estado
+                + "</div>"
+                + "</html>"
+        );
         lblTexto.setHorizontalAlignment(SwingConstants.CENTER);
-        tarjeta.add(lblImagen, java.awt.BorderLayout.CENTER);
-        tarjeta.add(lblTexto, java.awt.BorderLayout.SOUTH);
+        lblTexto.setFont(new Font("Arial", Font.PLAIN, 10));
+        tarjeta.add(lblImagen, BorderLayout.CENTER);
+        tarjeta.add(lblTexto, BorderLayout.SOUTH);
         return tarjeta;
     }
 
@@ -124,7 +155,6 @@ public class frmDetalleArtista extends javax.swing.JFrame {
                     icono = new ImageIcon(rutaImagen);
                 }
             }
-
             if (icono == null || icono.getIconWidth() <= 0) {
                 label.setText("Sin imagen");
                 return;
@@ -135,6 +165,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
             label.setText("Sin imagen");
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -151,12 +182,12 @@ public class frmDetalleArtista extends javax.swing.JFrame {
         lblGeneroArtista = new javax.swing.JLabel();
         pnlIntegrantes5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        pnlIntegrantes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAlbumes = new javax.swing.JTable();
         lblImagenArtista = new javax.swing.JLabel();
         btnAgregarFavoritos = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        scrollpane = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -261,17 +292,6 @@ public class frmDetalleArtista extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("Colección de Álbumes:");
 
-        javax.swing.GroupLayout pnlIntegrantesLayout = new javax.swing.GroupLayout(pnlIntegrantes);
-        pnlIntegrantes.setLayout(pnlIntegrantesLayout);
-        pnlIntegrantesLayout.setHorizontalGroup(
-            pnlIntegrantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
-        );
-        pnlIntegrantesLayout.setVerticalGroup(
-            pnlIntegrantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         tblAlbumes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -287,6 +307,9 @@ public class frmDetalleArtista extends javax.swing.JFrame {
 
         lblImagenArtista.setText("jLabel2");
 
+        btnAgregarFavoritos.setBackground(new java.awt.Color(0, 255, 0));
+        btnAgregarFavoritos.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnAgregarFavoritos.setForeground(new java.awt.Color(0, 0, 0));
         btnAgregarFavoritos.setText("Agregar Favoritos");
         btnAgregarFavoritos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -316,18 +339,18 @@ public class frmDetalleArtista extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(51, 51, 51)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
                                     .addComponent(lblTipoArtista)
                                     .addComponent(lblNombreArtista)
                                     .addComponent(lblGeneroArtista)
                                     .addComponent(pnlIntegrantes5)
                                     .addComponent(jLabel6)
-                                    .addComponent(pnlIntegrantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblImagenArtista)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btnAgregarFavoritos, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12)))))
+                                        .addGap(12, 12, 12))
+                                    .addComponent(scrollpane))))
                         .addGap(0, 49, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -353,7 +376,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
                 .addGap(76, 76, 76)
                 .addComponent(pnlIntegrantes5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlIntegrantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
@@ -415,8 +438,8 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombreArtista;
     private javax.swing.JLabel lblTipoArtista;
     private javax.swing.JPanel panelBotones;
-    private javax.swing.JPanel pnlIntegrantes;
     private javax.swing.JLabel pnlIntegrantes5;
+    private javax.swing.JScrollPane scrollpane;
     private javax.swing.JTable tblAlbumes;
     // End of variables declaration//GEN-END:variables
 }

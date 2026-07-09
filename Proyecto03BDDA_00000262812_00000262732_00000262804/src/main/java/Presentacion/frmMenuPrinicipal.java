@@ -409,6 +409,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
+        btnBuscar.setBackground(new java.awt.Color(51, 102, 255));
         btnBuscar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
@@ -419,11 +420,11 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Menú Principal");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Canciones Recomendades");
 
         javax.swing.GroupLayout pnlCancionesRecientesLayout = new javax.swing.GroupLayout(pnlCancionesRecientes);
@@ -438,7 +439,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
         );
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Artistas Recomendados");
 
         javax.swing.GroupLayout pnlArtistasRecomendadosLayout = new javax.swing.GroupLayout(pnlArtistasRecomendados);
@@ -453,7 +454,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
         );
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Álbumes Recomendados");
 
         javax.swing.GroupLayout pnlAlbumesRecientesLayout = new javax.swing.GroupLayout(pnlAlbumesRecientes);
@@ -526,11 +527,13 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuPrincipalActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        buscarGeneral();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
-        // TODO add your handling code here:
+        frmMenuArtista pantallaArtista = new frmMenuArtista();
+        pantallaArtista.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed

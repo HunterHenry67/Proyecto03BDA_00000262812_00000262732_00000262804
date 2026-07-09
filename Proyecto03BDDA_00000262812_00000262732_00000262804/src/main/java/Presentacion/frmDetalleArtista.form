@@ -35,19 +35,19 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jScrollPane1" min="-2" pref="569" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="569" max="32767" attributes="0"/>
                                   <Component id="lblTipoArtista" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblNombreArtista" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblGeneroArtista" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="pnlIntegrantes5" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="pnlIntegrantes" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblImagenArtista" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="btnAgregarFavoritos" min="-2" pref="244" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="scrollpane" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -82,7 +82,7 @@
               <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
               <Component id="pnlIntegrantes5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="pnlIntegrantes" min="-2" max="-2" attributes="0"/>
+              <Component id="scrollpane" min="-2" pref="100" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -275,21 +275,6 @@
         <Property name="text" type="java.lang.String" value="Colecci&#xf3;n de &#xc1;lbumes:"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JPanel" name="pnlIntegrantes">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="569" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-    </Container>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -315,6 +300,15 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregarFavoritos">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="ff" red="0" type="rgb"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="12" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Agregar Favoritos"/>
       </Properties>
       <Events>
@@ -329,5 +323,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegresarActionPerformed"/>
       </Events>
     </Component>
+    <Container class="javax.swing.JScrollPane" name="scrollpane">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+    </Container>
   </SubComponents>
 </Form>

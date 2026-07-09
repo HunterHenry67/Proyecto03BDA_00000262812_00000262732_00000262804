@@ -207,7 +207,10 @@ public class frmMenuArtista extends javax.swing.JFrame {
                 "Detalle artista",
                 JOptionPane.INFORMATION_MESSAGE
         );
-
+        
+        frmDetalleArtista pantallaDetalleArtista = new frmDetalleArtista(artista);
+        pantallaDetalleArtista.setVisible(true);
+        this.dispose();
     }
 
     @SuppressWarnings("unchecked")
@@ -309,8 +312,9 @@ public class frmMenuArtista extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
+        btnBuscar.setBackground(new java.awt.Color(51, 102, 255));
         btnBuscar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -319,7 +323,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Artistas");
 
         javax.swing.GroupLayout pnlListaArtistasLayout = new javax.swing.GroupLayout(pnlListaArtistas);
