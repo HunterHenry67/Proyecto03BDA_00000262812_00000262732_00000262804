@@ -17,8 +17,6 @@ public class AlbumDTO {
     private String fechaLanzamiento; 
     private String idGenero;
     private String imagenPortada;
-    private String idArtista;
-    private String nombreArtista;
     private List<CancionDTO> canciones;
 
     public AlbumDTO() {
@@ -63,22 +61,6 @@ public class AlbumDTO {
 
     public void setImagenPortada(String imagenPortada) {
         this.imagenPortada = imagenPortada;
-    }
-
-    public String getIdArtista() {
-        return idArtista;
-    }
-
-    public void setIdArtista(String idArtista) {
-        this.idArtista = idArtista;
-    }
-
-    public String getNombreArtista() {
-        return nombreArtista;
-    }
-
-    public void setNombreArtista(String nombreArtista) {
-        this.nombreArtista = nombreArtista;
     }
 
     public List<CancionDTO> getCanciones() {

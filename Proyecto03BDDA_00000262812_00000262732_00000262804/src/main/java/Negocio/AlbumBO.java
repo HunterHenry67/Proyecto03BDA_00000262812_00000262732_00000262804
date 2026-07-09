@@ -3,7 +3,7 @@ import DTO.AlbumDTO;
 import Entidades.Album;
 import Excepciones.NegocioException;
 import Interfaces.IAlbumDAO;
-import Negocio.IAlbumBO;
+import Interfaces.IAlbumBO;
 import Persistencia.AlbumDAO;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
