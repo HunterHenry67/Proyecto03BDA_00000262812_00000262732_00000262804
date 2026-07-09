@@ -4,17 +4,205 @@
  */
 package Presentacion;
 
+import DTO.ArtistaDTO;
+import Excepciones.NegocioException;
+import Interfaces.IArtistaBO;
+import Interfaces.IArtistaDAO;
+import Interfaces.IConexionBD;
+import Negocio.ArtistaBO;
+import Persistencia.ArtistaDAO;
+import Persistencia.ConexionBD;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.net.URL;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author BALAMRUSH
  */
 public class frmMenuArtista extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuPrinicipal
-     */
+    private IArtistaBO artistaBO;
+    private static final int LIMITE_ARTISTAS = 6;
+    
     public frmMenuArtista() {
         initComponents();
+        inicializarBOs();
+        configurarPantallaArtistas();
+        setLocationRelativeTo(null);
+        cargarPrimerosArtistas();
+    }
+
+    private void inicializarBOs() {
+        IConexionBD conexionBD = new ConexionBD();
+        IArtistaDAO artistaDAO = new ArtistaDAO(conexionBD);
+        this.artistaBO = new ArtistaBO(artistaDAO);
+    }
+
+    private void configurarPantallaArtistas() {
+        pnlListaArtistas.setLayout(new GridLayout(2, 3, 25, 25));
+        pnlListaArtistas.setBackground(new Color(220, 220, 220));
+
+        btnBuscar.addActionListener(e -> buscarArtista());
+        txtBusqueda.addActionListener(e -> buscarArtista());
+    }
+
+    private void cargarPrimerosArtistas() {
+        try {
+            pnlListaArtistas.removeAll();
+            List<ArtistaDTO> artistas = artistaBO.consultarTodos();
+            int limite = Math.min(LIMITE_ARTISTAS, artistas.size());
+            for (int i = 0; i < limite; i++) {
+                ArtistaDTO artista = artistas.get(i);
+                pnlListaArtistas.add(crearTarjetaArtista(artista));
+            }
+            while (pnlListaArtistas.getComponentCount() < LIMITE_ARTISTAS) {
+                pnlListaArtistas.add(crearEspacioVacio());
+            }
+            pnlListaArtistas.revalidate();
+            pnlListaArtistas.repaint();
+        } catch(NegocioException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    ex.getMessage(),
+                    "Error al cargar artistas",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    private void buscarArtista() {
+        String texto = txtBusqueda.getText();
+        if (texto == null || texto.trim().isEmpty()) {
+            cargarPrimerosArtistas();
+            return;
+        }
+        try {
+            pnlListaArtistas.removeAll();
+            List<ArtistaDTO> artistas = artistaBO.buscarPorNombre(texto.trim());
+            int limite = Math.min(LIMITE_ARTISTAS, artistas.size());
+            for (int i = 0; i < limite; i++) {
+                ArtistaDTO artista = artistas.get(i);
+                pnlListaArtistas.add(crearTarjetaArtista(artista));
+            }
+            if (artistas.isEmpty()) {
+                pnlListaArtistas.add(crearMensajeSinResultados());
+            }
+            while (pnlListaArtistas.getComponentCount() < LIMITE_ARTISTAS) {
+                pnlListaArtistas.add(crearEspacioVacio());
+            }
+            pnlListaArtistas.revalidate();
+            pnlListaArtistas.repaint();
+        } catch(NegocioException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    ex.getMessage(),
+                    "Error al buscar artista",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    private JPanel crearTarjetaArtista(ArtistaDTO artista) {
+        JPanel tarjeta = new JPanel();
+        tarjeta.setBackground(Color.BLACK);
+        tarjeta.setLayout(new BorderLayout());
+        tarjeta.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        tarjeta.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        JLabel lblImagen = new JLabel();
+        lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
+        lblImagen.setPreferredSize(new Dimension(150, 120));
+        cargarImagen(lblImagen, artista.getImagen());
+
+        JLabel lblNombre = new JLabel(artista.getNombre());
+        lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNombre.setForeground(Color.WHITE);
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 14));
+
+        JLabel lblTipo = new JLabel(obtenerTipoArtista(artista));
+        lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTipo.setForeground(Color.LIGHT_GRAY);
+        lblTipo.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        JPanel panelTexto = new JPanel(new GridLayout(2, 1));
+        panelTexto.setBackground(Color.BLACK);
+        panelTexto.add(lblNombre);
+        panelTexto.add(lblTipo);
+
+        tarjeta.add(lblImagen, BorderLayout.CENTER);
+        tarjeta.add(panelTexto, BorderLayout.SOUTH);
+
+        tarjeta.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                abrirDetalleArtista(artista);
+            }
+        });
+
+        return tarjeta;
+    }
+
+    private void cargarImagen(JLabel label, String rutaImagen) {
+        try {
+            ImageIcon icono = null;
+            if(rutaImagen != null && !rutaImagen.trim().isEmpty()) {
+                URL url = getClass().getClassLoader().getResource(rutaImagen);
+                if (url != null) {
+                    icono = new ImageIcon(url);
+                } else {
+                    icono = new ImageIcon(rutaImagen);
+                }
+            }
+            if (icono == null || icono.getIconWidth() <= 0) {
+                label.setText("Sin imagen");
+                label.setForeground(Color.WHITE);
+                return;
+            }
+            Image imagen = icono.getImage().getScaledInstance(110,110,Image.SCALE_SMOOTH);
+            label.setIcon(new ImageIcon(imagen));
+        } catch(Exception ex) {
+            label.setText("Sin imagen");
+            label.setForeground(Color.WHITE);
+        }
+    }
+
+    private String obtenerTipoArtista(ArtistaDTO artista) {
+        if (artista.getIntegrantes() == null) {
+            return "Artista";
+        }
+        if (artista.getIntegrantes().size() == 1) {
+            return "Solista";
+        }
+        if (artista.getIntegrantes().size() > 1) {
+            return "Banda";
+        }
+        return "Artista";
+    }
+
+    private JPanel crearEspacioVacio() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(220, 220, 220));
+        return panel;
+    }
+
+    private JLabel crearMensajeSinResultados() {
+        JLabel label = new JLabel("No se encontraron artistas.");
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 16));
+        return label;
     }
 
     /**
