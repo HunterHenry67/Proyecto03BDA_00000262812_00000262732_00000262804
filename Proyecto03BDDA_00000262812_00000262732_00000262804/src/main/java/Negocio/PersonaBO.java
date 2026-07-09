@@ -77,6 +77,7 @@ public class PersonaBO implements IPersonaBO {
         }
         persona.setNombre(dto.getNombre());
         persona.setDescripcion(dto.getDescripcion());
+        persona.setImagen(dto.getImagen());
         return persona;
     }
 
@@ -85,6 +86,7 @@ public class PersonaBO implements IPersonaBO {
         dto.setId(persona.getId().toHexString());
         dto.setNombre(persona.getNombre());
         dto.setDescripcion(persona.getDescripcion());
+        dto.setImagen(persona.getImagen());
         return dto;
     }
 

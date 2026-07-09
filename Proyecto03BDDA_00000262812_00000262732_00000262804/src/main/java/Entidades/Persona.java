@@ -15,14 +15,16 @@ public class Persona {
     private ObjectId id;
     private String nombre;
     private String descripcion;
+    private String imagen;
 
     public Persona() {
     }
 
-    public Persona(ObjectId id, String nombre, String descripcion) {
+    public Persona(ObjectId id, String nombre, String descripcion, String imagen) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.imagen = imagen;
     }
 
     public ObjectId getId() {
@@ -48,6 +50,12 @@ public class Persona {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }

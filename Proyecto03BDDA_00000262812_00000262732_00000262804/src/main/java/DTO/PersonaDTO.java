@@ -12,14 +12,16 @@ public class PersonaDTO {
     private String id;
     private String nombre;
     private String descripcion;
+    private String imagen;
 
     public PersonaDTO() {
     }
 
-    public PersonaDTO(String id, String nombre, String descripcion) {
+    public PersonaDTO(String id, String nombre, String descripcion, String imagen) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.imagen = imagen;
     }
 
     public String getId() {
@@ -46,4 +48,11 @@ public class PersonaDTO {
         this.descripcion = descripcion;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
