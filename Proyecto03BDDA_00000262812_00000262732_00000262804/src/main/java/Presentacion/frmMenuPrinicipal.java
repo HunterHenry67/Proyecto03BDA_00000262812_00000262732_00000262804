@@ -29,6 +29,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import DTO.UsuarioDTO;
+import Excepciones.PersistenciaException;
 
 /**
  *
@@ -40,6 +42,16 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     private static final int LIMITE_CANCIONES = 4;
     private static final int LIMITE_ARTISTAS = 4;
     private static final int LIMITE_ALBUMES = 4;
+    private static UsuarioDTO usuarioActual;
+
+    public static void establecerUsuarioActual(UsuarioDTO usuario) {
+        usuarioActual = usuario;
+    }
+
+    public static UsuarioDTO obtenerUsuarioActual() {
+        return usuarioActual;
+    }
+    
     public frmMenuPrinicipal() {
         initComponents();
         inicializarBOs();
@@ -537,15 +549,22 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
-        // TODO add your handling code here:
+       new frmAlbum().setVisible(true);
+       dispose();
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
-        // TODO add your handling code here:
+        try {
+            new frmFavoritos().setVisible(true);
+            dispose();
+        } catch (PersistenciaException ex) {
+            System.getLogger(frmMenuPrinicipal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }//GEN-LAST:event_btnFavoritosActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        // TODO add your handling code here:
+        new frmPerfil().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     /**
