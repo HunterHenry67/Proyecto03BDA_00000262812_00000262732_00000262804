@@ -11,7 +11,7 @@ import java.util.List;
  * @author BALAMRUSH
  */
 public class ArtistaDTO {
-     private String id;
+    private String id;
     private String nombre;
     private String imagen;
     private String idGenero;
