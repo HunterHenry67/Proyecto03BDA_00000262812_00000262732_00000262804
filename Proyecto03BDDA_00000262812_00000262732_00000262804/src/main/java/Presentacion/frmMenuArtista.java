@@ -19,6 +19,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -36,7 +38,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
 
     private IArtistaBO artistaBO;
     private static final int LIMITE_ARTISTAS = 6;
-    
+
     public frmMenuArtista() {
         initComponents();
         inicializarBOs();
@@ -54,9 +56,8 @@ public class frmMenuArtista extends javax.swing.JFrame {
     private void configurarPantallaArtistas() {
         pnlListaArtistas.setLayout(new GridLayout(2, 3, 25, 25));
         pnlListaArtistas.setBackground(new Color(220, 220, 220));
-
         btnBuscar.addActionListener(e -> buscarArtista());
-        txtBusqueda.addActionListener(e -> buscarArtista());
+        txtFieldBuscar.addActionListener(e -> buscarArtista());
     }
 
     private void cargarPrimerosArtistas() {
@@ -73,7 +74,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
             }
             pnlListaArtistas.revalidate();
             pnlListaArtistas.repaint();
-        } catch(NegocioException ex) {
+        } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(
                     this,
                     ex.getMessage(),
@@ -84,7 +85,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
     }
 
     private void buscarArtista() {
-        String texto = txtBusqueda.getText();
+        String texto = txtFieldBuscar.getText();
         if (texto == null || texto.trim().isEmpty()) {
             cargarPrimerosArtistas();
             return;
@@ -105,7 +106,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
             }
             pnlListaArtistas.revalidate();
             pnlListaArtistas.repaint();
-        } catch(NegocioException ex) {
+        } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(
                     this,
                     ex.getMessage(),
@@ -121,33 +122,27 @@ public class frmMenuArtista extends javax.swing.JFrame {
         tarjeta.setLayout(new BorderLayout());
         tarjeta.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         tarjeta.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
         JLabel lblImagen = new JLabel();
         lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
         lblImagen.setPreferredSize(new Dimension(150, 120));
         cargarImagen(lblImagen, artista.getImagen());
-
         JLabel lblNombre = new JLabel(artista.getNombre());
         lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
         lblNombre.setForeground(Color.WHITE);
         lblNombre.setFont(new Font("Arial", Font.BOLD, 14));
-
         JLabel lblTipo = new JLabel(obtenerTipoArtista(artista));
         lblTipo.setHorizontalAlignment(SwingConstants.CENTER);
         lblTipo.setForeground(Color.LIGHT_GRAY);
         lblTipo.setFont(new Font("Arial", Font.PLAIN, 12));
-
         JPanel panelTexto = new JPanel(new GridLayout(2, 1));
         panelTexto.setBackground(Color.BLACK);
         panelTexto.add(lblNombre);
         panelTexto.add(lblTipo);
-
         tarjeta.add(lblImagen, BorderLayout.CENTER);
         tarjeta.add(panelTexto, BorderLayout.SOUTH);
-
-        tarjeta.addMouseListener(new java.awt.event.MouseAdapter() {
+        tarjeta.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            public void mouseClicked(MouseEvent evt) {
                 abrirDetalleArtista(artista);
             }
         });
@@ -158,7 +153,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
     private void cargarImagen(JLabel label, String rutaImagen) {
         try {
             ImageIcon icono = null;
-            if(rutaImagen != null && !rutaImagen.trim().isEmpty()) {
+            if (rutaImagen != null && !rutaImagen.trim().isEmpty()) {
                 URL url = getClass().getClassLoader().getResource(rutaImagen);
                 if (url != null) {
                     icono = new ImageIcon(url);
@@ -171,9 +166,9 @@ public class frmMenuArtista extends javax.swing.JFrame {
                 label.setForeground(Color.WHITE);
                 return;
             }
-            Image imagen = icono.getImage().getScaledInstance(110,110,Image.SCALE_SMOOTH);
+            Image imagen = icono.getImage().getScaledInstance(110, 110, Image.SCALE_SMOOTH);
             label.setIcon(new ImageIcon(imagen));
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             label.setText("Sin imagen");
             label.setForeground(Color.WHITE);
         }
@@ -205,11 +200,16 @@ public class frmMenuArtista extends javax.swing.JFrame {
         return label;
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    private void abrirDetalleArtista(ArtistaDTO artista) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Abrir detalle de: " + artista.getNombre(),
+                "Detalle artista",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -223,6 +223,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         txtFieldBuscar = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        pnlListaArtistas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -321,6 +322,17 @@ public class frmMenuArtista extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Artistas");
 
+        javax.swing.GroupLayout pnlListaArtistasLayout = new javax.swing.GroupLayout(pnlListaArtistas);
+        pnlListaArtistas.setLayout(pnlListaArtistasLayout);
+        pnlListaArtistasLayout.setHorizontalGroup(
+            pnlListaArtistasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlListaArtistasLayout.setVerticalGroup(
+            pnlListaArtistasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 492, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -328,16 +340,19 @@ public class frmMenuArtista extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(btnBuscar)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 73, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(298, 298, 298))))
+                        .addGap(298, 298, 298))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pnlListaArtistas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBuscar)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 73, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,6 +364,8 @@ public class frmMenuArtista extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtFieldBuscar)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(pnlListaArtistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -356,11 +373,13 @@ public class frmMenuArtista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
-        // TODO add your handling code here:
+        frmMenuPrinicipal pantallaMenuPrincipal = new frmMenuPrinicipal();
+        pantallaMenuPrincipal.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMenuPrincipalActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        buscarArtista();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
@@ -424,6 +443,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
     private javax.swing.JButton btnPerfil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel panelBotones;
+    private javax.swing.JPanel pnlListaArtistas;
     private javax.swing.JTextField txtFieldBuscar;
     // End of variables declaration//GEN-END:variables
 }
