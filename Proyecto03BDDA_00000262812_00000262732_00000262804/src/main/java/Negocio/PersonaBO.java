@@ -22,6 +22,11 @@ public class PersonaBO implements IPersonaBO {
 
     private IPersonaDAO personaDAO;
 
+    public PersonaBO() {
+    }
+
+    
+    
     public PersonaBO(IPersonaDAO personaDAO) {
         this.personaDAO = personaDAO;
     }

@@ -28,6 +28,11 @@ import org.bson.types.ObjectId;
 public class ArtistaBO implements IArtistaBO{
     private IArtistaDAO artistaDAO;
 
+    public ArtistaBO() {
+    }
+
+    
+    
     public ArtistaBO(IArtistaDAO artistaDAO) {
         this.artistaDAO = artistaDAO;
     }
