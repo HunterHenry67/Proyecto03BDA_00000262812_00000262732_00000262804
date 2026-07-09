@@ -213,6 +213,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
         scrollpane = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Detalle Artista");
 
         panelBotones.setBackground(new java.awt.Color(0, 0, 0));
 

@@ -229,6 +229,7 @@ public class frmMenuArtista extends javax.swing.JFrame {
         pnlListaArtistas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú Artistas");
 
         panelBotones.setBackground(new java.awt.Color(0, 0, 0));
 

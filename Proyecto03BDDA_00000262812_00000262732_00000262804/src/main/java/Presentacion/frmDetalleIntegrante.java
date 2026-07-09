@@ -181,6 +181,7 @@ public class frmDetalleIntegrante extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Detalle Integrante");
 
         panelBotones.setBackground(new java.awt.Color(0, 0, 0));
 

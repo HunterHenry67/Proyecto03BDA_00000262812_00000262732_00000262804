@@ -338,6 +338,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
         pnlAlbumesRecientes = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú Principal");
 
         panelBotones.setBackground(new java.awt.Color(0, 0, 0));
 
