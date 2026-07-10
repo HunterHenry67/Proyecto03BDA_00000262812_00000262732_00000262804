@@ -8,6 +8,7 @@ import DTO.UsuarioDTO;
 import Excepciones.NegocioException;
 import Interfaces.IUsuarioBO;
 import Negocio.UsuarioBO;
+import Utilerias.Sesion;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
@@ -16,7 +17,6 @@ import javax.swing.*;
  *
  * @author Andre
  */
-
 public class frmLogin extends JFrame {
 
     private JTextField txtUsuario;
@@ -99,31 +99,16 @@ public class frmLogin extends JFrame {
     private void iniciarSesion() {
         String usuarioOCorreo = txtUsuario.getText().trim();
         String contrasena = new String(txtContrasena.getPassword());
-
         try {
-    UsuarioDTO usuario = usuarioBO.iniciarSesion(
-            usuarioOCorreo,
-            contrasena
-    );
-
-    JOptionPane.showMessageDialog(
-            this,
-            "Bienvenido " + usuario.getNombreUsuario()
-    );
-
-    frmMenuPrinicipal.establecerUsuarioActual(usuario);
-
-    new frmMenuPrinicipal().setVisible(true);
-    dispose();
-
-} catch (NegocioException ex) {
-    JOptionPane.showMessageDialog(
-            this,
-            ex.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE
-    );
-}
+            UsuarioDTO usuario = usuarioBO.iniciarSesion(usuarioOCorreo,contrasena);
+            Sesion.iniciarSesion(usuario);
+            JOptionPane.showMessageDialog( this, "Bienvenido " + usuario.getNombreUsuario());
+            frmMenuPrinicipal menu = new frmMenuPrinicipal();
+            menu.setVisible(true);
+            dispose();
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog( this, ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE );
+        }
     }
-    
+
 }

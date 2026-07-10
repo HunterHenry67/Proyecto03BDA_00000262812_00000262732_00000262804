@@ -7,6 +7,11 @@ package Presentacion;
 import DTO.AlbumDTO;
 import DTO.ArtistaDTO;
 import DTO.IntegranteDTO;
+import DTO.UsuarioDTO;
+import Excepciones.NegocioException;
+import Interfaces.IFavoritoBO;
+import Negocio.FavoritoBO;
+import Utilerias.Sesion;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,6 +42,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     private JPanel panelTarjetasIntegrantes;
     private List<AlbumDTO> albumesArtista = new ArrayList<>();
     private int paginaAlbumActual = 0;
+    private final IFavoritoBO favoritoBO = new FavoritoBO();
 
     private static final int ALBUMES_POR_PAGINA = 4;
 
@@ -48,7 +54,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
         cargarDatosArtista();
         cargarIntegrantes();
         inicializarAlbumes();
-        cargarAlbumes();    
+        cargarAlbumes();
     }
 
     private void configurarPantalla() {
@@ -205,6 +211,8 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }
 
     private void cargarImagen(JLabel label, String rutaImagen, int ancho, int alto) {
+        label.setText("");
+        label.setIcon(null);
         try {
             ImageIcon icono = null;
             if (rutaImagen != null && !rutaImagen.trim().isEmpty()) {
@@ -219,7 +227,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
                 label.setText("Sin imagen");
                 return;
             }
-            Image imagen = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+            Image imagen = icono.getImage().getScaledInstance(ancho,alto,Image.SCALE_SMOOTH);
             label.setIcon(new ImageIcon(imagen));
         } catch (Exception ex) {
             label.setText("Sin imagen");
@@ -511,7 +519,27 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     private void btnAgregarFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFavoritosActionPerformed
-        JOptionPane.showMessageDialog(this, "Artista agregado a favoritos: " + artista.getNombre());
+        UsuarioDTO usuario = Sesion.getUsuarioActual();
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(this, "No existe un usuario con sesión iniciada.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (artista == null || artista.getId() == null) {
+            JOptionPane.showMessageDialog(this, "El artista no tiene un identificador válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            boolean agregado = favoritoBO.agregarArtistaFavorito(usuario.getId(), artista.getId());
+            if (agregado) {
+                JOptionPane.showMessageDialog(this, "Artista agregado a favoritos: " + artista.getNombre());
+                btnAgregarFavoritos.setEnabled(false);
+                btnAgregarFavoritos.setText("Ya está en favoritos");
+            } else {
+                JOptionPane.showMessageDialog(this, "El artista ya estaba en favoritos.", "Favoritos", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al agregar favorito", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAgregarFavoritosActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -528,8 +556,8 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnteriorAlbumesActionPerformed
 
     private void btnSiguienteAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteAlbumesActionPerformed
-        int totalPaginas = (int) Math.ceil( albumesArtista.size() / (double) ALBUMES_POR_PAGINA);
-        if (paginaAlbumActual < totalPaginas - 1){
+        int totalPaginas = (int) Math.ceil(albumesArtista.size() / (double) ALBUMES_POR_PAGINA);
+        if (paginaAlbumActual < totalPaginas - 1) {
             paginaAlbumActual++;
             cargarAlbumes();
         }

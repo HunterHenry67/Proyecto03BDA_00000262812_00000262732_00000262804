@@ -17,6 +17,7 @@ import Negocio.GeneroBO;
 import Interfaces.IFavoritoBO;
 import Interfaces.IGeneroBO;
 import Negocio.UsuarioBO;
+import Utilerias.Sesion;
 import java.awt.Color;
 import java.awt.Font;
 import java.time.LocalDate;
@@ -41,7 +42,7 @@ public class frmGenerosNoDeseados extends JFrame {
     private JButton btnRegresar;
 
     public frmGenerosNoDeseados() throws PersistenciaException {
-        this.usuarioActual = frmMenuPrinicipal.obtenerUsuarioActual();
+        this.usuarioActual = Sesion.getUsuarioActual();
         this.usuarioBO = new UsuarioBO();
         this.generoBO = new GeneroBO();
         this.favoritoBO = new FavoritoBO();
@@ -62,27 +63,26 @@ public class frmGenerosNoDeseados extends JFrame {
 
         JPanel menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(new Color(55, 55, 55));
+        menu.setBackground(new Color(0, 0, 0));
         menu.setBounds(0, 0, 180, 620);
         getContentPane().add(menu);
 
-        JLabel lblLogo = new JLabel("♪ Music");
-        lblLogo.setForeground(Color.WHITE);
-        lblLogo.setFont(new Font("Arial", Font.BOLD, 18));
-        lblLogo.setBounds(25, 20, 130, 30);
-        menu.add(lblLogo);
+        JButton btnMenuPrincipal = crearBotonMenu("Menú Principal", 40);
+        JButton btnArtistas = crearBotonMenu("Ártistas", 95);
+        JButton btnAlbumes = crearBotonMenu("Álbumes", 150);
+        JButton btnFavoritos = crearBotonMenu("Favoritos", 205);
+        JButton btnPerfil = crearBotonMenu("Perfil", 530);
 
-        JButton btnArtistas = crearBotonMenu("Artistas", 70);
-        JButton btnAlbumes = crearBotonMenu("Álbumes", 120);
-        JButton btnFavoritos = crearBotonMenu("Favoritos", 170);
-        JButton btnPerfil = crearBotonMenu("Perfil", 220);
-        JButton btnSalir = crearBotonMenu("Salir", 510);
-
+        menu.add(btnMenuPrincipal);
         menu.add(btnArtistas);
         menu.add(btnAlbumes);
         menu.add(btnFavoritos);
         menu.add(btnPerfil);
-        menu.add(btnSalir);
+
+        btnMenuPrincipal.addActionListener(e -> {
+            new frmMenuPrinicipal().setVisible(true);
+            dispose();
+        });
 
         btnArtistas.addActionListener(e -> {
             new frmMenuArtista().setVisible(true);
@@ -105,11 +105,6 @@ public class frmGenerosNoDeseados extends JFrame {
 
         btnPerfil.addActionListener(e -> {
             new frmPerfil().setVisible(true);
-            dispose();
-        });
-
-        btnSalir.addActionListener(e -> {
-            new frmLogin().setVisible(true);
             dispose();
         });
 
@@ -147,7 +142,7 @@ public class frmGenerosNoDeseados extends JFrame {
         getContentPane().add(btnEliminar);
 
         modeloTabla = new DefaultTableModel(
-                new Object[]{"ID Género", "Fecha agregación"}, 0
+                new Object[]{"ID Género", "Nombre", "Fecha agregación"}, 0
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -181,10 +176,12 @@ public class frmGenerosNoDeseados extends JFrame {
 
     private JButton crearBotonMenu(String texto, int y) {
         JButton boton = new JButton(texto);
-        boton.setBounds(25, y, 130, 35);
-        boton.setBackground(new Color(35, 35, 35));
+        boton.setBounds(20, y, 140, 45);
+        boton.setBackground(Color.BLACK);
         boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Dialog", Font.BOLD, 12));
         boton.setFocusPainted(false);
+        boton.setBorder(BorderFactory.createLineBorder(new Color(140, 140, 140)));
         return boton;
     }
 
@@ -196,124 +193,91 @@ public class frmGenerosNoDeseados extends JFrame {
         }
     }
 
-    private void cargarGenerosNoDeseados() {
-        modeloTabla.setRowCount(0);
-
-        if (usuarioActual == null) {
-            mostrarError("No hay usuario iniciado.");
-            return;
-        }
-
-        try {
-            List<GeneroNoDeseadoDTO> generos =
-                    usuarioBO.consultarGenerosNoDeseados(usuarioActual.getId());
-
-            for (GeneroNoDeseadoDTO genero : generos) {
-                modeloTabla.addRow(new Object[]{
-                    genero.getIdGenero(),
-                    genero.getFechaAgregacion()
-                });
-            }
-
-        } catch (NegocioException ex) {
-            mostrarError(ex.getMessage());
-        }
-    }
-
     private void agregarGeneroNoDeseado() {
         try {
+            this.usuarioActual = Sesion.getUsuarioActual();
+
             validarUsuario();
             validarSeleccionGenero();
 
-            GeneroDTO genero = (GeneroDTO) cmbGeneros.getSelectedItem();
+            GeneroDTO generoSeleccionado
+                    = (GeneroDTO) cmbGeneros.getSelectedItem();
 
-            List<FavoritoDTO> favoritos = favoritoBO.buscarFavoritos(
-                    usuarioActual.getId(),
-                    "",
-                    "TODOS",
-                    genero.getId()
-            );
+            GeneroNoDeseadoDTO generoNoDeseado
+                    = new GeneroNoDeseadoDTO(
+                            generoSeleccionado.getId(),
+                            generoSeleccionado.getNombre(),
+                            LocalDate.now()
+                    );
 
-            String mensaje;
-
-            if (favoritos == null || favoritos.isEmpty()) {
-                mensaje = "¿Deseas agregar este género a no deseados?";
-            } else {
-                mensaje = "Tienes " + favoritos.size()
-                        + " favorito(s) de este género.\n"
-                        + "Si continúas, se eliminarán de favoritos.\n\n"
-                        + "¿Deseas continuar?";
-            }
-
-            int opcion = JOptionPane.showConfirmDialog(
-                    this,
-                    mensaje,
-                    "Confirmar",
-                    JOptionPane.YES_NO_OPTION
-            );
-
-            if (opcion != JOptionPane.YES_OPTION) {
+            boolean agregado = usuarioBO.agregarGeneroNoDeseado(this.usuarioActual.getId(), generoNoDeseado);
+            if (!agregado) {
+                JOptionPane.showMessageDialog(this, "El género ya se encuentra en la lista de no deseados.", "Géneros no deseados", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-
-            GeneroNoDeseadoDTO dto = new GeneroNoDeseadoDTO();
-            dto.setIdGenero(genero.getId());
-            dto.setFechaAgregacion(LocalDate.now());
-
-            usuarioBO.agregarGeneroNoDeseado(usuarioActual.getId(), dto);
-
-            favoritoBO.eliminarFavoritosPorGenero(
-                    usuarioActual.getId(),
-                    genero.getId()
+            favoritoBO.eliminarFavoritosPorGenero(this.usuarioActual.getId(), generoSeleccionado.getId()
             );
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Género agregado correctamente."
-            );
-
+            JOptionPane.showMessageDialog(this, "Género agregado correctamente.\n" + "Los favoritos relacionados fueron eliminados.");
             cargarGenerosNoDeseados();
-
         } catch (PresentacionException | NegocioException ex) {
             mostrarError(ex.getMessage());
         }
     }
 
+    private void cargarGenerosNoDeseados() {
+        this.usuarioActual = Sesion.getUsuarioActual();
+
+        if (this.usuarioActual == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No hay sesión iniciada.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        try {
+            modeloTabla.setRowCount(0);
+            List generosNoDeseados = usuarioBO.consultarGenerosNoDeseados(this.usuarioActual.getId());
+            if (generosNoDeseados != null) {
+                for (Object objeto : generosNoDeseados) {
+                    if (objeto instanceof GeneroNoDeseadoDTO) {
+                        GeneroNoDeseadoDTO generoNoDeseado = (GeneroNoDeseadoDTO) objeto;
+                        modeloTabla.addRow(new Object[]{
+                            generoNoDeseado.getIdGenero(),
+                            generoNoDeseado.getNombreGenero(),
+                            generoNoDeseado.getFechaAgregacion()
+                        });
+                    }
+                }
+            }
+            this.usuarioActual.setGeneroNoDeseado(generosNoDeseados);
+            Sesion.iniciarSesion(this.usuarioActual);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al cargar géneros no deseados", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void eliminarGeneroNoDeseado() {
         try {
+            this.usuarioActual = Sesion.getUsuarioActual();
             validarUsuario();
-
             int fila = tblGenerosNoDeseados.getSelectedRow();
-
             if (fila == -1) {
                 throw new PresentacionException("Seleccione un género de la tabla.");
             }
-
             String idGenero = modeloTabla.getValueAt(fila, 0).toString();
-
-            int opcion = JOptionPane.showConfirmDialog(
-                    this,
-                    "¿Deseas quitar este género de no deseados?",
-                    "Confirmar",
-                    JOptionPane.YES_NO_OPTION
-            );
-
+            int opcion = JOptionPane.showConfirmDialog(this, "¿Deseas quitar este género de no deseados?", "Confirmar", JOptionPane.YES_NO_OPTION);
             if (opcion != JOptionPane.YES_OPTION) {
                 return;
             }
-
-            usuarioBO.eliminarGeneroNoDeseado(
-                    usuarioActual.getId(),
-                    idGenero
-            );
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Género eliminado correctamente."
-            );
-
-            cargarGenerosNoDeseados();
-
+            boolean eliminado = usuarioBO.eliminarGeneroNoDeseado(this.usuarioActual.getId(), idGenero);
+            if (eliminado) {
+                JOptionPane.showMessageDialog(this, "Género eliminado correctamente.");
+                cargarGenerosNoDeseados();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el género para eliminar.");
+            }
         } catch (PresentacionException | NegocioException ex) {
             mostrarError(ex.getMessage());
         }

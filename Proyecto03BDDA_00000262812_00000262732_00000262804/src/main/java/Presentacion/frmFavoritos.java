@@ -17,10 +17,14 @@ import Negocio.FavoritoBO;
 import Negocio.GeneroBO;
 import Interfaces.IFavoritoBO;
 import Interfaces.IGeneroBO;
+import Utilerias.Sesion;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -28,8 +32,7 @@ import javax.swing.border.LineBorder;
 public class frmFavoritos extends JFrame {
 
     private UsuarioDTO usuarioActual;
-
-    private IFavoritoBO favoritoBO;
+    private final IFavoritoBO favoritoBO;
     private IGeneroBO generoBO;
 
     private JTextField txtBuscar;
@@ -59,27 +62,26 @@ public class frmFavoritos extends JFrame {
 
         JPanel menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(new Color(55, 55, 55));
+        menu.setBackground(new Color(0, 0, 0));
         menu.setBounds(0, 0, 180, 700);
         getContentPane().add(menu);
 
-        JLabel lblLogo = new JLabel("♪ Music");
-        lblLogo.setForeground(Color.WHITE);
-        lblLogo.setFont(new Font("Arial", Font.BOLD, 18));
-        lblLogo.setBounds(25, 20, 130, 30);
-        menu.add(lblLogo);
+        JButton btnMenuPrincipal = crearBotonMenu("Menú Principal", 40);
+        JButton btnArtistas = crearBotonMenu("Ártistas", 95);
+        JButton btnAlbumes = crearBotonMenu("Álbumes", 150);
+        JButton btnFavoritos = crearBotonMenu("Favoritos", 205);
+        JButton btnPerfil = crearBotonMenu("Perfil", 610);
 
-        JButton btnArtistas = crearBotonMenu("Artistas", 70);
-        JButton btnAlbumes = crearBotonMenu("Álbumes", 120);
-        JButton btnFavoritos = crearBotonMenu("Favoritos", 170);
-        JButton btnPerfil = crearBotonMenu("Perfil", 220);
-        JButton btnSalir = crearBotonMenu("Salir", 590);
-
+        menu.add(btnMenuPrincipal);
         menu.add(btnArtistas);
         menu.add(btnAlbumes);
         menu.add(btnFavoritos);
         menu.add(btnPerfil);
-        menu.add(btnSalir);
+
+        btnMenuPrincipal.addActionListener(e -> {
+            new frmMenuPrinicipal().setVisible(true);
+            dispose();
+        });
 
         btnArtistas.addActionListener(e -> {
             new frmMenuArtista().setVisible(true);
@@ -95,11 +97,6 @@ public class frmFavoritos extends JFrame {
 
         btnPerfil.addActionListener(e -> {
             new frmPerfil().setVisible(true);
-            dispose();
-        });
-
-        btnSalir.addActionListener(e -> {
-            new frmLogin().setVisible(true);
             dispose();
         });
 
@@ -145,10 +142,12 @@ public class frmFavoritos extends JFrame {
 
     private JButton crearBotonMenu(String texto, int y) {
         JButton boton = new JButton(texto);
-        boton.setBounds(25, y, 130, 35);
-        boton.setBackground(new Color(35, 35, 35));
+        boton.setBounds(20, y, 140, 45);
+        boton.setBackground(Color.BLACK);
         boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Dialog", Font.BOLD, 12));
         boton.setFocusPainted(false);
+        boton.setBorder(BorderFactory.createLineBorder(new Color(140, 140, 140)));
         return boton;
     }
 
@@ -162,51 +161,39 @@ public class frmFavoritos extends JFrame {
     }
 
     private void buscarFavoritos() {
-        if (usuarioActual == null) {
-            JOptionPane.showMessageDialog(this, "No hay usuario iniciado.");
+        this.usuarioActual = Sesion.getUsuarioActual();
+        if (this.usuarioActual == null) {
+            JOptionPane.showMessageDialog(this, "No existe una sesión iniciada.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             String texto = txtBuscar.getText().trim();
-            String tipo = cmbTipo.getSelectedItem().toString();
-
+            String tipo = cmbTipo.getSelectedItem() != null ? cmbTipo.getSelectedItem().toString() : "TODOS";
             String idGenero = null;
-            Object generoSeleccionado = cmbGenero.getSelectedItem();
-
-            if (generoSeleccionado instanceof GeneroDTO) {
-                idGenero = ((GeneroDTO) generoSeleccionado).getId();
+            if (cmbGenero.getSelectedItem() instanceof GeneroDTO) {
+                GeneroDTO generoSeleccionado = (GeneroDTO) cmbGenero.getSelectedItem();
+                idGenero = generoSeleccionado.getId();
             }
-
-            List<FavoritoDTO> favoritos = favoritoBO.buscarFavoritos(
-                    usuarioActual.getId(),
-                    texto,
-                    tipo,
-                    idGenero
-            );
-
-            cargarFavoritos(favoritos);
-
+            List<FavoritoDTO> favoritosEncontrados = favoritoBO.buscarFavoritos(this.usuarioActual.getId(), texto, tipo, idGenero);
+            cargarFavoritos(favoritosEncontrados);
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al buscar favoritos", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void cargarFavoritos(List<FavoritoDTO> favoritos) {
         panelResultados.removeAll();
-
         if (favoritos == null || favoritos.isEmpty()) {
-            JLabel lblVacio = new JLabel("No se encontraron favoritos.");
-            lblVacio.setFont(new Font("Arial", Font.PLAIN, 18));
-            lblVacio.setAlignmentX(LEFT_ALIGNMENT);
-            panelResultados.add(lblVacio);
+            JLabel lblMensaje = new JLabel("No se encontraron favoritos.");
+            lblMensaje.setFont(new Font("Arial", Font.PLAIN, 18)
+            );
+            panelResultados.add(lblMensaje);
         } else {
             for (FavoritoDTO favorito : favoritos) {
                 panelResultados.add(crearTarjetaFavorito(favorito));
-                panelResultados.add(Box.createVerticalStrut(12));
             }
         }
-
         panelResultados.revalidate();
         panelResultados.repaint();
     }
@@ -222,7 +209,15 @@ public class frmFavoritos extends JFrame {
         JLabel lblImagen = new JLabel();
         lblImagen.setBounds(15, 15, 100, 100);
         lblImagen.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        lblImagen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblImagen.setToolTipText("Clic para quitar de favoritos");
         cargarImagen(lblImagen, favorito.getImagen(), 100, 100);
+        lblImagen.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                eliminarFavorito(favorito);
+            }
+        });
         tarjeta.add(lblImagen);
 
         JLabel lblNombre = new JLabel(favorito.getNombre());
@@ -258,29 +253,25 @@ public class frmFavoritos extends JFrame {
     }
 
     private void eliminarFavorito(FavoritoDTO favorito) {
-        int opcion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Deseas eliminar este elemento de favoritos?",
-                "Confirmar",
-                JOptionPane.YES_NO_OPTION
-        );
-
+        UsuarioDTO usuario = Sesion.getUsuarioActual();
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(this, "No existe una sesión iniciada.", "Error", JOptionPane.ERROR_MESSAGE );
+            return;
+        }
+        int opcion = JOptionPane.showConfirmDialog( this,"¿Deseas eliminar este elemento de favoritos?", "Confirmar",JOptionPane.YES_NO_OPTION );
         if (opcion != JOptionPane.YES_OPTION) {
             return;
         }
-
         try {
-            favoritoBO.eliminarElementoFavorito(
-                    usuarioActual.getId(),
-                    favorito.getTipo(),
-                    favorito.getIdElemento()
-            );
-
-            JOptionPane.showMessageDialog(this, "Favorito eliminado.");
-            buscarFavoritos();
-
+            boolean eliminado = favoritoBO.eliminarElementoFavorito( usuario.getId(), favorito.getTipo(), favorito.getIdElemento() );
+            if (eliminado) {
+                JOptionPane.showMessageDialog( this,"Favorito eliminado.");
+                buscarFavoritos();
+            } else {
+                JOptionPane.showMessageDialog(this,"No se encontró el favorito para eliminar.");
+            }
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al eliminar favorito",JOptionPane.ERROR_MESSAGE);
         }
     }
 
