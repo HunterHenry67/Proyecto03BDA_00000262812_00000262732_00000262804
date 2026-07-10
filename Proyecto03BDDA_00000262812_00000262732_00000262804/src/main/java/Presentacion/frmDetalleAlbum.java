@@ -4,19 +4,156 @@
  */
 package Presentacion;
 
+import DTO.AlbumDTO;
+import DTO.CancionDTO;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author user
  */
 public class frmDetalleAlbum extends javax.swing.JFrame {
-    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmDetalleAlbum.class.getName());
-
+    private AlbumDTO album;
+    private String nombreArtista;
+    private String imagenArtista;
     /**
      * Creates new form frmDetalleAlbum
      */
     public frmDetalleAlbum() {
         initComponents();
+        setLocationRelativeTo(null);
+    }
+    
+    public frmDetalleAlbum(AlbumDTO album, String nombreArtista, String imagenArtista) {
+        initComponents();
+
+        this.album = album;
+        this.nombreArtista = nombreArtista;
+        this.imagenArtista = imagenArtista;
+        setLocationRelativeTo(null);
+        mostrarInformacionAlbum();
+//        configurarBotonVolver();
+    }
+    
+    private void mostrarInformacionAlbum() {
+
+        if (album == null) {
+            return;
+        }
+
+        lblNombreArtista.setText(nombreArtista);
+        lblNombreALbum.setText(album.getNombre());
+        lblFechaAlbum.setText(album.getFechaLanzamiento());
+
+        lblGeneroAlbum.setText(
+                obtenerNombreGenero(album.getIdGenero())
+        );
+
+        cargarImagen(
+                lblFotoAlbum,
+                album.getImagenPortada(),
+                165,
+                133
+        );
+
+        cargarImagen(
+                lblFotoPerfilArtista,
+                imagenArtista,
+                37,
+                30
+        );
+
+        llenarTablaCanciones();
+    }
+    
+    private void llenarTablaCanciones() {
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("#");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Duración");
+        modelo.addColumn("Favorito");
+
+        if (album.getCanciones() != null) {
+
+            int numero = 1;
+
+            for (CancionDTO cancion : album.getCanciones()) {
+
+                Object[] fila = {
+                    numero,
+                    cancion.getNombre(),
+                    cancion.getDuracion(),
+                    "☆"
+                };
+
+                modelo.addRow(fila);
+                numero++;
+            }
+        }
+
+        tablaInfoCanciones.setModel(modelo);
+    }
+    
+    private String obtenerNombreGenero(String idGenero) {
+
+        if (idGenero == null) {
+            return "";
+        }
+
+        if (idGenero.equals("6871f8c9e7b12a001a45a101")) {
+            return "Pop";
+        }
+
+        if (idGenero.equals("6871f8c9e7b12a001a45a102")) {
+            return "Rock Alternativo";
+        }
+
+        if (idGenero.equals("6871f8c9e7b12a001a45a103")) {
+            return "Reggaeton";
+        }
+
+        return "";
+    }
+    
+    private void cargarImagen(JLabel label, String rutaImagen, int ancho, int alto) {
+
+        label.setText("");
+        label.setIcon(null);
+
+        if (rutaImagen == null || rutaImagen.isBlank()) {
+            label.setText("Sin imagen");
+            return;
+        }
+
+        String ruta = rutaImagen.replace("\\", "/");
+
+        if (!ruta.startsWith("/")) {
+            ruta = "/" + ruta;
+        }
+
+        URL urlImagen = getClass().getResource(ruta);
+
+        if (urlImagen == null) {
+            label.setText("Sin imagen");
+            return;
+        }
+
+        ImageIcon icono = new ImageIcon(urlImagen);
+
+        Image imagenEscalada = icono.getImage().getScaledInstance(
+                ancho,
+                alto,
+                Image.SCALE_SMOOTH
+        );
+
+        label.setIcon(new ImageIcon(imagenEscalada));
     }
 
     /**
@@ -88,8 +225,10 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
 
         lblFotoPerfilArtista.setText("jLabel4");
 
+        lblNombreArtista.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNombreArtista.setText("jLabel5");
 
+        lblNombreALbum.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNombreALbum.setText("jLabel6");
 
         lblFechaAlbum.setText("jLabel7");
@@ -110,6 +249,7 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tablaInfoCanciones);
 
         btnVolver.setText("Volver");
+        btnVolver.addActionListener(this::btnVolverActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -123,15 +263,16 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lblNombreALbum, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(lblFotoPerfilArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblNombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(lblFechaAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblGeneroAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(lblNombreALbum, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(lblNombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblFechaAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblGeneroAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -234,11 +375,9 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(198, 198, 198)
-                        .addComponent(jLabel2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel2))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,6 +394,13 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+            
+        new frmAlbum().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
      * @param args the command line arguments

@@ -32,7 +32,7 @@ public class frmAlbum extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmAlbum.class.getName());
 
     private IArtistaBO artistaBO;
-
+    private List<String> imagenesArtistas = new ArrayList<>();
     private JLabel[] labelsImagenes;
     private JLabel[] labelsArtistas;
     private JLabel[] labelsNombresAlbum;
@@ -57,7 +57,7 @@ public class frmAlbum extends javax.swing.JFrame {
         inicializarLabels();
         limpiarLabels();
         cargarAlbumes();
-
+        configurarClickAlbumes();
         setLocationRelativeTo(null);
     }
 
@@ -101,73 +101,95 @@ public class frmAlbum extends javax.swing.JFrame {
     }
 
     private void cargarAlbumes() {
+
         try {
 
             List<ArtistaDTO> artistas = artistaBO.consultarTodos();
+
             albumesMostrados.clear();
             artistasAlbumes.clear();
+            imagenesArtistas.clear();
 
             if (artistas == null) {
                 mostrarAlbumes();
                 return;
             }
-            
+
             for (ArtistaDTO artista : artistas) {
-                if (artista == null) {
+
+                if (artista == null || artista.getAlbumes() == null) {
                     continue;
                 }
-                if (artista.getAlbumes() == null) {
-                    continue;
-                }
+
                 for (AlbumDTO album : artista.getAlbumes()) {
+
                     if (album == null) {
                         continue;
                     }
 
                     albumesMostrados.add(album);
                     artistasAlbumes.add(artista.getNombre());
+                    imagenesArtistas.add(artista.getImagen());
                 }
             }
+
             paginaActual = 0;
             mostrarAlbumes();
 
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
-        }
 
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error al cargar álbumes: " + ex.getMessage()
+            );
+        }
     }
 
     private void filtrarAlbumes() {
+
         try {
+
             List<ArtistaDTO> artistas = artistaBO.consultarTodos();
+
             albumesMostrados.clear();
             artistasAlbumes.clear();
+            imagenesArtistas.clear();
 
-            String texto = txtBuscadorAlbumes.getText().trim().toLowerCase();
+            String texto = txtBuscadorAlbumes.getText()
+                    .trim()
+                    .toLowerCase();
 
             for (ArtistaDTO artista : artistas) {
+
                 if (artista == null || artista.getAlbumes() == null) {
                     continue;
                 }
 
                 for (AlbumDTO album : artista.getAlbumes()) {
+
+                    if (album == null) {
+                        continue;
+                    }
+
                     String nombreArtista = artista.getNombre();
                     String nombreAlbum = album.getNombre();
                     String fecha = album.getFechaLanzamiento();
+                    String genero = obtenerNombreGenero(album.getIdGenero());
 
                     if (nombreArtista == null) {
                         nombreArtista = "";
                     }
+
                     if (nombreAlbum == null) {
                         nombreAlbum = "";
                     }
+
                     if (fecha == null) {
                         fecha = "";
                     }
 
-                    String genero = obtenerNombreGenero(album.getIdGenero());
-                    boolean coincide =
-                            nombreArtista.toLowerCase().contains(texto)
+                    boolean coincide
+                            = nombreArtista.toLowerCase().contains(texto)
                             || nombreAlbum.toLowerCase().contains(texto)
                             || fecha.toLowerCase().contains(texto)
                             || genero.toLowerCase().contains(texto);
@@ -175,16 +197,72 @@ public class frmAlbum extends javax.swing.JFrame {
                     if (coincide) {
                         albumesMostrados.add(album);
                         artistasAlbumes.add(nombreArtista);
+                        imagenesArtistas.add(artista.getImagen());
                     }
                 }
             }
 
             paginaActual = 0;
             mostrarAlbumes();
+
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage());
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error al buscar álbumes: " + ex.getMessage()
+            );
+        }
+    }
+    
+    private void configurarClickAlbumes() {
+
+        for (int i = 0; i < labelsImagenes.length; i++) {
+
+            final int posicionLabel = i;
+
+            labelsImagenes[i].setCursor(
+                    new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)
+            );
+
+            labelsImagenes[i].addMouseListener(
+                    new java.awt.event.MouseAdapter() {
+
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    abrirDetalleAlbum(posicionLabel);
+                }
+            });
+        }
+    }
+    
+    private void abrirDetalleAlbum(int posicionLabel) {
+
+        int posicionReal
+                = paginaActual * ALBUMES_POR_PAGINA
+                + posicionLabel;
+
+        if (posicionReal < 0
+                || posicionReal >= albumesMostrados.size()) {
+            return;
         }
 
+        AlbumDTO albumSeleccionado
+                = albumesMostrados.get(posicionReal);
+
+        String nombreArtista
+                = artistasAlbumes.get(posicionReal);
+
+        String imagenArtista
+                = imagenesArtistas.get(posicionReal);
+
+        frmDetalleAlbum detalle = new frmDetalleAlbum(
+                albumSeleccionado,
+                nombreArtista,
+                imagenArtista
+        );
+
+        detalle.setVisible(true);
+        dispose();
     }
     
     private String obtenerNombreGenero(String idGenero) {
@@ -338,6 +416,7 @@ public class frmAlbum extends javax.swing.JFrame {
         txtBuscadorAlbumes = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(102, 102, 102));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -417,42 +496,62 @@ public class frmAlbum extends javax.swing.JFrame {
 
         lblAlbum1.setText("jLabel4");
 
+        lblArtista1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblArtista1.setText("jLabel13");
 
+        lblNombreAlbum1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         lblNombreAlbum1.setText("jLabel14");
 
+        lblArtista2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblArtista2.setText("jLabel15");
 
+        lblNombreAlbum2.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         lblNombreAlbum2.setText("jLabel16");
 
+        lblArtista3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblArtista3.setText("jLabel17");
 
+        lblNombreAlbum3.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         lblNombreAlbum3.setText("jLabel18");
 
+        lblArtista4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblArtista4.setText("jLabel19");
 
+        lblNombreAlbum4.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         lblNombreAlbum4.setText("jLabel20");
 
+        lblNombreArtista5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblNombreArtista5.setText("jLabel1");
 
+        lblNombreArtista6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblNombreArtista6.setText("jLabel2");
 
+        lblNombreArtista7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblNombreArtista7.setText("jLabel4");
 
+        lblNombreArtista8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblNombreArtista8.setText("jLabel5");
 
+        lblNombreAlbum8.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         lblNombreAlbum8.setText("jLabel6");
 
+        lblNombreAlbum7.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         lblNombreAlbum7.setText("jLabel7");
 
+        lblNombreAlbum6.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         lblNombreAlbum6.setText("jLabel8");
 
+        lblNombreAlbum5.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         lblNombreAlbum5.setText("jLabel9");
 
+        btnSiguiente.setBackground(new java.awt.Color(51, 51, 51));
         btnSiguiente.setText(">");
+        btnSiguiente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         btnSiguiente.addActionListener(this::btnSiguienteActionPerformed);
 
+        btnAtras.setBackground(new java.awt.Color(51, 51, 51));
         btnAtras.setText("<");
+        btnAtras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         btnAtras.addActionListener(this::btnAtrasActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -554,7 +653,7 @@ public class frmAlbum extends javax.swing.JFrame {
                             .addComponent(lblNombreAlbum6)
                             .addComponent(lblNombreAlbum5)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 290, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSiguiente)
                             .addComponent(btnAtras))))
@@ -573,14 +672,13 @@ public class frmAlbum extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(198, 198, 198)
                         .addComponent(lblTituloFrm)
-                        .addGap(221, 221, 221)
-                        .addComponent(txtBuscadorAlbumes)
-                        .addGap(31, 31, 31)))
-                .addGap(0, 148, Short.MAX_VALUE))
+                        .addGap(198, 198, 198)
+                        .addComponent(txtBuscadorAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,9 +687,11 @@ public class frmAlbum extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblTituloFrm)
-                            .addComponent(txtBuscadorAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(txtBuscadorAlbumes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
