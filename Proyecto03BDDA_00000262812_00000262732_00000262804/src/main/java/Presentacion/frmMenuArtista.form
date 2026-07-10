@@ -116,7 +116,7 @@
                   <Component id="btnAlbumes" min="-2" pref="53" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnFavoritos" min="-2" pref="56" max="-2" attributes="0"/>
-                  <EmptySpace pref="277" max="32767" attributes="0"/>
+                  <EmptySpace pref="323" max="32767" attributes="0"/>
                   <Component id="btnPerfil" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>

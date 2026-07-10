@@ -50,13 +50,11 @@ public class GeneroNoDeseadoBO implements IGeneroNoDeseadoBO {
             ObjectId idUsuarioObj = new ObjectId(idUsuario);
             ObjectId idGeneroObj = new ObjectId(idGeneroStr);
 
-            // Validar que el género exista y tomar su nombre actual
             Genero genero = generoDAO.consultarPorId(idGeneroObj);
             if (genero == null) {
                 throw new NegocioException("El género seleccionado no existe.");
             }
 
-            // Validar que no esté duplicado
             if (usuarioDAO.tieneGeneroNoDeseado(idUsuarioObj, idGeneroObj)) {
                 throw new NegocioException("Ese género ya está en tu lista de restricciones.");
             }

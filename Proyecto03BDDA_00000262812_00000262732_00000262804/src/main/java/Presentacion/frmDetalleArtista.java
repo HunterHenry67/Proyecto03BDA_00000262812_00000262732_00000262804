@@ -211,6 +211,8 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }
 
     private void cargarImagen(JLabel label, String rutaImagen, int ancho, int alto) {
+        label.setText("");
+        label.setIcon(null);
         try {
             ImageIcon icono = null;
             if (rutaImagen != null && !rutaImagen.trim().isEmpty()) {
@@ -225,7 +227,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
                 label.setText("Sin imagen");
                 return;
             }
-            Image imagen = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+            Image imagen = icono.getImage().getScaledInstance(ancho,alto,Image.SCALE_SMOOTH);
             label.setIcon(new ImageIcon(imagen));
         } catch (Exception ex) {
             label.setText("Sin imagen");
