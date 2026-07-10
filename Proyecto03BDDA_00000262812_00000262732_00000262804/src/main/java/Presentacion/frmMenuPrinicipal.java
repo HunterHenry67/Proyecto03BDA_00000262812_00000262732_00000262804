@@ -25,7 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import DTO.UsuarioDTO;
 import Excepciones.PersistenciaException;
 
 /**
@@ -38,15 +37,6 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     private static final int LIMITE_CANCIONES = 4;
     private static final int LIMITE_ARTISTAS = 4;
     private static final int LIMITE_ALBUMES = 4;
-    private static UsuarioDTO usuarioActual;
-
-    public static void establecerUsuarioActual(UsuarioDTO usuario) {
-        usuarioActual = usuario;
-    }
-
-    public static UsuarioDTO obtenerUsuarioActual() {
-        return usuarioActual;
-    }
 
     public frmMenuPrinicipal() {
         initComponents();
@@ -530,7 +520,8 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
-        // TODO add your handling code here:
+        txtFieldBuscar.setText("");
+        cargarInicio();
     }//GEN-LAST:event_btnMenuPrincipalActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

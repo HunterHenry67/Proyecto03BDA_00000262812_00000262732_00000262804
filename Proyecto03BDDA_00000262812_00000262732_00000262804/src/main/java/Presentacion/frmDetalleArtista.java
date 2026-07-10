@@ -31,6 +31,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import DTO.GeneroDTO;
+import Excepciones.PersistenciaException;
+import Interfaces.IGeneroBO;
+import Negocio.GeneroBO;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -43,6 +48,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     private List<AlbumDTO> albumesArtista = new ArrayList<>();
     private int paginaAlbumActual = 0;
     private final IFavoritoBO favoritoBO = new FavoritoBO();
+    private final IGeneroBO generoBO = new GeneroBO();
 
     private static final int ALBUMES_POR_PAGINA = 4;
 
@@ -80,7 +86,8 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     private void cargarDatosArtista() {
         lblNombreArtista.setText("Nombre: " + artista.getNombre());
         lblTipoArtista.setText("Tipo: " + obtenerTipoArtista());
-        lblGeneroArtista.setText("Género: " + artista.getIdGenero());
+        lblGeneroArtista.setText("Género: "+ obtenerNombreGenero(artista.getIdGenero())
+);
         cargarImagen(lblImagenArtista, artista.getImagen(), 120, 120);
     }
 
@@ -95,6 +102,54 @@ public class frmDetalleArtista extends javax.swing.JFrame {
             return "Banda";
         }
         return "Artista";
+    }
+    
+    private ImageIcon crearIconoTabla(
+            String rutaImagen,
+            int ancho,
+            int alto
+    ) {
+        try {
+            if (rutaImagen == null
+                    || rutaImagen.trim().isEmpty()) {
+                return null;
+            }
+
+            String ruta = rutaImagen
+                    .replace("\\", "/");
+
+            if (ruta.startsWith("/")) {
+                ruta = ruta.substring(1);
+            }
+
+            URL url = getClass()
+                    .getClassLoader()
+                    .getResource(ruta);
+
+            ImageIcon icono;
+
+            if (url != null) {
+                icono = new ImageIcon(url);
+            } else {
+                icono = new ImageIcon(rutaImagen);
+            }
+
+            if (icono.getIconWidth() <= 0) {
+                return null;
+            }
+
+            Image imagen = icono.getImage()
+                    .getScaledInstance(
+                            ancho,
+                            alto,
+                            Image.SCALE_SMOOTH
+                    );
+
+            return new ImageIcon(imagen);
+
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     private void cargarIntegrantes() {
@@ -170,31 +225,73 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }
 
     private void cargarAlbumes() {
-        DefaultTableModel modelo = new DefaultTableModel(
-                new Object[]{
-                    "Portada",
-                    "Nombre",
-                    "Fecha de publicación",
-                    "Género"
-                },
-                0) {
+        DefaultTableModel modelo =
+                new DefaultTableModel(
+                        new Object[]{
+                            "Portada",
+                            "Nombre",
+                            "Fecha de publicación",
+                            "Género"
+                        },
+                        0
+                ) {
             @Override
-            public boolean isCellEditable(int fila, int columna) {
+            public boolean isCellEditable(
+                    int fila,
+                    int columna
+            ) {
                 return false;
             }
+
+            @Override
+            public Class<?> getColumnClass(
+                    int columna
+            ) {
+                if (columna == 0) {
+                    return ImageIcon.class;
+                }
+
+                return Object.class;
+            }
         };
-        int inicio = paginaAlbumActual * ALBUMES_POR_PAGINA;
-        int fin = Math.min(inicio + ALBUMES_POR_PAGINA, albumesArtista.size());
+
+        int inicio =
+                paginaAlbumActual
+                * ALBUMES_POR_PAGINA;
+
+        int fin = Math.min(
+                inicio + ALBUMES_POR_PAGINA,
+                albumesArtista.size()
+        );
+
         for (int i = inicio; i < fin; i++) {
-            AlbumDTO album = albumesArtista.get(i);
+            AlbumDTO album =
+                    albumesArtista.get(i);
+
+            ImageIcon portada =
+                    crearIconoTabla(
+                            album.getImagenPortada(),
+                            65,
+                            65
+                    );
+
             modelo.addRow(new Object[]{
-                album.getImagenPortada(),
+                portada,
                 album.getNombre(),
                 album.getFechaLanzamiento(),
-                album.getIdGenero()
+                obtenerNombreGenero(
+                        album.getIdGenero()
+                )
             });
         }
+
         tblAlbumes.setModel(modelo);
+        tblAlbumes.setRowHeight(70);
+
+        tblAlbumes.getColumnModel()
+                .getColumn(0)
+                .setPreferredWidth(75);
+
         actualizarControlesPaginacion();
     }
 
@@ -233,7 +330,29 @@ public class frmDetalleArtista extends javax.swing.JFrame {
             label.setText("Sin imagen");
         }
     }
+    
+    private String obtenerNombreGenero(String idGenero) {
+        if (idGenero == null
+                || idGenero.isBlank()
+                || !ObjectId.isValid(idGenero)) {
 
+            return "Sin género";
+        }
+
+        try {
+            GeneroDTO genero =
+                    generoBO.consultarPorId(
+                            new ObjectId(idGenero)
+                    );
+
+            return genero.getNombre();
+
+        } catch (PersistenciaException
+                | IllegalArgumentException ex) {
+
+            return "Sin género";
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -507,15 +626,27 @@ public class frmDetalleArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
-        // TODO add your handling code here:
+        new frmAlbum().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
-        // TODO add your handling code here:
+        try {
+            new frmFavoritos().setVisible(true);
+            dispose();
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No fue posible abrir favoritos: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnFavoritosActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        // TODO add your handling code here:
+        new frmPerfil().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     private void btnAgregarFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFavoritosActionPerformed

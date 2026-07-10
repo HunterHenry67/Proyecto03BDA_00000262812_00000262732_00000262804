@@ -136,12 +136,27 @@ public class UsuarioBO implements IUsuarioBO {
             ObjectId objectIdUsuario = new ObjectId(idUsuario);
             GeneroNoDeseado generoNoDeseado = mapearGeneroNoDeseadoAEntidad(generoNoDeseadoDTO);
 
+            if (generoNoDeseado.getIdGenero() == null) {
+                throw new NegocioException(
+                        "El género no tiene un identificador válido."
+                );
+            }
+
+            boolean yaExiste = usuarioDAO.tieneGeneroNoDeseado(
+                    objectIdUsuario,
+                    generoNoDeseado.getIdGenero()
+            );
+
+            if (yaExiste) {
+                return false;
+            }
+
             return usuarioDAO.agregarGeneroNoDeseado(objectIdUsuario, generoNoDeseado);
 
         } catch (PersistenciaException e) {
             throw new NegocioException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            throw new NegocioException("El id del usuario no es válido.");
+            throw new NegocioException("El id del usuario o del género no es válido.");
         }
     }
 

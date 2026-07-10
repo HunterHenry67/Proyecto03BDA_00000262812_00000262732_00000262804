@@ -238,19 +238,19 @@ public class frmGenerosNoDeseados extends JFrame {
         }
         try {
             modeloTabla.setRowCount(0);
-            List generosNoDeseados = usuarioBO.consultarGenerosNoDeseados(this.usuarioActual.getId());
+            List<GeneroNoDeseadoDTO> generosNoDeseados
+                    = usuarioBO.consultarGenerosNoDeseados(this.usuarioActual.getId());
+
             if (generosNoDeseados != null) {
-                for (Object objeto : generosNoDeseados) {
-                    if (objeto instanceof GeneroNoDeseadoDTO) {
-                        GeneroNoDeseadoDTO generoNoDeseado = (GeneroNoDeseadoDTO) objeto;
-                        modeloTabla.addRow(new Object[]{
-                            generoNoDeseado.getIdGenero(),
-                            generoNoDeseado.getNombreGenero(),
-                            generoNoDeseado.getFechaAgregacion()
-                        });
-                    }
+                for (GeneroNoDeseadoDTO generoNoDeseado : generosNoDeseados) {
+                    modeloTabla.addRow(new Object[]{
+                        generoNoDeseado.getIdGenero(),
+                        generoNoDeseado.getNombreGenero(),
+                        generoNoDeseado.getFechaAgregacion()
+                    });
                 }
             }
+
             this.usuarioActual.setGeneroNoDeseado(generosNoDeseados);
             Sesion.iniciarSesion(this.usuarioActual);
         } catch (NegocioException ex) {

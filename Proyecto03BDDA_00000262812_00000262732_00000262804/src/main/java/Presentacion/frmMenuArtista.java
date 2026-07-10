@@ -6,6 +6,7 @@ package Presentacion;
 
 import DTO.ArtistaDTO;
 import Excepciones.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.IArtistaBO;
 import Interfaces.IPersonaBO;
 import Negocio.ArtistaBO;
@@ -442,15 +443,27 @@ public class frmMenuArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
-        // TODO add your handling code here:
+        new frmAlbum().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
-        // TODO add your handling code here:
+        try {
+            new frmFavoritos().setVisible(true);
+            dispose();
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No fue posible abrir favoritos: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnFavoritosActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        // TODO add your handling code here:
+        new frmPerfil().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     private void btnAnteriorArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorArtistasActionPerformed

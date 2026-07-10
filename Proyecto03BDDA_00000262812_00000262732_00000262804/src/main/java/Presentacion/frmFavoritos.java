@@ -42,7 +42,7 @@ public class frmFavoritos extends JFrame {
     private JScrollPane scrollResultados;
 
     public frmFavoritos() throws PersistenciaException {
-        this.usuarioActual = frmMenuPrinicipal.obtenerUsuarioActual();
+        this.usuarioActual = Sesion.getUsuarioActual();
         this.favoritoBO = new FavoritoBO();
         this.generoBO = new GeneroBO();
 

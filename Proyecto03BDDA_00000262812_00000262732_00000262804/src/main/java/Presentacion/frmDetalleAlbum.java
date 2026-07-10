@@ -12,6 +12,7 @@ import Interfaces.IFavoritoBO;
 import Negocio.FavoritoBO;
 import Utilerias.Sesion;
 import java.awt.Image;
+import java.io.File;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -19,26 +20,36 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import DTO.GeneroDTO;
+import Excepciones.PersistenciaException;
+import Interfaces.IGeneroBO;
+import Negocio.GeneroBO;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author user
  */
 public class frmDetalleAlbum extends javax.swing.JFrame {
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmDetalleAlbum.class.getName());
     private AlbumDTO album;
     private IFavoritoBO favoritoBO;
     private String nombreArtista;
     private String imagenArtista;
+    private final IGeneroBO generoBO = new GeneroBO();
+
     /**
      * Creates new form frmDetalleAlbum
      */
     public frmDetalleAlbum() {
         initComponents();
         favoritoBO = new FavoritoBO();
+        configurarNavegacion();
+        cargarPerfilLateral();
         setLocationRelativeTo(null);
     }
-    
+
     public frmDetalleAlbum(AlbumDTO album, String nombreArtista, String imagenArtista) {
         initComponents();
 
@@ -46,40 +57,42 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
         this.nombreArtista = nombreArtista;
         this.favoritoBO = new FavoritoBO();
         this.imagenArtista = imagenArtista;
+        configurarNavegacion();
+        cargarPerfilLateral();
         setLocationRelativeTo(null);
         mostrarInformacionAlbum();
         configurarClickFavoritos();
     }
-    
+
     private void mostrarInformacionAlbum() {
         if (album == null) {
             return;
         }
-        
+
         lblNombreArtista.setText(nombreArtista);
         lblNombreALbum.setText(album.getNombre());
         lblFechaAlbum.setText(album.getFechaLanzamiento());
-        lblGeneroAlbum.setText(obtenerNombreGenero(album.getIdGenero()));
+        lblGeneroAlbum.setText("Género: " + obtenerNombreGenero(album.getIdGenero()));
 
-        cargarImagen(lblFotoAlbum, album.getImagenPortada(),165,133);
-        cargarImagen(lblFotoPerfilArtista, imagenArtista,37,30);
+        cargarImagen(lblFotoAlbum, album.getImagenPortada(), 165, 133);
+        cargarImagen(lblFotoPerfilArtista, imagenArtista, 37, 30);
         llenarTablaCanciones();
     }
-    
+
     private void llenarTablaCanciones() {
         DefaultTableModel modelo = new DefaultTableModel(new Object[]{"#", "Nombre", "Duración", "Favorito"}, 0) {
-            
+
             @Override
             public boolean isCellEditable(int fila, int columna) {
                 return false;
             }
         };
-        
+
         if (album != null && album.getCanciones() != null) {
             int numero = 1;
-            
+
             for (CancionDTO cancion : album.getCanciones()) {
-                Object[] fila = {numero,cancion.getNombre(),cancion.getDuracion(),"☐" };
+                Object[] fila = {numero, cancion.getNombre(), cancion.getDuracion(), "☐"};
 
                 modelo.addRow(fila);
                 numero++;
@@ -90,7 +103,7 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
         tablaInfoCanciones.getColumnModel().getColumn(0).setPreferredWidth(30);
         tablaInfoCanciones.getColumnModel().getColumn(3).setPreferredWidth(60);
     }
-    
+
     private void configurarClickFavoritos() {
         tablaInfoCanciones.addMouseListener(new MouseAdapter() {
             @Override
@@ -103,12 +116,12 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void agregarCancionFavorita(int fila) {
         UsuarioDTO usuario = Sesion.getUsuarioActual();
-        
+
         if (usuario == null) {
-            JOptionPane.showMessageDialog(this, "No existe un usuario con sesión iniciada.", "Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No existe un usuario con sesión iniciada.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (album == null || album.getCanciones() == null) {
@@ -117,49 +130,54 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
         if (fila < 0 || fila >= album.getCanciones().size()) {
             return;
         }
-        
+
         CancionDTO cancion = album.getCanciones().get(fila);
-        
+
         if (cancion == null || cancion.getIdCancion() == null) {
-            JOptionPane.showMessageDialog(this, "La canción no tiene un identificador válido.", "Error",JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog(this, "La canción no tiene un identificador válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        
+
         try {
-            boolean agregado = favoritoBO.agregarCancionFavorita(usuario.getId(),cancion.getIdCancion());
+            boolean agregado = favoritoBO.agregarCancionFavorita(usuario.getId(), cancion.getIdCancion());
             if (agregado) {
                 tablaInfoCanciones.setValueAt("☑", fila, 3);
-                JOptionPane.showMessageDialog(this,"Canción agregada a favoritos: "+ cancion.getNombre());
+                JOptionPane.showMessageDialog(this, "Canción agregada a favoritos: " + cancion.getNombre());
             } else {
-                tablaInfoCanciones.setValueAt( "★", fila, 3);
-                JOptionPane.showMessageDialog( this,"La canción ya estaba en favoritos.","Favoritos", JOptionPane.INFORMATION_MESSAGE);
+                tablaInfoCanciones.setValueAt("☑", fila, 3);
+                JOptionPane.showMessageDialog(this, "La canción ya estaba en favoritos.", "Favoritos", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al agregar favorito", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private String obtenerNombreGenero(String idGenero) {
-        if (idGenero == null) {
-            return "";
+
+        if (idGenero == null || idGenero.isBlank()) {
+            return "Sin género";
         }
 
-        if (idGenero.equals("6871f8c9e7b12a001a45a101")) {
-            return "Pop";
+        if (!ObjectId.isValid(idGenero)) {
+            return "Sin género";
         }
 
-        if (idGenero.equals("6871f8c9e7b12a001a45a102")) {
-            return "Rock Alternativo";
-        }
+        try {
+            ObjectId id = new ObjectId(idGenero);
 
-        if (idGenero.equals("6871f8c9e7b12a001a45a103")) {
-            return "Reggaeton";
-        }
+            GeneroDTO genero = generoBO.consultarPorId(id);
 
-        return "";
+            if (genero == null || genero.getNombre() == null) {
+                return "Sin género";
+            }
+
+            return genero.getNombre();
+
+        } catch (PersistenciaException | IllegalArgumentException ex) {
+            return "Sin género";
+        }
     }
-    
+
     private void cargarImagen(JLabel label, String rutaImagen, int ancho, int alto) {
         label.setText("");
         label.setIcon(null);
@@ -168,24 +186,91 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
             label.setText("Sin imagen");
             return;
         }
-        
-        String ruta = rutaImagen.replace("\\", "/");
-        
-        if (!ruta.startsWith("/")) {
-            ruta = "/" + ruta;
-        }
-        
-        URL urlImagen = getClass().getResource(ruta);
-        
-        if (urlImagen == null) {
+
+        try {
+            String ruta = rutaImagen.trim().replace("\\", "/");
+            while (ruta.startsWith("/")) {
+                ruta = ruta.substring(1);
+            }
+
+            URL urlImagen = getClass().getClassLoader().getResource(ruta);
+            ImageIcon icono;
+
+            if (urlImagen != null) {
+                icono = new ImageIcon(urlImagen);
+            } else {
+                File archivo = new File(rutaImagen);
+                icono = archivo.exists()
+                        ? new ImageIcon(archivo.getAbsolutePath())
+                        : new ImageIcon(rutaImagen);
+            }
+
+            if (icono.getIconWidth() <= 0) {
+                label.setText("Sin imagen");
+                return;
+            }
+
+            Image imagenEscalada = icono.getImage().getScaledInstance(
+                    ancho,
+                    alto,
+                    Image.SCALE_SMOOTH
+            );
+            label.setIcon(new ImageIcon(imagenEscalada));
+        } catch (Exception ex) {
             label.setText("Sin imagen");
+        }
+    }
+
+    private void configurarNavegacion() {
+        btnMenuPrincipal.addActionListener(e -> {
+            new frmMenuPrinicipal().setVisible(true);
+            dispose();
+        });
+
+        btnArtistas.addActionListener(e -> {
+            new frmMenuArtista().setVisible(true);
+            dispose();
+        });
+
+        btnAlbumes.addActionListener(e -> {
+            new frmAlbum().setVisible(true);
+            dispose();
+        });
+
+        btnFavoritos.addActionListener(e -> abrirFavoritos());
+
+        jButton5.addActionListener(e -> {
+            new frmPerfil().setVisible(true);
+            dispose();
+        });
+    }
+
+    private void abrirFavoritos() {
+        try {
+            new frmFavoritos().setVisible(true);
+            dispose();
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No fue posible abrir favoritos: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    private void cargarPerfilLateral() {
+        UsuarioDTO usuario = Sesion.getUsuarioActual();
+
+        if (usuario == null) {
+            lblNombrePerfil.setText("Sin sesión");
+            lblFotoPerfil.setText("");
+            lblFotoPerfil.setIcon(null);
             return;
         }
-        
-        ImageIcon icono = new ImageIcon(urlImagen);
-        
-        Image imagenEscalada = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH );
-        label.setIcon(new ImageIcon(imagenEscalada));
+
+        lblNombrePerfil.setText(usuario.getNombreUsuario());
+        cargarImagen(lblFotoPerfil, usuario.getImagenPerfil(), 34, 30);
     }
 
     /**
@@ -428,8 +513,6 @@ public class frmDetalleAlbum extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
-            
         new frmAlbum().setVisible(true);
         dispose();
     }//GEN-LAST:event_btnVolverActionPerformed

@@ -573,4 +573,74 @@ public class FavoritoDAO implements IFavoritoDAO {
 
         return null;
     }
+
+    @Override
+    public ObjectId obtenerGeneroElemento(
+            String tipo,
+            ObjectId idElemento
+    ) throws PersistenciaException {
+
+        try {
+            String tipoNormalizado
+                    = normalizarTipo(tipo);
+
+            List<Artista> artistas
+                    = coleccionArtistas.find()
+                            .into(new ArrayList<>());
+
+            for (Artista artista : artistas) {
+
+                if ("ARTISTA".equals(tipoNormalizado)
+                        && artista.getId() != null
+                        && artista.getId()
+                                .equals(idElemento)) {
+
+                    return artista.getIdGenero();
+                }
+
+                if (artista.getAlbumes() == null) {
+                    continue;
+                }
+
+                for (Album album
+                        : artista.getAlbumes()) {
+
+                    if ("ALBUM".equals(tipoNormalizado)
+                            && album.getId() != null
+                            && album.getId()
+                                    .equals(idElemento)) {
+
+                        return album.getIdGenero();
+                    }
+
+                    if (album.getCanciones() == null) {
+                        continue;
+                    }
+
+                    for (Cancion cancion
+                            : album.getCanciones()) {
+
+                        if ("CANCION".equals(
+                                tipoNormalizado
+                        )
+                                && cancion.getId() != null
+                                && cancion.getId()
+                                        .equals(idElemento)) {
+
+                            return cancion.getIdGenero();
+                        }
+                    }
+                }
+            }
+
+            return null;
+
+        } catch (Exception ex) {
+            throw new PersistenciaException(
+                    "Error al obtener el género "
+                    + "del elemento: "
+                    + ex.getMessage()
+            );
+        }
+    }
 }

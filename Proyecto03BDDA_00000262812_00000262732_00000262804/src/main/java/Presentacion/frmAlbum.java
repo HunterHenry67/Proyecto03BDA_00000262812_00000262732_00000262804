@@ -6,9 +6,15 @@ package Presentacion;
 
 import DTO.AlbumDTO;
 import DTO.ArtistaDTO;
+import DTO.GeneroDTO;
+import DTO.UsuarioDTO;
 import Excepciones.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.IArtistaBO;
+import Interfaces.IGeneroBO;
 import Negocio.ArtistaBO;
+import Negocio.GeneroBO;
+import Utilerias.Sesion;
 import java.awt.Image;
 import java.io.File;
 import java.net.URL;
@@ -22,6 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -32,6 +39,7 @@ public class frmAlbum extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmAlbum.class.getName());
 
     private IArtistaBO artistaBO;
+    private final IGeneroBO generoBO = new GeneroBO();
     private List<String> imagenesArtistas = new ArrayList<>();
     private JLabel[] labelsImagenes;
     private JLabel[] labelsArtistas;
@@ -53,6 +61,8 @@ public class frmAlbum extends javax.swing.JFrame {
         initComponents();
 
         this.artistaBO = artistaBO;
+        configurarNavegacion();
+        cargarPerfilLateral();
         configurarBuscador();
         inicializarLabels();
         limpiarLabels();
@@ -266,19 +276,23 @@ public class frmAlbum extends javax.swing.JFrame {
     }
     
     private String obtenerNombreGenero(String idGenero) {
-        if (idGenero == null) {
-            return "";
+        if (idGenero == null
+                || idGenero.isBlank()
+                || !ObjectId.isValid(idGenero)) {
+            return "Sin género";
         }
-        if (idGenero.equals("6871f8c9e7b12a001a45a101")) {
-            return "Pop";
+
+        try {
+            GeneroDTO genero = generoBO.consultarPorId(new ObjectId(idGenero));
+
+            if (genero == null || genero.getNombre() == null) {
+                return "Sin género";
+            }
+
+            return genero.getNombre();
+        } catch (PersistenciaException | IllegalArgumentException ex) {
+            return "Sin género";
         }
-        if (idGenero.equals("6871f8c9e7b12a001a45a102")) {
-            return "Rock Alternativo";
-        }
-        if (idGenero.equals("6871f8c9e7b12a001a45a103")) {
-            return "Reggaeton";
-        }
-        return "";
     }
     
     private void mostrarAlbumes() {
@@ -332,37 +346,97 @@ public class frmAlbum extends javax.swing.JFrame {
     }
     
     private void cargarImagen(JLabel label, String rutaImagen) {
+        cargarImagen(label, rutaImagen, 100, 100);
+    }
+
+    private void cargarImagen(JLabel label, String rutaImagen, int ancho, int alto) {
         label.setIcon(null);
         label.setText("");
+
         if (rutaImagen == null || rutaImagen.isBlank()) {
             label.setText("Sin imagen");
             return;
         }
-        
-        try {
-            String ruta = rutaImagen.replace("\\", "/");
 
-            if (!ruta.startsWith("/")) {
-                ruta = "/" + ruta;
+        try {
+            String ruta = rutaImagen.trim().replace("\\", "/");
+            while (ruta.startsWith("/")) {
+                ruta = ruta.substring(1);
             }
 
-            URL urlImagen = getClass().getResource(ruta);
+            URL urlImagen = getClass().getClassLoader().getResource(ruta);
+            ImageIcon icono = urlImagen != null
+                    ? new ImageIcon(urlImagen)
+                    : new ImageIcon(rutaImagen);
 
-            if (urlImagen == null) {
-                System.out.println("No se encontró la imagen: " + ruta);
+            if (icono.getIconWidth() <= 0) {
                 label.setText("Sin imagen");
                 return;
             }
-            
-            ImageIcon icono = new ImageIcon(urlImagen);
-            Image imagenEscalada = icono.getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH);
+
+            Image imagenEscalada = icono.getImage().getScaledInstance(
+                    ancho,
+                    alto,
+                    Image.SCALE_SMOOTH
+            );
 
             label.setIcon(new ImageIcon(imagenEscalada));
-
         } catch (Exception ex) {
-            System.out.println("Error cargando imagen: " + ex.getMessage());
             label.setText("Sin imagen");
         }
+    }
+
+    private void configurarNavegacion() {
+        btnMenuPrincipal.addActionListener(e -> {
+            new frmMenuPrinicipal().setVisible(true);
+            dispose();
+        });
+
+        btnArtistas.addActionListener(e -> {
+            new frmMenuArtista().setVisible(true);
+            dispose();
+        });
+
+        btnAlbumes.addActionListener(e -> {
+            txtBuscadorAlbumes.setText("");
+            paginaActual = 0;
+            cargarAlbumes();
+        });
+
+        btnFavoritos.addActionListener(e -> abrirFavoritos());
+
+        jButton5.addActionListener(e -> {
+            new frmPerfil().setVisible(true);
+            dispose();
+        });
+    }
+
+    private void abrirFavoritos() {
+        try {
+            new frmFavoritos().setVisible(true);
+            dispose();
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No fue posible abrir favoritos: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    private void cargarPerfilLateral() {
+        UsuarioDTO usuario = Sesion.getUsuarioActual();
+
+        if (usuario == null) {
+            lblNombrePerfil.setText("Sin sesión");
+            lblFotoPerfil.setText("");
+            lblFotoPerfil.setIcon(null);
+            return;
+        }
+
+        lblNombrePerfil.setText(usuario.getNombreUsuario());
+        cargarImagen(lblFotoPerfil, usuario.getImagenPerfil(), 34, 30);
     }
     
     
@@ -701,7 +775,6 @@ public class frmAlbum extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        // TODO add your handling code here:
         int totalPaginas = (int) Math.ceil((double) albumesMostrados.size() / ALBUMES_POR_PAGINA);
 
         if (paginaActual < totalPaginas - 1) {
@@ -711,7 +784,6 @@ public class frmAlbum extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        // TODO add your handling code here:
         if (paginaActual > 0) {
             paginaActual--;
             mostrarAlbumes();
