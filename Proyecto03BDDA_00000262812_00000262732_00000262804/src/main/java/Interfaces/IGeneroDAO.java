@@ -14,7 +14,8 @@ import org.bson.types.ObjectId;
  * @author user
  */
 public interface IGeneroDAO {
-
+    Genero agregar(Genero genero) throws PersistenciaException;
+    
     Genero consultarPorId(ObjectId idGenero) throws PersistenciaException;
 
     Genero consultarPorNombre(String nombre) throws PersistenciaException;

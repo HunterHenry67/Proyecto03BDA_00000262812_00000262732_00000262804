@@ -30,7 +30,39 @@ public class GeneroDAO implements IGeneroDAO{
         MongoDatabase baseDatos = conexionBD.conexion();
         this.coleccion = baseDatos.getCollection("generos", Genero.class);
     }
+    
+    
+    @Override
+public Genero agregar(Genero genero) throws PersistenciaException {
+    try {
+        if (genero == null) {
+            throw new PersistenciaException(
+                    "El género no puede ser nulo."
+            );
+        }
 
+        if (genero.getNombre() == null
+                || genero.getNombre().trim().isEmpty()) {
+
+            throw new PersistenciaException(
+                    "El nombre del género no puede estar vacío."
+            );
+        }
+
+        if (genero.getId() == null) {
+            genero.setId(new ObjectId());
+        }
+
+        coleccion.insertOne(genero);
+
+        return genero;
+
+    } catch (Exception ex) {
+        throw new PersistenciaException(
+                "Error al agregar el género: " + ex.getMessage()
+        );
+    }
+}
 
     @Override
     public Genero consultarPorId(ObjectId idGenero) throws PersistenciaException {
