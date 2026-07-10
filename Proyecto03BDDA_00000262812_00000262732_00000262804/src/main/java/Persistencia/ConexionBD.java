@@ -25,7 +25,7 @@ public class ConexionBD implements IConexionBD{
     public MongoDatabase conexion() {
         CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
         CodecRegistry codecRegistry =fromRegistries( MongoClientSettings.getDefaultCodecRegistry(),pojoCodecRegistry);
-        ConnectionString cadenaConexion =new ConnectionString("mongodb://localhost:27017");
+        ConnectionString cadenaConexion =new ConnectionString("mongodb+srv://victorortega262812_db_user:rxzFm1CT0SeOeeLP@victor.5ge8rec.mongodb.net/?appName=victor");
         MongoClientSettings settings =MongoClientSettings.builder().applyConnectionString(cadenaConexion).codecRegistry(codecRegistry).build();
         MongoClient cliente = MongoClients.create(settings);
         return cliente.getDatabase("bibliotecaMusical02");
