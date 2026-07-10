@@ -30,7 +30,42 @@ public class GeneroBO implements IGeneroBO{
         this.generoDAO = generoDAO;
     }
     
-    
+    @Override
+public GeneroDTO agregar(GeneroDTO generoDTO)
+        throws PersistenciaException {
+
+    if (generoDTO == null) {
+        throw new IllegalArgumentException(
+                "El género no puede ser nulo."
+        );
+    }
+
+    if (generoDTO.getNombre() == null
+            || generoDTO.getNombre().trim().isEmpty()) {
+
+        throw new IllegalArgumentException(
+                "El nombre del género no puede estar vacío."
+        );
+    }
+
+    String nombre = generoDTO.getNombre().trim();
+
+    Genero generoExistente =
+            generoDAO.consultarPorNombre(nombre);
+
+    if (generoExistente != null) {
+        return mapearADTO(generoExistente);
+    }
+
+    Genero generoNuevo = new Genero();
+    generoNuevo.setId(new ObjectId());
+    generoNuevo.setNombre(nombre);
+
+    Genero generoGuardado =
+            generoDAO.agregar(generoNuevo);
+
+    return mapearADTO(generoGuardado);
+}
 
     @Override
     public GeneroDTO consultarPorId(ObjectId idGenero) throws PersistenciaException {

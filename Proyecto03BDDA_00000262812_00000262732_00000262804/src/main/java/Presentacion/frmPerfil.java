@@ -5,7 +5,9 @@
 package Presentacion;
 
 import DTO.UsuarioDTO;
+import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
+import Negocio.CargaMasivaBO;
 import Utilerias.Sesion;
 import java.awt.Color;
 import java.awt.Font;
@@ -24,9 +26,10 @@ public class frmPerfil extends JFrame {
     private JButton btnEditarPerfil;
     private JButton btnGenerosNoDeseados;
     private JButton btnCerrarSesion;
+    private JButton btnCargaMasiva;
 
     public frmPerfil() {
-        this.usuarioActual = frmMenuPrinicipal.obtenerUsuarioActual();
+        this.usuarioActual = Sesion.getUsuarioActual();
 
         inicializarComponentes();
         cargarDatosUsuario();
@@ -137,6 +140,13 @@ public class frmPerfil extends JFrame {
         btnCerrarSesion.setFocusPainted(false);
         getContentPane().add(btnCerrarSesion);
 
+        btnCargaMasiva = new JButton("Cargar datos de ejemplo");
+        btnCargaMasiva.setBounds(450, 400, 220, 40);
+        btnCargaMasiva.setBackground(new Color(35, 35, 35));
+        btnCargaMasiva.setForeground(Color.WHITE);
+        btnCargaMasiva.setFocusPainted(false);
+        getContentPane().add(btnCargaMasiva);
+
         btnEditarPerfil.addActionListener(e -> {
             new frmEditarPerfil().setVisible(true);
             dispose();
@@ -152,6 +162,36 @@ public class frmPerfil extends JFrame {
         });
 
         btnCerrarSesion.addActionListener(e -> cerrarSesion());
+
+        btnCargaMasiva.addActionListener(e -> cargarDatosMasivos());
+    }
+
+    private void cargarDatosMasivos() {
+        int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "Esto insertará un catálogo de ejemplo (artistas, bandas, integrantes,\n"
+                + "álbumes y canciones) en la base de datos. ¿Deseas continuar?",
+                "Carga masiva de datos",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (opcion != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        btnCargaMasiva.setEnabled(false);
+        setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
+
+        try {
+            CargaMasivaBO cargaMasivaBO = new CargaMasivaBO();
+            String resultado = cargaMasivaBO.ejecutarCargaMasiva();
+            JOptionPane.showMessageDialog(this, resultado, "Carga masiva de datos", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error en la carga masiva", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            btnCargaMasiva.setEnabled(true);
+            setCursor(java.awt.Cursor.getDefaultCursor());
+        }
     }
 
     private void cerrarSesion() {
