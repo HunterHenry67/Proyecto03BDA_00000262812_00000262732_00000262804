@@ -23,6 +23,7 @@ public class frmPerfil extends JFrame {
 
     private JButton btnEditarPerfil;
     private JButton btnGenerosNoDeseados;
+    private JButton btnCerrarSesion;
 
     public frmPerfil() {
         this.usuarioActual = frmMenuPrinicipal.obtenerUsuarioActual();
@@ -42,27 +43,26 @@ public class frmPerfil extends JFrame {
 
         JPanel menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(new Color(55, 55, 55));
+        menu.setBackground(new Color(0, 0, 0));
         menu.setBounds(0, 0, 180, 600);
         getContentPane().add(menu);
 
-        JLabel lblLogo = new JLabel("♪ Music");
-        lblLogo.setForeground(Color.WHITE);
-        lblLogo.setFont(new Font("Arial", Font.BOLD, 18));
-        lblLogo.setBounds(25, 20, 130, 30);
-        menu.add(lblLogo);
+        JButton btnMenuPrincipal = crearBotonMenu("Menú Principal", 40);
+        JButton btnArtistas = crearBotonMenu("Ártistas", 95);
+        JButton btnAlbumes = crearBotonMenu("Álbumes", 150);
+        JButton btnFavoritos = crearBotonMenu("Favoritos", 205);
+        JButton btnPerfil = crearBotonMenu("Perfil", 510);
 
-        JButton btnArtistas = crearBotonMenu("Artistas", 70);
-        JButton btnAlbumes = crearBotonMenu("Álbumes", 120);
-        JButton btnFavoritos = crearBotonMenu("Favoritos", 170);
-        JButton btnPerfil = crearBotonMenu("Perfil", 220);
-        JButton btnSalir = crearBotonMenu("Salir", 490);
-
+        menu.add(btnMenuPrincipal);
         menu.add(btnArtistas);
         menu.add(btnAlbumes);
         menu.add(btnFavoritos);
         menu.add(btnPerfil);
-        menu.add(btnSalir);
+
+        btnMenuPrincipal.addActionListener(e -> {
+            new frmMenuPrinicipal().setVisible(true);
+            dispose();
+        });
 
         btnArtistas.addActionListener(e -> {
             new frmMenuArtista().setVisible(true);
@@ -84,11 +84,6 @@ public class frmPerfil extends JFrame {
         });
 
         btnPerfil.addActionListener(e -> cargarDatosUsuario());
-
-        btnSalir.addActionListener(e -> {
-            new frmLogin().setVisible(true);
-            dispose();
-        });
 
         JLabel lblTitulo = new JLabel("Perfil");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 30));
@@ -135,6 +130,13 @@ public class frmPerfil extends JFrame {
         btnGenerosNoDeseados.setFocusPainted(false);
         getContentPane().add(btnGenerosNoDeseados);
 
+        btnCerrarSesion = new JButton("Cerrar sesión");
+        btnCerrarSesion.setBounds(240, 400, 180, 40);
+        btnCerrarSesion.setBackground(new Color(120, 20, 20));
+        btnCerrarSesion.setForeground(Color.WHITE);
+        btnCerrarSesion.setFocusPainted(false);
+        getContentPane().add(btnCerrarSesion);
+
         btnEditarPerfil.addActionListener(e -> {
             new frmEditarPerfil().setVisible(true);
             dispose();
@@ -148,14 +150,29 @@ public class frmPerfil extends JFrame {
             }
             dispose();
         });
+
+        btnCerrarSesion.addActionListener(e -> cerrarSesion());
+    }
+
+    private void cerrarSesion() {
+        int opcion = JOptionPane.showConfirmDialog(this, "¿Deseas cerrar sesión?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (opcion != JOptionPane.YES_OPTION) {
+            return;
+        }
+        Sesion.cerrarSesion();
+        frmMenuPrinicipal.establecerUsuarioActual(null);
+        new frmLogin().setVisible(true);
+        dispose();
     }
 
     private JButton crearBotonMenu(String texto, int y) {
         JButton boton = new JButton(texto);
-        boton.setBounds(25, y, 130, 35);
-        boton.setBackground(new Color(35, 35, 35));
+        boton.setBounds(20, y, 140, 45);
+        boton.setBackground(Color.BLACK);
         boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Dialog", Font.BOLD, 12));
         boton.setFocusPainted(false);
+        boton.setBorder(BorderFactory.createLineBorder(new Color(140, 140, 140)));
         return boton;
     }
 
