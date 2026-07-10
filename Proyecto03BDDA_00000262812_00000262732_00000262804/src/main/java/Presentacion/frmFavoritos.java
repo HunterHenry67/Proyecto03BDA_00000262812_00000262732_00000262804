@@ -19,9 +19,12 @@ import Interfaces.IFavoritoBO;
 import Interfaces.IGeneroBO;
 import Utilerias.Sesion;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -59,27 +62,26 @@ public class frmFavoritos extends JFrame {
 
         JPanel menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(new Color(55, 55, 55));
+        menu.setBackground(new Color(0, 0, 0));
         menu.setBounds(0, 0, 180, 700);
         getContentPane().add(menu);
 
-        JLabel lblLogo = new JLabel("♪ Music");
-        lblLogo.setForeground(Color.WHITE);
-        lblLogo.setFont(new Font("Arial", Font.BOLD, 18));
-        lblLogo.setBounds(25, 20, 130, 30);
-        menu.add(lblLogo);
+        JButton btnMenuPrincipal = crearBotonMenu("Menú Principal", 40);
+        JButton btnArtistas = crearBotonMenu("Ártistas", 95);
+        JButton btnAlbumes = crearBotonMenu("Álbumes", 150);
+        JButton btnFavoritos = crearBotonMenu("Favoritos", 205);
+        JButton btnPerfil = crearBotonMenu("Perfil", 610);
 
-        JButton btnArtistas = crearBotonMenu("Artistas", 70);
-        JButton btnAlbumes = crearBotonMenu("Álbumes", 120);
-        JButton btnFavoritos = crearBotonMenu("Favoritos", 170);
-        JButton btnPerfil = crearBotonMenu("Perfil", 220);
-        JButton btnSalir = crearBotonMenu("Salir", 590);
-
+        menu.add(btnMenuPrincipal);
         menu.add(btnArtistas);
         menu.add(btnAlbumes);
         menu.add(btnFavoritos);
         menu.add(btnPerfil);
-        menu.add(btnSalir);
+
+        btnMenuPrincipal.addActionListener(e -> {
+            new frmMenuPrinicipal().setVisible(true);
+            dispose();
+        });
 
         btnArtistas.addActionListener(e -> {
             new frmMenuArtista().setVisible(true);
@@ -95,11 +97,6 @@ public class frmFavoritos extends JFrame {
 
         btnPerfil.addActionListener(e -> {
             new frmPerfil().setVisible(true);
-            dispose();
-        });
-
-        btnSalir.addActionListener(e -> {
-            new frmLogin().setVisible(true);
             dispose();
         });
 
@@ -145,10 +142,12 @@ public class frmFavoritos extends JFrame {
 
     private JButton crearBotonMenu(String texto, int y) {
         JButton boton = new JButton(texto);
-        boton.setBounds(25, y, 130, 35);
-        boton.setBackground(new Color(35, 35, 35));
+        boton.setBounds(20, y, 140, 45);
+        boton.setBackground(Color.BLACK);
         boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Dialog", Font.BOLD, 12));
         boton.setFocusPainted(false);
+        boton.setBorder(BorderFactory.createLineBorder(new Color(140, 140, 140)));
         return boton;
     }
 
@@ -210,7 +209,15 @@ public class frmFavoritos extends JFrame {
         JLabel lblImagen = new JLabel();
         lblImagen.setBounds(15, 15, 100, 100);
         lblImagen.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        lblImagen.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblImagen.setToolTipText("Clic para quitar de favoritos");
         cargarImagen(lblImagen, favorito.getImagen(), 100, 100);
+        lblImagen.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                eliminarFavorito(favorito);
+            }
+        });
         tarjeta.add(lblImagen);
 
         JLabel lblNombre = new JLabel(favorito.getNombre());

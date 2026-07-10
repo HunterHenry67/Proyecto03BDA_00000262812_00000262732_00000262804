@@ -10,6 +10,7 @@ import Excepciones.PersistenciaException;
 import Excepciones.PresentacionException;
 import Interfaces.IUsuarioBO;
 import Negocio.UsuarioBO;
+import Utilerias.Sesion;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -33,7 +34,7 @@ public class frmEditarPerfil extends JFrame {
     private String rutaImagenSeleccionada;
 
     public frmEditarPerfil() {
-        this.usuarioActual = frmMenuPrinicipal.obtenerUsuarioActual();
+        this.usuarioActual = Sesion.getUsuarioActual();
         this.usuarioBO = new UsuarioBO();
 
         inicializarComponentes();
@@ -42,7 +43,7 @@ public class frmEditarPerfil extends JFrame {
 
     private void inicializarComponentes() {
         setTitle("Editar Perfil");
-        setSize(850, 560);
+        setSize(900, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -51,27 +52,26 @@ public class frmEditarPerfil extends JFrame {
 
         JPanel menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(new Color(55, 55, 55));
-        menu.setBounds(0, 0, 180, 560);
+        menu.setBackground(new Color(0, 0, 0));
+        menu.setBounds(0, 0, 180, 600);
         getContentPane().add(menu);
 
-        JLabel lblLogo = new JLabel("♪ Music");
-        lblLogo.setForeground(Color.WHITE);
-        lblLogo.setFont(new Font("Arial", Font.BOLD, 18));
-        lblLogo.setBounds(25, 20, 130, 30);
-        menu.add(lblLogo);
+        JButton btnMenuPrincipal = crearBotonMenu("Menú Principal", 40);
+        JButton btnArtistas = crearBotonMenu("Ártistas", 95);
+        JButton btnAlbumes = crearBotonMenu("Álbumes", 150);
+        JButton btnFavoritos = crearBotonMenu("Favoritos", 205);
+        JButton btnPerfil = crearBotonMenu("Perfil", 510);
 
-        JButton btnArtistas = crearBotonMenu("Artistas", 70);
-        JButton btnAlbumes = crearBotonMenu("Álbumes", 120);
-        JButton btnFavoritos = crearBotonMenu("Favoritos", 170);
-        JButton btnPerfil = crearBotonMenu("Perfil", 220);
-        JButton btnSalir = crearBotonMenu("Salir", 450);
-
+        menu.add(btnMenuPrincipal);
         menu.add(btnArtistas);
         menu.add(btnAlbumes);
         menu.add(btnFavoritos);
         menu.add(btnPerfil);
-        menu.add(btnSalir);
+
+        btnMenuPrincipal.addActionListener(e -> {
+            new frmMenuPrinicipal().setVisible(true);
+            dispose();
+        });
 
         btnArtistas.addActionListener(e -> {
             new frmMenuArtista().setVisible(true);
@@ -97,24 +97,19 @@ public class frmEditarPerfil extends JFrame {
             dispose();
         });
 
-        btnSalir.addActionListener(e -> {
-            new frmLogin().setVisible(true);
-            dispose();
-        });
-
         JLabel lblTitulo = new JLabel("Editar Perfil");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 30));
         lblTitulo.setBounds(230, 35, 300, 40);
         getContentPane().add(lblTitulo);
 
         lblImagenPerfil = new JLabel();
-        lblImagenPerfil.setBounds(250, 105, 160, 160);
+        lblImagenPerfil.setBounds(250, 110, 170, 170);
         lblImagenPerfil.setBorder(new LineBorder(Color.GRAY, 2));
         lblImagenPerfil.setHorizontalAlignment(SwingConstants.CENTER);
         getContentPane().add(lblImagenPerfil);
 
         btnSeleccionarImagen = new JButton("Seleccionar imagen");
-        btnSeleccionarImagen.setBounds(245, 280, 170, 35);
+        btnSeleccionarImagen.setBounds(245, 295, 175, 35);
         btnSeleccionarImagen.setBackground(new Color(35, 35, 35));
         btnSeleccionarImagen.setForeground(Color.WHITE);
         btnSeleccionarImagen.setFocusPainted(false);
@@ -122,33 +117,33 @@ public class frmEditarPerfil extends JFrame {
 
         JLabel lblUsuario = new JLabel("Nombre de usuario:");
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 18));
-        lblUsuario.setBounds(460, 120, 250, 30);
+        lblUsuario.setBounds(490, 130, 250, 30);
         getContentPane().add(lblUsuario);
 
         txtNombreUsuario = new JTextField();
         txtNombreUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
-        txtNombreUsuario.setBounds(460, 155, 260, 35);
+        txtNombreUsuario.setBounds(490, 165, 280, 35);
         getContentPane().add(txtNombreUsuario);
 
         JLabel lblCorreo = new JLabel("Correo:");
         lblCorreo.setFont(new Font("Arial", Font.BOLD, 18));
-        lblCorreo.setBounds(460, 215, 250, 30);
+        lblCorreo.setBounds(490, 225, 250, 30);
         getContentPane().add(lblCorreo);
 
         txtCorreo = new JTextField();
         txtCorreo.setFont(new Font("Arial", Font.PLAIN, 16));
-        txtCorreo.setBounds(460, 250, 260, 35);
+        txtCorreo.setBounds(490, 260, 280, 35);
         getContentPane().add(txtCorreo);
 
         btnGuardar = new JButton("Guardar cambios");
-        btnGuardar.setBounds(460, 350, 170, 40);
+        btnGuardar.setBounds(490, 400, 170, 40);
         btnGuardar.setBackground(new Color(35, 35, 35));
         btnGuardar.setForeground(Color.WHITE);
         btnGuardar.setFocusPainted(false);
         getContentPane().add(btnGuardar);
 
         btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(650, 350, 120, 40);
+        btnCancelar.setBounds(680, 400, 120, 40);
         btnCancelar.setBackground(new Color(35, 35, 35));
         btnCancelar.setForeground(Color.WHITE);
         btnCancelar.setFocusPainted(false);
@@ -165,16 +160,20 @@ public class frmEditarPerfil extends JFrame {
 
     private JButton crearBotonMenu(String texto, int y) {
         JButton boton = new JButton(texto);
-        boton.setBounds(25, y, 130, 35);
-        boton.setBackground(new Color(35, 35, 35));
+        boton.setBounds(20, y, 140, 45);
+        boton.setBackground(Color.BLACK);
         boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Dialog", Font.BOLD, 12));
         boton.setFocusPainted(false);
+        boton.setBorder(BorderFactory.createLineBorder(new Color(140, 140, 140)));
         return boton;
     }
 
     private void cargarDatosUsuario() {
+        this.usuarioActual = Sesion.getUsuarioActual();
+
         if (usuarioActual == null) {
-            JOptionPane.showMessageDialog(this, "No hay usuario iniciado.");
+            JOptionPane.showMessageDialog(this, "No hay ningún usuario con sesión iniciada.", "Error", JOptionPane.ERROR_MESSAGE);
             new frmLogin().setVisible(true);
             dispose();
             return;
@@ -184,7 +183,7 @@ public class frmEditarPerfil extends JFrame {
         txtCorreo.setText(usuarioActual.getCorreo());
         rutaImagenSeleccionada = usuarioActual.getImagenPerfil();
 
-        cargarImagen(lblImagenPerfil, rutaImagenSeleccionada, 160, 160);
+        cargarImagen(lblImagenPerfil, rutaImagenSeleccionada, 170, 170);
     }
 
     private void seleccionarImagen() {
@@ -197,7 +196,7 @@ public class frmEditarPerfil extends JFrame {
             File archivo = chooser.getSelectedFile();
             rutaImagenSeleccionada = archivo.getAbsolutePath();
 
-            cargarImagen(lblImagenPerfil, rutaImagenSeleccionada, 160, 160);
+            cargarImagen(lblImagenPerfil, rutaImagenSeleccionada, 170, 170);
         }
     }
 
@@ -221,7 +220,9 @@ public class frmEditarPerfil extends JFrame {
 
             usuarioBO.actualizarPerfil(usuarioEditado);
 
-            frmMenuPrinicipal.establecerUsuarioActual(usuarioEditado);
+            // Actualiza la sesión activa (fuente única de verdad del usuario logueado)
+            Sesion.iniciarSesion(usuarioEditado);
+            this.usuarioActual = usuarioEditado;
 
             JOptionPane.showMessageDialog(this, "Perfil actualizado correctamente.");
 
