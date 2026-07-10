@@ -253,15 +253,12 @@ public class UsuarioBO implements IUsuarioBO {
         if (genero == null) {
             return null;
         }
-
         GeneroNoDeseadoDTO dto = new GeneroNoDeseadoDTO();
-
         if (genero.getIdGenero() != null) {
             dto.setIdGenero(genero.getIdGenero().toHexString());
         }
-
+        dto.setNombreGenero(genero.getNombreGenero());
         dto.setFechaAgregacion(genero.getFechaAgregacion());
-
         return dto;
     }
 
@@ -269,15 +266,12 @@ public class UsuarioBO implements IUsuarioBO {
         if (dto == null) {
             return null;
         }
-
         GeneroNoDeseado genero = new GeneroNoDeseado();
-
-        if (dto.getIdGenero() != null && !dto.getIdGenero().isBlank()) {
+        if (dto.getIdGenero() != null&& !dto.getIdGenero().isBlank()) {
             genero.setIdGenero(new ObjectId(dto.getIdGenero()));
         }
-
+        genero.setNombreGenero(dto.getNombreGenero());
         genero.setFechaAgregacion(dto.getFechaAgregacion());
-
         return genero;
     }
 
