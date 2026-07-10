@@ -377,10 +377,10 @@ public class frmAlbum extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnMenuPrincipal = new javax.swing.JButton();
+        btnArtistas = new javax.swing.JButton();
+        btnAlbumes = new javax.swing.JButton();
+        btnFavoritos = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         lblNombrePerfil = new javax.swing.JLabel();
         lblFotoPerfil = new javax.swing.JLabel();
@@ -420,13 +420,13 @@ public class frmAlbum extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
-        jButton1.setText("Menu Principal");
+        btnMenuPrincipal.setText("Menu Principal");
 
-        jButton2.setText("Artistas");
+        btnArtistas.setText("Artistas");
 
-        jButton3.setText("Albumes");
+        btnAlbumes.setText("Albumes");
 
-        jButton4.setText("Favoritos");
+        btnFavoritos.setText("Favoritos");
 
         jButton5.setText("Perfil");
 
@@ -443,10 +443,10 @@ public class frmAlbum extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnMenuPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnArtistas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAlbumes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnFavoritos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton5)
                                 .addGap(17, 17, 17))))
@@ -465,13 +465,13 @@ public class frmAlbum extends javax.swing.JFrame {
                     .addComponent(lblNombrePerfil)
                     .addComponent(lblFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
-                .addComponent(jButton1)
+                .addComponent(btnMenuPrincipal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(btnArtistas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(btnAlbumes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(btnFavoritos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(40, 40, 40))
@@ -744,12 +744,12 @@ public class frmAlbum extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlbumes;
+    private javax.swing.JButton btnArtistas;
     private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnFavoritos;
+    private javax.swing.JButton btnMenuPrincipal;
     private javax.swing.JButton btnSiguiente;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
