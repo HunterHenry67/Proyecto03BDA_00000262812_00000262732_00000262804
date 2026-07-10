@@ -70,8 +70,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Emily Armstrong", "Vocalista de Linkin Park desde 2024.", "imagenes/integrantes/emily_armstrong.jpg"), "Vocalista", LocalDate.of(2024, 9, 5), null, true)
             ),
             List.of(
-                album("Hybrid Theory", "2000-10-24", rock, "imagenes/albumes/hybrid_theory.jpg", cancion("In the End", "03:36", rock), cancion("One Step Closer", "02:35", rock)),
-                album("Meteora", "2003-03-25", rock, "imagenes/albumes/meteora.jpg", cancion("Numb", "03:07", rock), cancion("Faint", "02:42", rock))
+                album("Hybrid Theory", "2000-10-24", rock, "imagenes/albumes/hybrid_theory.jpg", cancion("In the End", "03:36", rock), cancion("One Step Closer", "02:35", rock), cancion("Papercut", "03:04", rock)),
+                album("Meteora", "2003-03-25", rock, "imagenes/albumes/meteora.jpg", cancion("Numb", "03:07", rock), cancion("Faint", "02:42", rock), cancion("Somewhere I Belong", "03:33", rock))
             )
         ));
 
@@ -83,8 +83,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Will Champion", "Batería de Coldplay.", "imagenes/integrantes/will_champion.jpg"), "Batería", LocalDate.of(1997, 1, 1), null, true)
             ),
             List.of(
-                album("Parachutes", "2000-07-10", rock, "imagenes/albumes/parachutes.jpg", cancion("Yellow", "04:29", rock), cancion("Trouble", "04:33", rock)),
-                album("Music of the Spheres", "2021-10-15", rock, "imagenes/albumes/music_of_the_spheres.jpg", cancion("Higher Power", "03:29", rock), cancion("My Universe", "03:52", rock))
+                album("Parachutes", "2000-07-10", rock, "imagenes/albumes/parachutes.jpg", cancion("Yellow", "04:29", rock), cancion("Trouble", "04:33", rock), cancion("Shiver", "05:00", rock)),
+                album("Music of the Spheres", "2021-10-15", rock, "imagenes/albumes/music_of_the_spheres.jpg", cancion("Higher Power", "03:29", rock), cancion("My Universe", "03:52", rock), cancion("Coloratura", "10:18", rock))
             )
         ));
 
@@ -94,8 +94,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Guy-Manuel de Homem-Christo", "Productor y DJ, mitad de Daft Punk.", "imagenes/integrantes/guy_manuel.jpg"), "Productor / DJ", LocalDate.of(1993, 1, 1), null, true)
             ),
             List.of(
-                album("Discovery", "2001-03-12", electro, "imagenes/albumes/discovery.jpg", cancion("One More Time", "05:20", electro), cancion("Digital Love", "04:58", electro)),
-                album("Random Access Memories", "2013-05-17", electro, "imagenes/albumes/random_access_memories.jpg", cancion("Get Lucky", "04:08", electro), cancion("Instant Crush", "03:37", electro))
+                album("Discovery", "2001-03-12", electro, "imagenes/albumes/discovery.jpg", cancion("One More Time", "05:20", electro), cancion("Digital Love", "04:58", electro), cancion("Harder, Better, Faster, Stronger", "03:45", electro)),
+                album("Random Access Memories", "2013-05-17", electro, "imagenes/albumes/random_access_memories.jpg", cancion("Get Lucky", "04:08", electro), cancion("Instant Crush", "03:37", electro), cancion("Lose Yourself to Dance", "05:53", electro))
             )
         ));
 
@@ -107,8 +107,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Daniel Platzman", "Batería de Imagine Dragons.", "imagenes/integrantes/daniel_platzman.jpg"), "Batería", LocalDate.of(2011, 1, 1), null, true)
             ),
             List.of(
-                album("Night Visions", "2012-09-04", rock, "imagenes/albumes/night_visions.jpg", cancion("Radioactive", "03:07", rock), cancion("Demons", "02:57", rock)),
-                album("Evolve", "2017-06-23", rock, "imagenes/albumes/evolve.jpg", cancion("Believer", "03:24", rock), cancion("Thunder", "03:07", rock))
+                album("Night Visions", "2012-09-04", rock, "imagenes/albumes/night_visions.jpg", cancion("Radioactive", "03:07", rock), cancion("Demons", "02:57", rock), cancion("It's Time", "04:00", rock)),
+                album("Evolve", "2017-06-23", rock, "imagenes/albumes/evolve.jpg", cancion("Believer", "03:24", rock), cancion("Thunder", "03:07", rock), cancion("Whatever It Takes", "03:21", rock))
             )
         ));
 
@@ -120,8 +120,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Nick O'Malley", "Bajista de Arctic Monkeys.", "imagenes/integrantes/nick_omalley.jpg"), "Bajista", LocalDate.of(2006, 1, 1), null, true)
             ),
             List.of(
-                album("AM", "2013-09-09", rock, "imagenes/albumes/am.jpg", cancion("Do I Wanna Know?", "04:32", rock), cancion("R U Mine?", "03:21", rock)),
-                album("The Car", "2022-10-21", rock, "imagenes/albumes/the_car.jpg", cancion("There'd Better Be a Mirrorball", "04:32", rock), cancion("Body Paint", "04:20", rock))
+                album("AM", "2013-09-09", rock, "imagenes/albumes/am.jpg", cancion("Do I Wanna Know?", "04:32", rock), cancion("R U Mine?", "03:21", rock), cancion("Why'd You Only Call Me When You're High?", "02:41", rock)),
+                album("The Car", "2022-10-21", rock, "imagenes/albumes/the_car.jpg", cancion("There'd Better Be a Mirrorball", "04:32", rock), cancion("Body Paint", "04:20", rock), cancion("Sculptures of Anything Goes", "03:59", rock))
             )
         ));
 
@@ -133,8 +133,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Robert Trujillo", "Bajista de Metallica.", "imagenes/integrantes/robert_trujillo.jpg"), "Bajista", LocalDate.of(2003, 2, 24), null, true)
             ),
             List.of(
-                album("Master of Puppets", "1986-03-03", rock, "imagenes/albumes/master_of_puppets.jpg", cancion("Master of Puppets", "08:35", rock), cancion("Battery", "05:12", rock)),
-                album("72 Seasons", "2023-04-14", rock, "imagenes/albumes/72_seasons.jpg", cancion("Lux Æterna", "03:19", rock), cancion("72 Seasons", "05:11", rock))
+                album("Master of Puppets", "1986-03-03", rock, "imagenes/albumes/master_of_puppets.jpg", cancion("Master of Puppets", "08:35", rock), cancion("Battery", "05:12", rock), cancion("Welcome Home (Sanitarium)", "06:27", rock)),
+                album("72 Seasons", "2023-04-14", rock, "imagenes/albumes/72_seasons.jpg", cancion("Lux Æterna", "03:19", rock), cancion("72 Seasons", "05:11", rock), cancion("Screaming Suicide", "05:30", rock))
             )
         ));
 
@@ -146,99 +146,99 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "John Deacon", "Bajista de Queen.", "imagenes/integrantes/john_deacon.jpg"), "Bajista", LocalDate.of(1971, 2, 1), LocalDate.of(1997, 1, 1), false)
             ),
             List.of(
-                album("A Night at the Opera", "1975-11-21", rock, "imagenes/albumes/a_night_at_the_opera.jpg", cancion("Bohemian Rhapsody", "05:55", rock), cancion("You're My Best Friend", "02:52", rock)),
-                album("The Game", "1980-06-30", rock, "imagenes/albumes/the_game.jpg", cancion("Another One Bites the Dust", "03:35", rock), cancion("Crazy Little Thing Called Love", "02:43", rock))
+                album("A Night at the Opera", "1975-11-21", rock, "imagenes/albumes/a_night_at_the_opera.jpg", cancion("Bohemian Rhapsody", "05:55", rock), cancion("You're My Best Friend", "02:52", rock), cancion("Love of My Life", "03:39", rock)),
+                album("The Game", "1980-06-30", rock, "imagenes/albumes/the_game.jpg", cancion("Another One Bites the Dust", "03:35", rock), cancion("Crazy Little Thing Called Love", "02:43", rock), cancion("Play the Game", "03:30", rock))
             )
         ));
 
         artists.add(crearSolista(personas, "Dua Lipa", "Cantante y compositora británica.", "imagenes/personas/dua_lipa.jpg", "imagenes/solistas/dua_lipa.jpg", pop, LocalDate.of(2015, 1, 1),
             List.of(
-                album("Future Nostalgia", "2020-03-27", pop, "imagenes/albumes/future_nostalgia.jpg", cancion("Don't Start Now", "03:03", pop), cancion("Levitating", "03:23", pop)),
-                album("Radical Optimism", "2024-05-03", pop, "imagenes/albumes/radical_optimism.jpg", cancion("Houdini", "03:07", pop), cancion("Training Season", "03:20", pop))
+                album("Future Nostalgia", "2020-03-27", pop, "imagenes/albumes/future_nostalgia.jpg", cancion("Don't Start Now", "03:03", pop), cancion("Levitating", "03:23", pop), cancion("Physical", "03:13", pop)),
+                album("Radical Optimism", "2024-05-03", pop, "imagenes/albumes/radical_optimism.jpg", cancion("Houdini", "03:07", pop), cancion("Training Season", "03:20", pop), cancion("Illusion", "03:08", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Billie Eilish", "Cantante y compositora estadounidense.", "imagenes/personas/billie_eilish.jpg", "imagenes/solistas/billie_eilish.jpg", pop, LocalDate.of(2015, 1, 1),
             List.of(
-                album("When We All Fall Asleep, Where Do We Go?", "2019-03-29", pop, "imagenes/albumes/when_we_all_fall_asleep_where_do_we_go.jpg", cancion("Bad Guy", "03:14", pop), cancion("Bury a Friend", "03:13", pop)),
-                album("Hit Me Hard and Soft", "2024-05-17", pop, "imagenes/albumes/hit_me_hard_and_soft.jpg", cancion("Birds of a Feather", "03:30", pop), cancion("Lunch", "03:20", pop))
+                album("When We All Fall Asleep, Where Do We Go?", "2019-03-29", pop, "imagenes/albumes/when_we_all_fall_asleep_where_do_we_go.jpg", cancion("Bad Guy", "03:14", pop), cancion("Bury a Friend", "03:13", pop), cancion("When the Party's Over", "03:16", pop)),
+                album("Hit Me Hard and Soft", "2024-05-17", pop, "imagenes/albumes/hit_me_hard_and_soft.jpg", cancion("Birds of a Feather", "03:30", pop), cancion("Lunch", "03:20", pop), cancion("Chihiro", "05:03", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Bruno Mars", "Cantante, compositor y productor estadounidense.", "imagenes/personas/bruno_mars.jpg", "imagenes/solistas/bruno_mars.jpg", pop, LocalDate.of(2010, 1, 1),
             List.of(
-                album("Doo-Wops & Hooligans", "2010-10-04", pop, "imagenes/albumes/doo_wops_and_hooligans.jpg", cancion("Just the Way You Are", "03:40", pop), cancion("Grenade", "03:42", pop)),
-                album("24K Magic", "2016-11-18", pop, "imagenes/albumes/24k_magic.jpg", cancion("24K Magic", "03:46", pop), cancion("That's What I Like", "03:26", pop))
+                album("Doo-Wops & Hooligans", "2010-10-04", pop, "imagenes/albumes/doo_wops_and_hooligans.jpg", cancion("Just the Way You Are", "03:40", pop), cancion("Grenade", "03:42", pop), cancion("The Lazy Song", "03:10", pop)),
+                album("24K Magic", "2016-11-18", pop, "imagenes/albumes/24k_magic.jpg", cancion("24K Magic", "03:46", pop), cancion("That's What I Like", "03:26", pop), cancion("Versace on the Floor", "04:21", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Bad Bunny", "Cantante y compositor puertorriqueño de reggaetón.", "imagenes/personas/bad_bunny.jpg", "imagenes/solistas/bad_bunny.jpg", latino, LocalDate.of(2016, 1, 1),
             List.of(
-                album("X100PRE", "2018-12-24", latino, "imagenes/albumes/x100pre.jpg", cancion("Estamos Bien", "03:23", latino), cancion("Callaita", "03:59", latino)),
-                album("Nadie Sabe Lo Que Va a Pasar Mañana", "2023-10-13", latino, "imagenes/albumes/nadie_sabe_lo_que_va_a_pasar_manana.jpg", cancion("Monaco", "03:12", latino), cancion("VOU 787", "03:31", latino))
+                album("X100PRE", "2018-12-24", latino, "imagenes/albumes/x100pre.jpg", cancion("Estamos Bien", "03:23", latino), cancion("Callaita", "03:59", latino), cancion("Mía", "03:30", latino)),
+                album("Nadie Sabe Lo Que Va a Pasar Mañana", "2023-10-13", latino, "imagenes/albumes/nadie_sabe_lo_que_va_a_pasar_manana.jpg", cancion("Monaco", "03:12", latino), cancion("VOU 787", "03:31", latino), cancion("Fina", "03:36", latino))
             )
         ));
 
         artists.add(crearSolista(personas, "Shakira", "Cantante y compositora colombiana.", "imagenes/personas/shakira.jpg", "imagenes/solistas/shakira.jpg", latino, LocalDate.of(1995, 1, 1),
             List.of(
-                album("El Dorado", "2017-05-26", latino, "imagenes/albumes/el_dorado.jpg", cancion("Chantaje", "03:21", latino), cancion("Perro Fiel", "03:24", latino)),
-                album("Las Mujeres Ya No Lloran", "2024-03-22", latino, "imagenes/albumes/las_mujeres_ya_no_lloran.jpg", cancion("Puntería", "03:01", latino), cancion("Te Felicito", "02:52", latino))
+                album("El Dorado", "2017-05-26", latino, "imagenes/albumes/el_dorado.jpg", cancion("Chantaje", "03:21", latino), cancion("Perro Fiel", "03:24", latino), cancion("Me Enamoré", "03:46", latino)),
+                album("Las Mujeres Ya No Lloran", "2024-03-22", latino, "imagenes/albumes/las_mujeres_ya_no_lloran.jpg", cancion("Puntería", "03:01", latino), cancion("Te Felicito", "02:52", latino), cancion("Acróstico", "02:50", latino))
             )
         ));
 
         artists.add(crearSolista(personas, "Taylor Swift", "Cantante y compositora estadounidense.", "imagenes/personas/taylor_swift.jpg", "imagenes/solistas/taylor_swift.jpg", pop, LocalDate.of(2006, 1, 1),
             List.of(
-                album("Midnights", "2022-10-21", pop, "imagenes/albumes/midnights.jpg", cancion("Anti-Hero", "03:20", pop), cancion("Lavender Haze", "03:22", pop)),
-                album("1989 (Taylor's Version)", "2023-10-27", pop, "imagenes/albumes/1989_taylors_version.jpg", cancion("Style", "03:51", pop), cancion("Blank Space", "03:51", pop))
+                album("Midnights", "2022-10-21", pop, "imagenes/albumes/midnights.jpg", cancion("Anti-Hero", "03:20", pop), cancion("Lavender Haze", "03:22", pop), cancion("Bejeweled", "03:14", pop)),
+                album("1989 (Taylor's Version)", "2023-10-27", pop, "imagenes/albumes/1989_taylors_version.jpg", cancion("Style", "03:51", pop), cancion("Blank Space", "03:51", pop), cancion("Shake It Off", "03:39", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Adele", "Cantante y compositora británica.", "imagenes/personas/adele.jpg", "imagenes/solistas/adele.jpg", pop, LocalDate.of(2008, 1, 1),
             List.of(
-                album("21", "2011-01-24", pop, "imagenes/albumes/21.jpg", cancion("Rolling in the Deep", "03:48", pop), cancion("Someone Like You", "04:45", pop)),
-                album("30", "2021-11-19", pop, "imagenes/albumes/30.jpg", cancion("Easy on Me", "03:44", pop), cancion("Oh My God", "03:39", pop))
+                album("21", "2011-01-24", pop, "imagenes/albumes/21.jpg", cancion("Rolling in the Deep", "03:48", pop), cancion("Someone Like You", "04:45", pop), cancion("Set Fire to the Rain", "04:02", pop)),
+                album("30", "2021-11-19", pop, "imagenes/albumes/30.jpg", cancion("Easy on Me", "03:44", pop), cancion("Oh My God", "03:39", pop), cancion("I Drink Wine", "06:16", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "The Weeknd", "Cantante y compositor canadiense, conocido como The Weeknd.", "imagenes/personas/abel_tesfaye.jpg", "imagenes/solistas/the_weeknd.jpg", rnb, LocalDate.of(2010, 1, 1),
             List.of(
-                album("After Hours", "2020-03-20", rnb, "imagenes/albumes/after_hours.jpg", cancion("Blinding Lights", "03:20", rnb), cancion("Save Your Tears", "03:35", rnb)),
-                album("Dawn FM", "2022-01-07", rnb, "imagenes/albumes/dawn_fm.jpg", cancion("Sacrifice", "03:08", rnb), cancion("Take My Breath", "03:44", rnb))
+                album("After Hours", "2020-03-20", rnb, "imagenes/albumes/after_hours.jpg", cancion("Blinding Lights", "03:20", rnb), cancion("Save Your Tears", "03:35", rnb), cancion("In Your Eyes", "03:57", rnb)),
+                album("Dawn FM", "2022-01-07", rnb, "imagenes/albumes/dawn_fm.jpg", cancion("Sacrifice", "03:08", rnb), cancion("Take My Breath", "03:44", rnb), cancion("Out of Time", "03:34", rnb))
             )
         ));
 
         artists.add(crearSolista(personas, "Rihanna", "Cantante y empresaria barbadense.", "imagenes/personas/rihanna.jpg", "imagenes/solistas/rihanna.jpg", rnb, LocalDate.of(2005, 1, 1),
             List.of(
-                album("Good Girl Gone Bad", "2007-05-31", rnb, "imagenes/albumes/good_girl_gone_bad.jpg", cancion("Umbrella", "04:35", rnb), cancion("Don't Stop the Music", "04:27", rnb)),
-                album("Anti", "2016-01-28", rnb, "imagenes/albumes/anti.jpg", cancion("Work", "03:39", rnb), cancion("Needed Me", "03:11", rnb))
+                album("Good Girl Gone Bad", "2007-05-31", rnb, "imagenes/albumes/good_girl_gone_bad.jpg", cancion("Umbrella", "04:35", rnb), cancion("Don't Stop the Music", "04:27", rnb), cancion("Shut Up and Drive", "03:32", rnb)),
+                album("Anti", "2016-01-28", rnb, "imagenes/albumes/anti.jpg", cancion("Work", "03:39", rnb), cancion("Needed Me", "03:11", rnb), cancion("Love on the Brain", "03:44", rnb))
             )
         ));
 
         artists.add(crearSolista(personas, "Ariana Grande", "Cantante y compositora estadounidense.", "imagenes/personas/ariana_grande.jpg", "imagenes/solistas/ariana_grande.jpg", pop, LocalDate.of(2011, 1, 1),
             List.of(
-                album("Sweetener", "2018-08-17", pop, "imagenes/albumes/sweetener.jpg", cancion("No Tears Left to Cry", "03:25", pop), cancion("God Is a Woman", "03:17", pop)),
-                album("Eternal Sunshine", "2024-03-08", pop, "imagenes/albumes/eternal_sunshine.jpg", cancion("Yes, And?", "03:35", pop), cancion("We Can't Be Friends", "03:48", pop))
+                album("Sweetener", "2018-08-17", pop, "imagenes/albumes/sweetener.jpg", cancion("No Tears Left to Cry", "03:25", pop), cancion("God Is a Woman", "03:17", pop), cancion("Breathin", "03:18", pop)),
+                album("Eternal Sunshine", "2024-03-08", pop, "imagenes/albumes/eternal_sunshine.jpg", cancion("Yes, And?", "03:35", pop), cancion("We Can't Be Friends", "03:48", pop), cancion("The Boy Is Mine", "02:53", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Ed Sheeran", "Cantante y compositor británico.", "imagenes/personas/ed_sheeran.jpg", "imagenes/solistas/ed_sheeran.jpg", pop, LocalDate.of(2011, 1, 1),
             List.of(
-                album("Divide", "2017-03-03", pop, "imagenes/albumes/divide.jpg", cancion("Shape of You", "03:53", pop), cancion("Perfect", "04:23", pop)),
-                album("Equals", "2021-10-29", pop, "imagenes/albumes/equals.jpg", cancion("Bad Habits", "03:51", pop), cancion("Shivers", "03:27", pop))
+                album("Divide", "2017-03-03", pop, "imagenes/albumes/divide.jpg", cancion("Shape of You", "03:53", pop), cancion("Perfect", "04:23", pop), cancion("Castle on the Hill", "04:21", pop)),
+                album("Equals", "2021-10-29", pop, "imagenes/albumes/equals.jpg", cancion("Bad Habits", "03:51", pop), cancion("Shivers", "03:27", pop), cancion("Overpass Graffiti", "03:56", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Lady Gaga", "Cantante, compositora y actriz estadounidense.", "imagenes/personas/lady_gaga.jpg", "imagenes/solistas/lady_gaga.jpg", pop, LocalDate.of(2008, 1, 1),
             List.of(
-                album("The Fame Monster", "2009-11-18", pop, "imagenes/albumes/the_fame_monster.jpg", cancion("Bad Romance", "04:54", pop), cancion("Alejandro", "04:34", pop)),
-                album("Chromatica", "2020-05-29", pop, "imagenes/albumes/chromatica.jpg", cancion("Rain on Me", "03:02", pop), cancion("Stupid Love", "03:13", pop))
+                album("The Fame Monster", "2009-11-18", pop, "imagenes/albumes/the_fame_monster.jpg", cancion("Bad Romance", "04:54", pop), cancion("Alejandro", "04:34", pop), cancion("Telephone", "03:40", pop)),
+                album("Chromatica", "2020-05-29", pop, "imagenes/albumes/chromatica.jpg", cancion("Rain on Me", "03:02", pop), cancion("Stupid Love", "03:13", pop), cancion("911", "02:52", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Beyoncé", "Cantante, compositora y productora estadounidense.", "imagenes/personas/beyonce.jpg", "imagenes/solistas/beyonce.jpg", rnb, LocalDate.of(2003, 1, 1),
             List.of(
-                album("Lemonade", "2016-04-23", rnb, "imagenes/albumes/lemonade.jpg", cancion("Formation", "03:26", rnb), cancion("Hold Up", "03:41", rnb)),
-                album("Renaissance", "2022-07-29", rnb, "imagenes/albumes/renaissance.jpg", cancion("Break My Soul", "04:38", rnb), cancion("Cuff It", "03:45", rnb))
+                album("Lemonade", "2016-04-23", rnb, "imagenes/albumes/lemonade.jpg", cancion("Formation", "03:26", rnb), cancion("Hold Up", "03:41", rnb), cancion("Sorry", "03:53", rnb)),
+                album("Renaissance", "2022-07-29", rnb, "imagenes/albumes/renaissance.jpg", cancion("Break My Soul", "04:38", rnb), cancion("Cuff It", "03:45", rnb), cancion("Alien Superstar", "03:35", rnb))
             )
         ));
 
@@ -250,8 +250,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "John Frusciante", "Guitarrista de Red Hot Chili Peppers.", "imagenes/integrantes/john_frusciante.jpg"), "Guitarrista", LocalDate.of(2019, 12, 15), null, true)
             ),
             List.of(
-                album("Californication", "1999-06-08", rock, "imagenes/albumes/californication.jpg", cancion("Californication", "05:29", rock), cancion("Scar Tissue", "03:35", rock)),
-                album("By the Way", "2002-07-09", rock, "imagenes/albumes/by_the_way.jpg", cancion("By the Way", "03:36", rock), cancion("Can't Stop", "04:29", rock))
+                album("Californication", "1999-06-08", rock, "imagenes/albumes/californication.jpg", cancion("Californication", "05:29", rock), cancion("Scar Tissue", "03:35", rock), cancion("Otherside", "04:15", rock)),
+                album("By the Way", "2002-07-09", rock, "imagenes/albumes/by_the_way.jpg", cancion("By the Way", "03:36", rock), cancion("Can't Stop", "04:29", rock), cancion("The Zephyr Song", "03:52", rock))
             )
         ));
 
@@ -262,8 +262,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Dave Grohl", "Batería de Nirvana.", "imagenes/integrantes/dave_grohl.jpg"), "Batería", LocalDate.of(1990, 9, 1), LocalDate.of(1994, 4, 5), false)
             ),
             List.of(
-                album("Nevermind", "1991-09-24", rock, "imagenes/albumes/nevermind.jpg", cancion("Smells Like Teen Spirit", "05:01", rock), cancion("Come as You Are", "03:39", rock)),
-                album("In Utero", "1993-09-21", rock, "imagenes/albumes/in_utero.jpg", cancion("Heart-Shaped Box", "04:41", rock), cancion("All Apologies", "03:50", rock))
+                album("Nevermind", "1991-09-24", rock, "imagenes/albumes/nevermind.jpg", cancion("Smells Like Teen Spirit", "05:01", rock), cancion("Come as You Are", "03:39", rock), cancion("Lithium", "04:17", rock)),
+                album("In Utero", "1993-09-21", rock, "imagenes/albumes/in_utero.jpg", cancion("Heart-Shaped Box", "04:41", rock), cancion("All Apologies", "03:50", rock), cancion("Rape Me", "02:49", rock))
             )
         ));
 
@@ -274,8 +274,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Tré Cool", "Batería de Green Day.", "imagenes/integrantes/tre_cool.jpg"), "Batería", LocalDate.of(1990, 1, 1), null, true)
             ),
             List.of(
-                album("Dookie", "1994-02-01", rock, "imagenes/albumes/dookie.jpg", cancion("Basket Case", "03:01", rock), cancion("When I Come Around", "02:58", rock)),
-                album("American Idiot", "2004-09-21", rock, "imagenes/albumes/american_idiot.jpg", cancion("American Idiot", "02:54", rock), cancion("Boulevard of Broken Dreams", "04:20", rock))
+                album("Dookie", "1994-02-01", rock, "imagenes/albumes/dookie.jpg", cancion("Basket Case", "03:01", rock), cancion("When I Come Around", "02:58", rock), cancion("Longview", "03:59", rock)),
+                album("American Idiot", "2004-09-21", rock, "imagenes/albumes/american_idiot.jpg", cancion("American Idiot", "02:54", rock), cancion("Boulevard of Broken Dreams", "04:20", rock), cancion("Holiday", "03:52", rock))
             )
         ));
 
@@ -286,8 +286,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Zac Farro", "Batería de Paramore.", "imagenes/integrantes/zac_farro.jpg"), "Batería", LocalDate.of(2017, 1, 1), null, true)
             ),
             List.of(
-                album("Riot!", "2007-06-12", rock, "imagenes/albumes/riot.jpg", cancion("Misery Business", "03:31", rock), cancion("That's What You Get", "03:40", rock)),
-                album("After Laughter", "2017-05-12", rock, "imagenes/albumes/after_laughter.jpg", cancion("Hard Times", "03:02", rock), cancion("Rose-Colored Boy", "03:33", rock))
+                album("Riot!", "2007-06-12", rock, "imagenes/albumes/riot.jpg", cancion("Misery Business", "03:31", rock), cancion("That's What You Get", "03:40", rock), cancion("Crushcrushcrush", "03:09", rock)),
+                album("After Laughter", "2017-05-12", rock, "imagenes/albumes/after_laughter.jpg", cancion("Hard Times", "03:02", rock), cancion("Rose-Colored Boy", "03:33", rock), cancion("Told You So", "03:08", rock))
             )
         ));
 
@@ -297,43 +297,43 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Josh Dun", "Batería de Twenty One Pilots.", "imagenes/integrantes/josh_dun.jpg"), "Batería", LocalDate.of(2011, 1, 1), null, true)
             ),
             List.of(
-                album("Blurryface", "2015-05-17", rock, "imagenes/albumes/blurryface.jpg", cancion("Stressed Out", "03:22", rock), cancion("Ride", "03:34", rock)),
-                album("Trench", "2018-10-05", rock, "imagenes/albumes/trench.jpg", cancion("Jumpsuit", "03:58", rock), cancion("Chlorine", "05:24", rock))
+                album("Blurryface", "2015-05-17", rock, "imagenes/albumes/blurryface.jpg", cancion("Stressed Out", "03:22", rock), cancion("Ride", "03:34", rock), cancion("Tear in My Heart", "03:08", rock)),
+                album("Trench", "2018-10-05", rock, "imagenes/albumes/trench.jpg", cancion("Jumpsuit", "03:58", rock), cancion("Chlorine", "05:24", rock), cancion("My Blood", "03:49", rock))
             )
         ));
 
         artists.add(crearSolista(personas, "Harry Styles", "Cantante y compositor británico.", "imagenes/personas/harry_styles.jpg", "imagenes/solistas/harry_styles.jpg", pop, LocalDate.of(2017, 1, 1),
             List.of(
-                album("Fine Line", "2019-12-13", pop, "imagenes/albumes/fine_line.jpg", cancion("Watermelon Sugar", "02:54", pop), cancion("Adore You", "03:27", pop)),
-                album("Harry's House", "2022-05-20", pop, "imagenes/albumes/harrys_house.jpg", cancion("As It Was", "02:47", pop), cancion("Late Night Talking", "02:58", pop))
+                album("Fine Line", "2019-12-13", pop, "imagenes/albumes/fine_line.jpg", cancion("Watermelon Sugar", "02:54", pop), cancion("Adore You", "03:27", pop), cancion("Falling", "04:00", pop)),
+                album("Harry's House", "2022-05-20", pop, "imagenes/albumes/harrys_house.jpg", cancion("As It Was", "02:47", pop), cancion("Late Night Talking", "02:58", pop), cancion("Music for a Sushi Restaurant", "03:13", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Justin Bieber", "Cantante y compositor canadiense.", "imagenes/personas/justin_bieber.jpg", "imagenes/solistas/justin_bieber.jpg", pop, LocalDate.of(2009, 1, 1),
             List.of(
-                album("Purpose", "2015-11-13", pop, "imagenes/albumes/purpose.jpg", cancion("Sorry", "03:20", pop), cancion("Love Yourself", "03:53", pop)),
-                album("Justice", "2021-03-19", pop, "imagenes/albumes/justice.jpg", cancion("Peaches", "03:18", pop), cancion("Hold On", "02:50", pop))
+                album("Purpose", "2015-11-13", pop, "imagenes/albumes/purpose.jpg", cancion("Sorry", "03:20", pop), cancion("Love Yourself", "03:53", pop), cancion("What Do You Mean?", "03:26", pop)),
+                album("Justice", "2021-03-19", pop, "imagenes/albumes/justice.jpg", cancion("Peaches", "03:18", pop), cancion("Hold On", "02:50", pop), cancion("Ghost", "02:33", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Miley Cyrus", "Cantante, compositora y actriz estadounidense.", "imagenes/personas/miley_cyrus.jpg", "imagenes/solistas/miley_cyrus.jpg", pop, LocalDate.of(2007, 1, 1),
             List.of(
-                album("Bangerz", "2013-10-04", pop, "imagenes/albumes/bangerz.jpg", cancion("Wrecking Ball", "03:41", pop), cancion("We Can't Stop", "03:50", pop)),
-                album("Endless Summer Vacation", "2023-03-10", pop, "imagenes/albumes/endless_summer_vacation.jpg", cancion("Flowers", "03:20", pop), cancion("River", "02:43", pop))
+                album("Bangerz", "2013-10-04", pop, "imagenes/albumes/bangerz.jpg", cancion("Wrecking Ball", "03:41", pop), cancion("We Can't Stop", "03:50", pop), cancion("Adore You", "04:38", pop)),
+                album("Endless Summer Vacation", "2023-03-10", pop, "imagenes/albumes/endless_summer_vacation.jpg", cancion("Flowers", "03:20", pop), cancion("River", "02:43", pop), cancion("Jaded", "03:05", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Olivia Rodrigo", "Cantante, compositora y actriz estadounidense.", "imagenes/personas/olivia_rodrigo.jpg", "imagenes/solistas/olivia_rodrigo.jpg", pop, LocalDate.of(2021, 1, 1),
             List.of(
-                album("Sour", "2021-05-21", pop, "imagenes/albumes/sour.jpg", cancion("Drivers License", "04:02", pop), cancion("Good 4 U", "02:58", pop)),
-                album("Guts", "2023-09-08", pop, "imagenes/albumes/guts.jpg", cancion("Vampire", "03:39", pop), cancion("Bad Idea Right?", "03:04", pop))
+                album("Sour", "2021-05-21", pop, "imagenes/albumes/sour.jpg", cancion("Drivers License", "04:02", pop), cancion("Good 4 U", "02:58", pop), cancion("Deja Vu", "03:35", pop)),
+                album("Guts", "2023-09-08", pop, "imagenes/albumes/guts.jpg", cancion("Vampire", "03:39", pop), cancion("Bad Idea Right?", "03:04", pop), cancion("Get Him Back!", "03:31", pop))
             )
         ));
 
         artists.add(crearSolista(personas, "Lana Del Rey", "Cantante y compositora estadounidense.", "imagenes/personas/lana_del_rey.jpg", "imagenes/solistas/lana_del_rey.jpg", pop, LocalDate.of(2011, 1, 1),
             List.of(
-                album("Born to Die", "2012-01-27", pop, "imagenes/albumes/born_to_die.jpg", cancion("Video Games", "04:42", pop), cancion("Summertime Sadness", "04:25", pop)),
-                album("Ultraviolence", "2014-06-13", pop, "imagenes/albumes/ultraviolence.jpg", cancion("West Coast", "04:16", pop), cancion("Ultraviolence", "04:11", pop))
+                album("Born to Die", "2012-01-27", pop, "imagenes/albumes/born_to_die.jpg", cancion("Video Games", "04:42", pop), cancion("Summertime Sadness", "04:25", pop), cancion("Born to Die", "04:46", pop)),
+                album("Ultraviolence", "2014-06-13", pop, "imagenes/albumes/ultraviolence.jpg", cancion("West Coast", "04:16", pop), cancion("Ultraviolence", "04:11", pop), cancion("Shades of Cool", "05:42", pop))
             )
         ));
 
@@ -343,8 +343,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Drew Taggart", "DJ, productor y vocalista de The Chainsmokers.", "imagenes/integrantes/drew_taggart.jpg"), "DJ / Vocalista", LocalDate.of(2012, 1, 1), null, true)
             ),
             List.of(
-                album("Memories... Do Not Open", "2017-04-07", electro, "imagenes/albumes/memories_do_not_open.jpg", cancion("Something Just Like This", "04:07", electro), cancion("Paris", "03:41", electro)),
-                album("So Far So Good", "2022-05-13", electro, "imagenes/albumes/so_far_so_good.jpg", cancion("High", "03:00", electro), cancion("I Love U", "03:05", electro))
+                album("Memories... Do Not Open", "2017-04-07", electro, "imagenes/albumes/memories_do_not_open.jpg", cancion("Something Just Like This", "04:07", electro), cancion("Paris", "03:41", electro), cancion("Honest", "03:28", electro)),
+                album("So Far So Good", "2022-05-13", electro, "imagenes/albumes/so_far_so_good.jpg", cancion("High", "03:00", electro), cancion("I Love U", "03:05", electro), cancion("Riptide", "02:51", electro))
             )
         ));
 
@@ -355,8 +355,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Dominic Howard", "Batería de Muse.", "imagenes/integrantes/dominic_howard.jpg"), "Batería", LocalDate.of(1994, 1, 1), null, true)
             ),
             List.of(
-                album("Absolution", "2003-09-15", rock, "imagenes/albumes/absolution.jpg", cancion("Time Is Running Out", "03:56", rock), cancion("Hysteria", "03:47", rock)),
-                album("Black Holes and Revelations", "2006-07-03", rock, "imagenes/albumes/black_holes_and_revelations.jpg", cancion("Starlight", "04:00", rock), cancion("Supermassive Black Hole", "03:29", rock))
+                album("Absolution", "2003-09-15", rock, "imagenes/albumes/absolution.jpg", cancion("Time Is Running Out", "03:56", rock), cancion("Hysteria", "03:47", rock), cancion("Stockholm Syndrome", "04:58", rock)),
+                album("Black Holes and Revelations", "2006-07-03", rock, "imagenes/albumes/black_holes_and_revelations.jpg", cancion("Starlight", "04:00", rock), cancion("Supermassive Black Hole", "03:29", rock), cancion("Knights of Cydonia", "06:06", rock))
             )
         ));
 
@@ -368,8 +368,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Ronnie Vannucci Jr.", "Batería de The Killers.", "imagenes/integrantes/ronnie_vannucci_jr.jpg"), "Batería", LocalDate.of(2002, 1, 1), null, true)
             ),
             List.of(
-                album("Hot Fuss", "2004-06-07", rock, "imagenes/albumes/hot_fuss.jpg", cancion("Mr. Brightside", "03:42", rock), cancion("Somebody Told Me", "03:17", rock)),
-                album("Sam's Town", "2006-10-02", rock, "imagenes/albumes/sams_town.jpg", cancion("When You Were Young", "03:40", rock), cancion("Read My Mind", "04:06", rock))
+                album("Hot Fuss", "2004-06-07", rock, "imagenes/albumes/hot_fuss.jpg", cancion("Mr. Brightside", "03:42", rock), cancion("Somebody Told Me", "03:17", rock), cancion("All These Things That I've Done", "05:01", rock)),
+                album("Sam's Town", "2006-10-02", rock, "imagenes/albumes/sams_town.jpg", cancion("When You Were Young", "03:40", rock), cancion("Read My Mind", "04:06", rock), cancion("Bones", "03:47", rock))
             )
         ));
 
@@ -381,8 +381,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Sergio Vallín", "Guitarrista de Maná.", "imagenes/integrantes/sergio_vallin.jpg"), "Guitarrista", LocalDate.of(1994, 1, 1), null, true)
             ),
             List.of(
-                album("¿Dónde Jugarán los Niños?", "1992-10-27", latino, "imagenes/albumes/donde_jugaran_los_ninos.jpg", cancion("Oye Mi Amor", "04:22", latino), cancion("Vivir Sin Aire", "04:51", latino)),
-                album("Sueños Líquidos", "1997-10-14", latino, "imagenes/albumes/suenos_liquidos.jpg", cancion("Clavado en un Bar", "05:11", latino), cancion("En el Muelle de San Blas", "05:59", latino))
+                album("¿Dónde Jugarán los Niños?", "1992-10-27", latino, "imagenes/albumes/donde_jugaran_los_ninos.jpg", cancion("Oye Mi Amor", "04:22", latino), cancion("Vivir Sin Aire", "04:51", latino), cancion("Me Vale", "04:32", latino)),
+                album("Sueños Líquidos", "1997-10-14", latino, "imagenes/albumes/suenos_liquidos.jpg", cancion("Clavado en un Bar", "05:11", latino), cancion("En el Muelle de San Blas", "05:59", latino), cancion("Hechicera", "05:01", latino))
             )
         ));
 
@@ -393,43 +393,43 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Charly Alberti", "Batería de Soda Stereo.", "imagenes/integrantes/charly_alberti.jpg"), "Batería", LocalDate.of(1982, 1, 1), LocalDate.of(1997, 9, 20), false)
             ),
             List.of(
-                album("Signos", "1986-11-10", latino, "imagenes/albumes/signos.jpg", cancion("Signos", "05:14", latino), cancion("Persiana Americana", "04:50", latino)),
-                album("Canción Animal", "1990-08-07", latino, "imagenes/albumes/cancion_animal.jpg", cancion("De Música Ligera", "03:33", latino), cancion("Entre Caníbales", "04:10", latino))
+                album("Signos", "1986-11-10", latino, "imagenes/albumes/signos.jpg", cancion("Signos", "05:14", latino), cancion("Persiana Americana", "04:50", latino), cancion("Prófugos", "05:20", latino)),
+                album("Canción Animal", "1990-08-07", latino, "imagenes/albumes/cancion_animal.jpg", cancion("De Música Ligera", "03:33", latino), cancion("Entre Caníbales", "04:10", latino), cancion("Un Millón de Años Luz", "03:46", latino))
             )
         ));
 
         artists.add(crearSolista(personas, "Karol G", "Cantante y compositora colombiana.", "imagenes/personas/karol_g.jpg", "imagenes/solistas/karol_g.jpg", latino, LocalDate.of(2013, 1, 1),
             List.of(
-                album("KG0516", "2021-03-25", latino, "imagenes/albumes/kg0516.jpg", cancion("Bichota", "02:58", latino), cancion("Location", "04:25", latino)),
-                album("Mañana Será Bonito", "2023-02-24", latino, "imagenes/albumes/manana_sera_bonito.jpg", cancion("TQG", "03:17", latino), cancion("Mientras Me Curo del Cora", "02:44", latino))
+                album("KG0516", "2021-03-25", latino, "imagenes/albumes/kg0516.jpg", cancion("Bichota", "02:58", latino), cancion("Location", "04:25", latino), cancion("El Makinon", "03:29", latino)),
+                album("Mañana Será Bonito", "2023-02-24", latino, "imagenes/albumes/manana_sera_bonito.jpg", cancion("TQG", "03:17", latino), cancion("Mientras Me Curo del Cora", "02:44", latino), cancion("Provenza", "03:30", latino))
             )
         ));
 
         artists.add(crearSolista(personas, "J Balvin", "Cantante y compositor colombiano.", "imagenes/personas/j_balvin.jpg", "imagenes/solistas/j_balvin.jpg", latino, LocalDate.of(2009, 1, 1),
             List.of(
-                album("Vibras", "2018-05-25", latino, "imagenes/albumes/vibras.jpg", cancion("Mi Gente", "03:06", latino), cancion("Ambiente", "04:09", latino)),
-                album("Colores", "2020-03-19", latino, "imagenes/albumes/colores.jpg", cancion("Rojo", "02:31", latino), cancion("Amarillo", "02:37", latino))
+                album("Vibras", "2018-05-25", latino, "imagenes/albumes/vibras.jpg", cancion("Mi Gente", "03:06", latino), cancion("Ambiente", "04:09", latino), cancion("Ahora", "04:14", latino)),
+                album("Colores", "2020-03-19", latino, "imagenes/albumes/colores.jpg", cancion("Rojo", "02:31", latino), cancion("Amarillo", "02:37", latino), cancion("Morado", "03:20", latino))
             )
         ));
 
         artists.add(crearSolista(personas, "Rosalía", "Cantante, compositora y productora española.", "imagenes/personas/rosalia.jpg", "imagenes/solistas/rosalia.jpg", latino, LocalDate.of(2017, 1, 1),
             List.of(
-                album("El Mal Querer", "2018-11-02", latino, "imagenes/albumes/el_mal_querer.jpg", cancion("Malamente", "02:30", latino), cancion("Pienso en Tu Mirá", "03:13", latino)),
-                album("Motomami", "2022-03-18", latino, "imagenes/albumes/motomami.jpg", cancion("Saoko", "02:17", latino), cancion("La Fama", "03:08", latino))
+                album("El Mal Querer", "2018-11-02", latino, "imagenes/albumes/el_mal_querer.jpg", cancion("Malamente", "02:30", latino), cancion("Pienso en Tu Mirá", "03:13", latino), cancion("Di Mi Nombre", "02:42", latino)),
+                album("Motomami", "2022-03-18", latino, "imagenes/albumes/motomami.jpg", cancion("Saoko", "02:17", latino), cancion("La Fama", "03:08", latino), cancion("Bizcochito", "01:49", latino))
             )
         ));
 
         artists.add(crearSolista(personas, "Post Malone", "Cantante, rapero y compositor estadounidense.", "imagenes/personas/post_malone.jpg", "imagenes/solistas/post_malone.jpg", rnb, LocalDate.of(2015, 1, 1),
             List.of(
-                album("Beerbongs & Bentleys", "2018-04-27", rnb, "imagenes/albumes/beerbongs_and_bentleys.jpg", cancion("Rockstar", "03:38", rnb), cancion("Better Now", "03:51", rnb)),
-                album("Hollywood's Bleeding", "2019-09-06", rnb, "imagenes/albumes/hollywoods_bleeding.jpg", cancion("Circles", "03:35", rnb), cancion("Sunflower", "02:38", rnb))
+                album("Beerbongs & Bentleys", "2018-04-27", rnb, "imagenes/albumes/beerbongs_and_bentleys.jpg", cancion("Rockstar", "03:38", rnb), cancion("Better Now", "03:51", rnb), cancion("Psycho", "03:41", rnb)),
+                album("Hollywood's Bleeding", "2019-09-06", rnb, "imagenes/albumes/hollywoods_bleeding.jpg", cancion("Circles", "03:35", rnb), cancion("Sunflower", "02:38", rnb), cancion("Goodbyes", "02:55", rnb))
             )
         ));
 
         artists.add(crearSolista(personas, "SZA", "Cantante y compositora estadounidense.", "imagenes/personas/sza.jpg", "imagenes/solistas/sza.jpg", rnb, LocalDate.of(2012, 1, 1),
             List.of(
-                album("Ctrl", "2017-06-09", rnb, "imagenes/albumes/ctrl.jpg", cancion("Love Galore", "04:35", rnb), cancion("The Weekend", "04:32", rnb)),
-                album("SOS", "2022-12-09", rnb, "imagenes/albumes/sos.jpg", cancion("Kill Bill", "02:33", rnb), cancion("Snooze", "03:21", rnb))
+                album("Ctrl", "2017-06-09", rnb, "imagenes/albumes/ctrl.jpg", cancion("Love Galore", "04:35", rnb), cancion("The Weekend", "04:32", rnb), cancion("Drew Barrymore", "03:51", rnb)),
+                album("SOS", "2022-12-09", rnb, "imagenes/albumes/sos.jpg", cancion("Kill Bill", "02:33", rnb), cancion("Snooze", "03:21", rnb), cancion("Shirt", "03:01", rnb))
             )
         ));
 
@@ -442,8 +442,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Rodrigo Guardiola", "Batería de Zoé.", "imagenes/integrantes/rodrigo_guardiola.jpg"), "Batería", LocalDate.of(2005, 1, 1), null, true)
             ),
             List.of(
-                album("Reptilectric", "2008-10-08", latino, "imagenes/albumes/reptilectric.jpg", cancion("Reptilectric", "04:12", latino), cancion("Nada", "04:37", latino)),
-                album("Aztlán", "2018-04-20", latino, "imagenes/albumes/aztlan.jpg", cancion("Azul", "03:27", latino), cancion("No Hay Mal Que Dure", "03:44", latino))
+                album("Reptilectric", "2008-10-08", latino, "imagenes/albumes/reptilectric.jpg", cancion("Reptilectric", "04:12", latino), cancion("Nada", "04:37", latino), cancion("Poli", "03:36", latino)),
+                album("Aztlán", "2018-04-20", latino, "imagenes/albumes/aztlan.jpg", cancion("Azul", "03:27", latino), cancion("No Hay Mal Que Dure", "03:44", latino), cancion("Temor y Temblor", "03:47", latino))
             )
         ));
 
@@ -455,8 +455,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Lisa", "Rapera y bailarina de BLACKPINK.", "imagenes/integrantes/lisa.jpg"), "Rapera / Bailarina", LocalDate.of(2016, 8, 8), null, true)
             ),
             List.of(
-                album("The Album", "2020-10-02", pop, "imagenes/albumes/the_album_blackpink.jpg", cancion("Lovesick Girls", "03:12", pop), cancion("How You Like That", "03:01", pop)),
-                album("Born Pink", "2022-09-16", pop, "imagenes/albumes/born_pink.jpg", cancion("Pink Venom", "03:07", pop), cancion("Shut Down", "02:56", pop))
+                album("The Album", "2020-10-02", pop, "imagenes/albumes/the_album_blackpink.jpg", cancion("Lovesick Girls", "03:12", pop), cancion("How You Like That", "03:01", pop), cancion("Pretty Savage", "03:19", pop)),
+                album("Born Pink", "2022-09-16", pop, "imagenes/albumes/born_pink.jpg", cancion("Pink Venom", "03:07", pop), cancion("Shut Down", "02:56", pop), cancion("Typa Girl", "02:59", pop))
             )
         ));
 
@@ -468,8 +468,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Anni-Frid Lyngstad", "Vocalista de ABBA.", "imagenes/integrantes/anni_frid_lyngstad.jpg"), "Vocalista", LocalDate.of(1972, 1, 1), LocalDate.of(1982, 12, 31), false)
             ),
             List.of(
-                album("Arrival", "1976-10-11", pop, "imagenes/albumes/arrival.jpg", cancion("Dancing Queen", "03:51", pop), cancion("Money, Money, Money", "03:06", pop)),
-                album("The Visitors", "1981-11-30", pop, "imagenes/albumes/the_visitors.jpg", cancion("One of Us", "03:56", pop), cancion("The Visitors", "05:47", pop))
+                album("Arrival", "1976-10-11", pop, "imagenes/albumes/arrival.jpg", cancion("Dancing Queen", "03:51", pop), cancion("Money, Money, Money", "03:06", pop), cancion("Knowing Me, Knowing You", "04:02", pop)),
+                album("The Visitors", "1981-11-30", pop, "imagenes/albumes/the_visitors.jpg", cancion("One of Us", "03:56", pop), cancion("The Visitors", "05:47", pop), cancion("Head Over Heels", "03:47", pop))
             )
         ));
 
@@ -479,8 +479,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "Patrick Carney", "Batería de The Black Keys.", "imagenes/integrantes/patrick_carney.jpg"), "Batería", LocalDate.of(2001, 1, 1), null, true)
             ),
             List.of(
-                album("Brothers", "2010-05-18", rock, "imagenes/albumes/brothers.jpg", cancion("Tighten Up", "03:31", rock), cancion("Howlin' for You", "03:11", rock)),
-                album("El Camino", "2011-12-06", rock, "imagenes/albumes/el_camino.jpg", cancion("Lonely Boy", "03:13", rock), cancion("Gold on the Ceiling", "03:44", rock))
+                album("Brothers", "2010-05-18", rock, "imagenes/albumes/brothers.jpg", cancion("Tighten Up", "03:31", rock), cancion("Howlin' for You", "03:11", rock), cancion("Next Girl", "03:18", rock)),
+                album("El Camino", "2011-12-06", rock, "imagenes/albumes/el_camino.jpg", cancion("Lonely Boy", "03:13", rock), cancion("Gold on the Ceiling", "03:44", rock), cancion("Little Black Submarines", "04:11", rock))
             )
         ));
 
@@ -492,8 +492,8 @@ public class CargaMasivaBO {
                 integrante(nuevaPersona(personas, "John Dolmayan", "Batería de System of a Down.", "imagenes/integrantes/john_dolmayan.jpg"), "Batería", LocalDate.of(1997, 1, 1), null, true)
             ),
             List.of(
-                album("Toxicity", "2001-09-04", rock, "imagenes/albumes/toxicity.jpg", cancion("Chop Suey!", "03:30", rock), cancion("Toxicity", "03:39", rock)),
-                album("Mezmerize", "2005-05-17", rock, "imagenes/albumes/mezmerize.jpg", cancion("B.Y.O.B.", "04:15", rock), cancion("Question!", "03:20", rock))
+                album("Toxicity", "2001-09-04", rock, "imagenes/albumes/toxicity.jpg", cancion("Chop Suey!", "03:30", rock), cancion("Toxicity", "03:39", rock), cancion("Aerials", "03:55", rock)),
+                album("Mezmerize", "2005-05-17", rock, "imagenes/albumes/mezmerize.jpg", cancion("B.Y.O.B.", "04:15", rock), cancion("Question!", "03:20", rock), cancion("Radio/Video", "04:09", rock))
             )
         ));
 
