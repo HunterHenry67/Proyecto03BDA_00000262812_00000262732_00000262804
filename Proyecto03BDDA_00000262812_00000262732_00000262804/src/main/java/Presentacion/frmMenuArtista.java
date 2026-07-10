@@ -6,6 +6,7 @@ package Presentacion;
 
 import DTO.ArtistaDTO;
 import Excepciones.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.IArtistaBO;
 import Interfaces.IPersonaBO;
 import Negocio.ArtistaBO;
@@ -446,7 +447,12 @@ public class frmMenuArtista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
-        // TODO add your handling code here:
+       try {
+            new frmFavoritos().setVisible(true);
+            dispose();
+        } catch (PersistenciaException ex) {
+            System.getLogger(frmMenuPrinicipal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }//GEN-LAST:event_btnFavoritosActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
