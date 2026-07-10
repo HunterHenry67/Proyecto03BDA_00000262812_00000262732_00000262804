@@ -17,6 +17,7 @@ import Negocio.FavoritoBO;
 import Negocio.GeneroBO;
 import Interfaces.IFavoritoBO;
 import Interfaces.IGeneroBO;
+import Utilerias.Sesion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,8 +29,7 @@ import javax.swing.border.LineBorder;
 public class frmFavoritos extends JFrame {
 
     private UsuarioDTO usuarioActual;
-
-    private IFavoritoBO favoritoBO;
+    private final IFavoritoBO favoritoBO;
     private IGeneroBO generoBO;
 
     private JTextField txtBuscar;
@@ -162,51 +162,39 @@ public class frmFavoritos extends JFrame {
     }
 
     private void buscarFavoritos() {
-        if (usuarioActual == null) {
-            JOptionPane.showMessageDialog(this, "No hay usuario iniciado.");
+        this.usuarioActual = Sesion.getUsuarioActual();
+        if (this.usuarioActual == null) {
+            JOptionPane.showMessageDialog(this, "No existe una sesión iniciada.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             String texto = txtBuscar.getText().trim();
-            String tipo = cmbTipo.getSelectedItem().toString();
-
+            String tipo = cmbTipo.getSelectedItem() != null ? cmbTipo.getSelectedItem().toString() : "TODOS";
             String idGenero = null;
-            Object generoSeleccionado = cmbGenero.getSelectedItem();
-
-            if (generoSeleccionado instanceof GeneroDTO) {
-                idGenero = ((GeneroDTO) generoSeleccionado).getId();
+            if (cmbGenero.getSelectedItem() instanceof GeneroDTO) {
+                GeneroDTO generoSeleccionado = (GeneroDTO) cmbGenero.getSelectedItem();
+                idGenero = generoSeleccionado.getId();
             }
-
-            List<FavoritoDTO> favoritos = favoritoBO.buscarFavoritos(
-                    usuarioActual.getId(),
-                    texto,
-                    tipo,
-                    idGenero
-            );
-
-            cargarFavoritos(favoritos);
-
+            List<FavoritoDTO> favoritosEncontrados = favoritoBO.buscarFavoritos(this.usuarioActual.getId(), texto, tipo, idGenero);
+            cargarFavoritos(favoritosEncontrados);
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al buscar favoritos", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void cargarFavoritos(List<FavoritoDTO> favoritos) {
         panelResultados.removeAll();
-
         if (favoritos == null || favoritos.isEmpty()) {
-            JLabel lblVacio = new JLabel("No se encontraron favoritos.");
-            lblVacio.setFont(new Font("Arial", Font.PLAIN, 18));
-            lblVacio.setAlignmentX(LEFT_ALIGNMENT);
-            panelResultados.add(lblVacio);
+            JLabel lblMensaje = new JLabel("No se encontraron favoritos.");
+            lblMensaje.setFont(new Font("Arial", Font.PLAIN, 18)
+            );
+            panelResultados.add(lblMensaje);
         } else {
             for (FavoritoDTO favorito : favoritos) {
                 panelResultados.add(crearTarjetaFavorito(favorito));
-                panelResultados.add(Box.createVerticalStrut(12));
             }
         }
-
         panelResultados.revalidate();
         panelResultados.repaint();
     }
@@ -258,29 +246,25 @@ public class frmFavoritos extends JFrame {
     }
 
     private void eliminarFavorito(FavoritoDTO favorito) {
-        int opcion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Deseas eliminar este elemento de favoritos?",
-                "Confirmar",
-                JOptionPane.YES_NO_OPTION
-        );
-
+        UsuarioDTO usuario = Sesion.getUsuarioActual();
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(this, "No existe una sesión iniciada.", "Error", JOptionPane.ERROR_MESSAGE );
+            return;
+        }
+        int opcion = JOptionPane.showConfirmDialog( this,"¿Deseas eliminar este elemento de favoritos?", "Confirmar",JOptionPane.YES_NO_OPTION );
         if (opcion != JOptionPane.YES_OPTION) {
             return;
         }
-
         try {
-            favoritoBO.eliminarElementoFavorito(
-                    usuarioActual.getId(),
-                    favorito.getTipo(),
-                    favorito.getIdElemento()
-            );
-
-            JOptionPane.showMessageDialog(this, "Favorito eliminado.");
-            buscarFavoritos();
-
+            boolean eliminado = favoritoBO.eliminarElementoFavorito( usuario.getId(), favorito.getTipo(), favorito.getIdElemento() );
+            if (eliminado) {
+                JOptionPane.showMessageDialog( this,"Favorito eliminado.");
+                buscarFavoritos();
+            } else {
+                JOptionPane.showMessageDialog(this,"No se encontró el favorito para eliminar.");
+            }
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al eliminar favorito",JOptionPane.ERROR_MESSAGE);
         }
     }
 
