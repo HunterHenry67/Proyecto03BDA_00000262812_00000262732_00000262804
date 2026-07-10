@@ -130,11 +130,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Menu Principal"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenuPrincipalActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnArtistas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Artistas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnArtistasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAlbumes">
           <Properties>
@@ -145,6 +151,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Favoritos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFavoritosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton5">
           <Properties>
