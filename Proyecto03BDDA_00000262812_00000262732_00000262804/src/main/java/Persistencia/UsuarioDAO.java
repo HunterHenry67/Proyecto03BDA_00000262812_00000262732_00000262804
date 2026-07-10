@@ -14,6 +14,7 @@ import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.elemMatch;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.not;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
@@ -119,7 +120,13 @@ public class UsuarioDAO implements IUsuarioDAO {
             if (generoNoDeseado.getIdGenero() == null) {
                 throw new PersistenciaException("El género no deseado debe tener un idGenero válido.");
             }
-            Bson filtro = eq("_id", idUsuario);
+            Bson filtro = and(
+                    eq("_id", idUsuario),
+                    not(elemMatch(
+                            "generoNoDeseado",
+                            eq("idGenero", generoNoDeseado.getIdGenero())
+                    ))
+            );
             Bson cambio = Updates.push("generoNoDeseado", generoNoDeseado);
             UpdateResult resultado = coleccion.updateOne(filtro, cambio);
             return resultado.getModifiedCount() > 0;

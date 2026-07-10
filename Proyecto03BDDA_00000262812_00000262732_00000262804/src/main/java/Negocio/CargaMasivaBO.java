@@ -42,6 +42,12 @@ public class CargaMasivaBO {
      * @return mensaje con el resumen de lo insertado.
      */
     public String ejecutarCargaMasiva() throws NegocioException {
+        if (cargaMasivaYaRealizada()) {
+            throw new NegocioException(
+                    "La carga masiva ya fue realizada anteriormente."
+            );
+        }
+
         // 1. RESOLVER GÉNEROS PRIMERO (Filtro de seguridad inicial)
         this.idGeneros = resolverGeneros();
         
@@ -51,11 +57,9 @@ public class CargaMasivaBO {
         String rnb = idGeneros.get("RNB");
         String latino = idGeneros.get("LATINO");
 
-        // 2. INICIALIZAR LISTAS DE CONTENEDORES
         List<PersonaDTO> personas = new ArrayList<>();
         List<ArtistaDTO> artists = new ArrayList<>();
 
-        // --- BANDAS ---
         artists.add(crearBanda(personas, "Linkin Park", "imagenes/bandas/linkin_park.jpg", rock,
             List.of(
                 integrante(nuevaPersona(personas, "Chester Bennington", "Vocalista original de Linkin Park.", "imagenes/integrantes/chester_bennington.jpg"), "Vocalista", LocalDate.of(1999, 1, 1), LocalDate.of(2017, 7, 20), false),
@@ -147,7 +151,6 @@ public class CargaMasivaBO {
             )
         ));
 
-        // --- SOLISTAS Y CASOS ESPECIALES ---
         artists.add(crearSolista(personas, "Dua Lipa", "Cantante y compositora británica.", "imagenes/personas/dua_lipa.jpg", "imagenes/solistas/dua_lipa.jpg", pop, LocalDate.of(2015, 1, 1),
             List.of(
                 album("Future Nostalgia", "2020-03-27", pop, "imagenes/albumes/future_nostalgia.jpg", cancion("Don't Start Now", "03:03", pop), cancion("Levitating", "03:23", pop)),
@@ -208,7 +211,7 @@ public class CargaMasivaBO {
             )
         ));
 
-        // 3. PERSISTENCIA EN LA BASE DE DATOS
+      
         try {
             List<PersonaDTO> personasGuardadas = personaBO.agregarMasivo(personas);
             List<ArtistaDTO> artistasGuardados = artistaBO.agregarMasivo(artists);
@@ -220,7 +223,6 @@ public class CargaMasivaBO {
         }
     }
 
-    // --- MÉTODOS DE CONSTRUCCIÓN GENÉRICOS ---
 
     private ArtistaDTO crearBanda(List<PersonaDTO> personas, String nombreBanda, String imagenBanda, String generoId, 
                                   List<IntegranteDTO> integrantes, List<AlbumDTO> albumes) {
@@ -263,7 +265,24 @@ public class CargaMasivaBO {
         return album;
     }
 
-    // --- RESOLUCIÓN Y CREACIÓN DE GÉNEROS ---
+    private boolean cargaMasivaYaRealizada() throws NegocioException {
+        List<ArtistaDTO> encontrados = artistaBO.buscarPorNombre("Linkin Park");
+
+        if (encontrados == null) {
+            return false;
+        }
+
+        for (ArtistaDTO artista : encontrados) {
+            if (artista != null
+                    && artista.getNombre() != null
+                    && artista.getNombre().equalsIgnoreCase("Linkin Park")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     private Map<String, String> resolverGeneros() throws NegocioException {
         try {

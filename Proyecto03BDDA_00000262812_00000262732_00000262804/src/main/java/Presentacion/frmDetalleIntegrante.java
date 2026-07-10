@@ -7,14 +7,19 @@ package Presentacion;
 import DTO.ArtistaDTO;
 import DTO.IntegranteDTO;
 import DTO.PersonaDTO;
+import DTO.UsuarioDTO;
 import Excepciones.NegocioException;
+import Excepciones.PersistenciaException;
 import Excepciones.PresentacionException;
 import Interfaces.IConexionBD;
+import Interfaces.IFavoritoBO;
 import Interfaces.IPersonaBO;
 import Interfaces.IPersonaDAO;
+import Negocio.FavoritoBO;
 import Negocio.PersonaBO;
 import Persistencia.ConexionBD;
 import Persistencia.PersonaDAO;
+import Utilerias.Sesion;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
@@ -35,6 +40,7 @@ public class frmDetalleIntegrante extends javax.swing.JFrame {
     private IntegranteDTO integrante;
     private PersonaDTO persona;
     private IPersonaBO personaBO;
+    private final IFavoritoBO favoritoBO = new FavoritoBO();
 
     public frmDetalleIntegrante(ArtistaDTO artista, IntegranteDTO integrante) {
         initComponents();
@@ -392,19 +398,81 @@ public class frmDetalleIntegrante extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
-        // TODO add your handling code here:
+        new frmAlbum().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
-        // TODO add your handling code here:
+        try {
+            new frmFavoritos().setVisible(true);
+            dispose();
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No fue posible abrir favoritos: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnFavoritosActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        // TODO add your handling code here:
+        new frmPerfil().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     private void btnAgregarFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFavoritosActionPerformed
-        JOptionPane.showMessageDialog(this, "Artista agregado a favoritos: " + artista.getNombre());
+        UsuarioDTO usuario = Sesion.getUsuarioActual();
+
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No existe un usuario con sesión iniciada.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        if (artista == null || artista.getId() == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "El artista no tiene un identificador válido.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        try {
+            boolean agregado = favoritoBO.agregarArtistaFavorito(
+                    usuario.getId(),
+                    artista.getId()
+            );
+
+            if (agregado) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Artista agregado a favoritos: " + artista.getNombre()
+                );
+                btnAgregarFavoritos.setEnabled(false);
+                btnAgregarFavoritos.setText("Ya está en favoritos");
+            } else {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "El artista ya estaba en favoritos.",
+                        "Favoritos",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    ex.getMessage(),
+                    "Error al agregar favorito",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnAgregarFavoritosActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed

@@ -4,7 +4,6 @@
  */
 package Negocio;
 
-
 import DTO.FavoritoDTO;
 import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
@@ -16,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import Interfaces.IUsuarioDAO;
+import Persistencia.UsuarioDAO;
+
 /**
  *
  * @author Andre
@@ -23,50 +25,101 @@ import org.bson.types.ObjectId;
 public class FavoritoBO implements IFavoritoBO {
 
     private final IFavoritoDAO favoritoDAO;
+    private final IUsuarioDAO usuarioDAO;
 
     public FavoritoBO() {
         this.favoritoDAO = new FavoritoDAO();
+        this.usuarioDAO = new UsuarioDAO();
     }
 
-    public FavoritoBO(IFavoritoDAO favoritoDAO) {
+    public FavoritoBO(
+            IFavoritoDAO favoritoDAO
+    ) {
         this.favoritoDAO = favoritoDAO;
+        this.usuarioDAO = new UsuarioDAO();
+    }
+
+    public FavoritoBO(
+            IFavoritoDAO favoritoDAO,
+            IUsuarioDAO usuarioDAO
+    ) {
+        this.favoritoDAO = favoritoDAO;
+        this.usuarioDAO = usuarioDAO;
     }
 
     @Override
-    public boolean agregarArtistaFavorito(String idUsuario, String idArtista) throws NegocioException {
-        ObjectId usuario = convertirObjectId(idUsuario, "usuario");
-        ObjectId artista = convertirObjectId(idArtista, "artista");
+public boolean agregarAlbumFavorito(
+        String idUsuario,
+        String idAlbum
+) throws NegocioException {
 
-        try {
-            return favoritoDAO.agregarArtista(usuario, artista);
-        } catch (PersistenciaException e) {
-            throw new NegocioException(e.getMessage());
-        }
+    ObjectId usuario =
+            convertirObjectId(
+                    idUsuario,
+                    "usuario"
+            );
+
+    ObjectId album =
+            convertirObjectId(
+                    idAlbum,
+                    "álbum"
+            );
+
+    try {
+        validarGeneroPermitido(
+                usuario,
+                "ALBUM",
+                album
+        );
+
+        return favoritoDAO.agregarAlbum(
+                usuario,
+                album
+        );
+
+    } catch (PersistenciaException ex) {
+        throw new NegocioException(
+                ex.getMessage()
+        );
     }
+}
 
     @Override
-    public boolean agregarAlbumFavorito(String idUsuario, String idAlbum) throws NegocioException {
-        ObjectId usuario = convertirObjectId(idUsuario, "usuario");
-        ObjectId album = convertirObjectId(idAlbum, "álbum");
+public boolean agregarCancionFavorita(
+        String idUsuario,
+        String idCancion
+) throws NegocioException {
 
-        try {
-            return favoritoDAO.agregarAlbum(usuario, album);
-        } catch (PersistenciaException e) {
-            throw new NegocioException(e.getMessage());
-        }
+    ObjectId usuario =
+            convertirObjectId(
+                    idUsuario,
+                    "usuario"
+            );
+
+    ObjectId cancion =
+            convertirObjectId(
+                    idCancion,
+                    "canción"
+            );
+
+    try {
+        validarGeneroPermitido(
+                usuario,
+                "CANCION",
+                cancion
+        );
+
+        return favoritoDAO.agregarCancion(
+                usuario,
+                cancion
+        );
+
+    } catch (PersistenciaException ex) {
+        throw new NegocioException(
+                ex.getMessage()
+        );
     }
-
-    @Override
-    public boolean agregarCancionFavorita(String idUsuario, String idCancion) throws NegocioException {
-        ObjectId usuario = convertirObjectId(idUsuario, "usuario");
-        ObjectId cancion = convertirObjectId(idCancion, "canción");
-
-        try {
-            return favoritoDAO.agregarCancion(usuario, cancion);
-        } catch (PersistenciaException e) {
-            throw new NegocioException(e.getMessage());
-        }
-    }
+}
 
     @Override
     public boolean eliminarArtistaFavorito(String idUsuario, String idArtista) throws NegocioException {
@@ -235,5 +288,77 @@ public class FavoritoBO implements IFavoritoBO {
         }
 
         throw new NegocioException("Tipo de favorito no válido.");
+    }
+
+    @Override
+    public boolean agregarArtistaFavorito(
+            String idUsuario,
+            String idArtista
+    ) throws NegocioException {
+
+        ObjectId usuario
+                = convertirObjectId(
+                        idUsuario,
+                        "usuario"
+                );
+
+        ObjectId artista
+                = convertirObjectId(
+                        idArtista,
+                        "artista"
+                );
+
+        try {
+            validarGeneroPermitido(
+                    usuario,
+                    "ARTISTA",
+                    artista
+            );
+
+            return favoritoDAO.agregarArtista(
+                    usuario,
+                    artista
+            );
+
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(
+                    ex.getMessage()
+            );
+        }
+    }
+
+    private void validarGeneroPermitido(
+            ObjectId idUsuario,
+            String tipo,
+            ObjectId idElemento
+    ) throws PersistenciaException,
+            NegocioException {
+
+        ObjectId idGenero
+                = favoritoDAO.obtenerGeneroElemento(
+                        tipo,
+                        idElemento
+                );
+
+        if (idGenero == null) {
+            throw new NegocioException(
+                    "No se pudo identificar el "
+                    + "género del elemento."
+            );
+        }
+
+        boolean noDeseado
+                = usuarioDAO.tieneGeneroNoDeseado(
+                        idUsuario,
+                        idGenero
+                );
+
+        if (noDeseado) {
+            throw new NegocioException(
+                    "No puedes agregar este elemento "
+                    + "a favoritos porque pertenece "
+                    + "a un género no deseado."
+            );
+        }
     }
 }

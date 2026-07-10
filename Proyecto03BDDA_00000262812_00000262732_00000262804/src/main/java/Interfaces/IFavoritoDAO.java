@@ -36,4 +36,6 @@ public interface IFavoritoDAO {
     boolean eliminarFavoritosPorGenero(ObjectId idUsuario, ObjectId idGenero) throws PersistenciaException;
 
     List<Document> buscarFavoritos(ObjectId idUsuario, String texto, String tipo, ObjectId idGenero) throws PersistenciaException;
+    
+    ObjectId obtenerGeneroElemento(String tipo, ObjectId idElemento) throws PersistenciaException;
 }

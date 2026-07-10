@@ -200,7 +200,6 @@ public class frmPerfil extends JFrame {
             return;
         }
         Sesion.cerrarSesion();
-        frmMenuPrinicipal.establecerUsuarioActual(null);
         new frmLogin().setVisible(true);
         dispose();
     }
