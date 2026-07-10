@@ -29,7 +29,7 @@ import org.bson.types.ObjectId;
 public class Proyecto03BDDA_00000262812_00000262732_00000262804 {
 
     public static void main(String[] args) {
-        //pruebaGeneroDAO();
+        pruebaGeneroDAO();
       new frmLogin();
     }
     
