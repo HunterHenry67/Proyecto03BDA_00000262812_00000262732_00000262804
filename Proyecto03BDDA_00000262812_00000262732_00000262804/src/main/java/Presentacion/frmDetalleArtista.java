@@ -35,7 +35,7 @@ public class frmDetalleArtista extends javax.swing.JFrame {
 
     private ArtistaDTO artista;
     private JPanel panelTarjetasIntegrantes;
-    private List<AlbumDTO> albumesArtista;
+    private List<AlbumDTO> albumesArtista = new ArrayList<>();
     private int paginaAlbumActual = 0;
 
     private static final int ALBUMES_POR_PAGINA = 4;
@@ -47,7 +47,8 @@ public class frmDetalleArtista extends javax.swing.JFrame {
         configurarPantalla();
         cargarDatosArtista();
         cargarIntegrantes();
-        cargarAlbumes();
+        inicializarAlbumes();
+        cargarAlbumes();    
     }
 
     private void configurarPantalla() {

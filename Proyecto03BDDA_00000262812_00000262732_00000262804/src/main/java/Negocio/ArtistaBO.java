@@ -16,6 +16,8 @@ import Excepciones.NegocioException;
 import Excepciones.PersistenciaException;
 import Interfaces.IArtistaBO;
 import Interfaces.IArtistaDAO;
+import Persistencia.ArtistaDAO;
+import Persistencia.ConexionBD;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +31,10 @@ public class ArtistaBO implements IArtistaBO{
     private IArtistaDAO artistaDAO;
 
     public ArtistaBO() {
+        this(new ArtistaDAO(new ConexionBD()));
     }
 
-    
-    
-    public ArtistaBO(IArtistaDAO artistaDAO) {
+    public ArtistaBO(IArtistaDAO artistaDAO) {     
         this.artistaDAO = artistaDAO;
     }
 

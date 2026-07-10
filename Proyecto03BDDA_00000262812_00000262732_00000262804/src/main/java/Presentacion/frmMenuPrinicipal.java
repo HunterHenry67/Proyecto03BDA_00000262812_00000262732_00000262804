@@ -51,7 +51,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     public static UsuarioDTO obtenerUsuarioActual() {
         return usuarioActual;
     }
-    
+
     public frmMenuPrinicipal() {
         initComponents();
         inicializarBOs();
@@ -61,9 +61,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     }
 
     private void inicializarBOs() {
-        IConexionBD conexionBD = new ConexionBD();
-        IArtistaDAO artistaDAO = new ArtistaDAO(conexionBD);
-        this.artistaBO = new ArtistaBO(artistaDAO);
+        this.artistaBO = new ArtistaBO();
     }
 
     private void configurarPaneles() {
@@ -84,7 +82,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
             cargarAlbumesRecientes(artistas);
 
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this,ex.getMessage(), "Error al cargar menú principal", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al cargar menú principal", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -175,7 +173,7 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
             for (ArtistaDTO artista : artistas) {
 
                 if (coincide(artista.getNombre(), texto) && contadorArtistas < LIMITE_ARTISTAS) {
-                    pnlArtistasRecomendados.add(crearTarjeta( artista.getNombre(), obtenerTipoArtista(artista), artista.getImagen()));
+                    pnlArtistasRecomendados.add(crearTarjeta(artista.getNombre(), obtenerTipoArtista(artista), artista.getImagen()));
                     contadorArtistas++;
                 }
                 if (artista.getAlbumes() == null) {
@@ -550,8 +548,8 @@ public class frmMenuPrinicipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
-       new frmAlbum().setVisible(true);
-       dispose();
+        new frmAlbum().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed

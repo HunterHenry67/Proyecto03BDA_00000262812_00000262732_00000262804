@@ -8,6 +8,7 @@ import DTO.ArtistaDTO;
 import Excepciones.NegocioException;
 import Interfaces.IArtistaBO;
 import Interfaces.IPersonaBO;
+import Negocio.ArtistaBO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -18,6 +19,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -31,22 +33,21 @@ import javax.swing.SwingConstants;
  * @author BALAMRUSH
  */
 public class frmMenuArtista extends javax.swing.JFrame {
-    
-    private IPersonaBO personaBO;
+
     private IArtistaBO artistaBO;
-    private List<ArtistaDTO> artistasMostrados = new java.util.ArrayList<>();
+    private List<ArtistaDTO> artistasMostrados = new ArrayList<>();
     private int paginaActual = 0;
     private static final int LIMITE_ARTISTAS = 6;
 
-    public frmMenuArtista(IArtistaBO artistaBO,IPersonaBO personaBO){
-        initComponents();     
-        this.artistaBO = artistaBO;
-        this.personaBO = personaBO;
-        configurarPantallaArtistas();
-        setLocationRelativeTo(null);
-        cargarPrimerosArtistas();
-    }
+    public frmMenuArtista() {
+    initComponents();
+    this.artistaBO = new ArtistaBO();
+    configurarPantallaArtistas();
+    setLocationRelativeTo(null);
+    cargarPrimerosArtistas();
+}
 
+    
     private void configurarPantallaArtistas() {
         pnlListaArtistas.setLayout(new GridLayout(2, 3, 25, 25));
         pnlListaArtistas.setBackground(new Color(220, 220, 220));
