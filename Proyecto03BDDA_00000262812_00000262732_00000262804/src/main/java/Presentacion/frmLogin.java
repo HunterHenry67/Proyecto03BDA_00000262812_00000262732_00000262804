@@ -99,21 +99,15 @@ public class frmLogin extends JFrame {
     private void iniciarSesion() {
         String usuarioOCorreo = txtUsuario.getText().trim();
         String contrasena = new String(txtContrasena.getPassword());
-
         try {
-            UsuarioDTO usuario = usuarioBO.iniciarSesion(usuarioOCorreo, contrasena);
+            UsuarioDTO usuario = usuarioBO.iniciarSesion(usuarioOCorreo,contrasena);
             Sesion.iniciarSesion(usuario);
-            JOptionPane.showMessageDialog( this, "Bienvenido " + usuario.getNombreUsuario() );
-            new frmMenuPrinicipal().setVisible(true);
+            JOptionPane.showMessageDialog( this, "Bienvenido " + usuario.getNombreUsuario());
+            frmMenuPrinicipal menu = new frmMenuPrinicipal();
+            menu.setVisible(true);
             dispose();
-
         } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog( this, ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE );
         }
     }
 

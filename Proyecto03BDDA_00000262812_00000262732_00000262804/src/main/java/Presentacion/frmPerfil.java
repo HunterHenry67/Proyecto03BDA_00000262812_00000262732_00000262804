@@ -6,6 +6,7 @@ package Presentacion;
 
 import DTO.UsuarioDTO;
 import Excepciones.PersistenciaException;
+import Utilerias.Sesion;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -159,22 +160,16 @@ public class frmPerfil extends JFrame {
     }
 
     private void cargarDatosUsuario() {
+        this.usuarioActual = Sesion.getUsuarioActual();
         if (usuarioActual == null) {
-            JOptionPane.showMessageDialog(this, "No hay usuario iniciado.");
+            JOptionPane.showMessageDialog( this, "No hay ningún usuario con sesión iniciada.", "Error", JOptionPane.ERROR_MESSAGE );
             new frmLogin().setVisible(true);
             dispose();
             return;
         }
-
-        lblNombreUsuario.setText(usuarioActual.getNombreUsuario());
-        lblCorreo.setText(usuarioActual.getCorreo());
-
-        cargarImagen(
-                lblImagenPerfil,
-                usuarioActual.getImagenPerfil(),
-                170,
-                170
-        );
+        lblNombreUsuario.setText( usuarioActual.getNombreUsuario());
+        lblCorreo.setText( usuarioActual.getCorreo());
+        cargarImagen( lblImagenPerfil, usuarioActual.getImagenPerfil(),170, 170);
     }
 
     private void cargarImagen(JLabel label, String ruta, int ancho, int alto) {
