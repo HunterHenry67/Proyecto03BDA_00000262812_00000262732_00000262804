@@ -495,12 +495,15 @@ public class frmAlbum extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
         btnMenuPrincipal.setText("Menu Principal");
+        btnMenuPrincipal.addActionListener(this::btnMenuPrincipalActionPerformed);
 
         btnArtistas.setText("Artistas");
+        btnArtistas.addActionListener(this::btnArtistasActionPerformed);
 
         btnAlbumes.setText("Albumes");
 
         btnFavoritos.setText("Favoritos");
+        btnFavoritos.addActionListener(this::btnFavoritosActionPerformed);
 
         jButton5.setText("Perfil");
 
@@ -789,6 +792,38 @@ public class frmAlbum extends javax.swing.JFrame {
             mostrarAlbumes();
         }
     }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
+        // TODO add your handling code here:
+        frmMenuPrinicipal menuPrincipal = new frmMenuPrinicipal();
+        menuPrincipal.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnMenuPrincipalActionPerformed
+
+    private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
+        // TODO add your handling code here:
+        frmMenuArtista menuArtistas = new frmMenuArtista();
+        menuArtistas.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnArtistasActionPerformed
+
+    private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
+        // TODO add your handling code here:
+        try {
+            frmFavoritos favoritos = new frmFavoritos();
+            favoritos.setVisible(true);
+            dispose();
+
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se pudo abrir la pantalla de favoritos.\n"
+                    + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_btnFavoritosActionPerformed
 
     /**
      * @param args the command line arguments

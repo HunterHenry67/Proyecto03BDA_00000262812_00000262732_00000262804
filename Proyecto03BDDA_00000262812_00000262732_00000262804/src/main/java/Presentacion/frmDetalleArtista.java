@@ -9,6 +9,7 @@ import DTO.ArtistaDTO;
 import DTO.IntegranteDTO;
 import DTO.UsuarioDTO;
 import Excepciones.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.IFavoritoBO;
 import Negocio.FavoritoBO;
 import Utilerias.Sesion;

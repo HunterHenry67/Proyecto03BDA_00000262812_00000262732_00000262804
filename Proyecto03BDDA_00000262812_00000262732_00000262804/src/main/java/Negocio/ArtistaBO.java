@@ -374,11 +374,7 @@ public class ArtistaBO implements IArtistaBO {
                         albumDTO.getNombre()
                 );
 
-                /*
-                 * Corrección:
-                 * Solo convierte la fecha si no es null
-                 * y tampoco está vacía.
-                 */
+                
                 if (albumDTO.getFechaLanzamiento() != null
                         && !albumDTO
                                 .getFechaLanzamiento()
